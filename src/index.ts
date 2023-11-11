@@ -5,7 +5,7 @@ import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import { envConfig } from './constants/config'
-
+import connectDB from '../services/database.services'
 const app: Express = express()
 const port = envConfig.port
 
@@ -17,6 +17,7 @@ const limiter = rateLimit({
   // store: ... , // Use an external store for more precise rate limiting
 })
 
+connectDB()
 app.set('trust proxy', 1) // Trust first proxy
 
 app.use(limiter)
