@@ -5,7 +5,9 @@ import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import { envConfig } from './constants/config'
-import connectDB from '../services/database.services'
+import connectDB from './services/database.services'
+import usersRouter from './routes/user.routes'
+import blogsRouter from './routes/blog.routes'
 const app: Express = express()
 const port = envConfig.port
 
@@ -31,6 +33,9 @@ app.use(bodyParser.json())
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')
 })
+
+app.use('/users', usersRouter)
+app.use('/blogs', blogsRouter)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

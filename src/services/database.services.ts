@@ -1,5 +1,5 @@
 import mongoose, { ConnectOptions } from 'mongoose'
-import { envConfig } from '../src/constants/config'
+import { envConfig } from '../constants/config'
 
 const connectDB = async () => {
   try {
