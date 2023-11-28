@@ -11,7 +11,6 @@ import blogsRouter from './routes/blog.routes'
 const app: Express = express()
 const port = envConfig.port
 
-connectDB()
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
@@ -22,6 +21,7 @@ const limiter = rateLimit({
 
 app.set('trust proxy', 1) // Trust first proxy
 
+connectDB()
 app.use(limiter)
 app.use(morgan('combined'))
 app.use(helmet())
