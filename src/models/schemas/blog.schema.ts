@@ -7,7 +7,7 @@ export interface Blogs {
 }
 const BlogsSchema = new mongoose.Schema<Blogs>(
   {
-    title: { type: String, default: '', required: true },
+    title: { type: String, default: '', required: true, index: true },
     description: { type: String, maxlength: 1000, default: '' },
     userID: {
       type: mongoose.SchemaTypes.ObjectId,
