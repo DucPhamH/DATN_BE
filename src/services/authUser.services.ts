@@ -6,13 +6,23 @@ import { UserLoginRequest, UserRegisterRequest } from '~/models/requests/authUse
 import RefreshTokenModel from '~/models/schemas/refreshToken.schema'
 import UserModel from '~/models/schemas/user.schema'
 import { hashPassword } from '~/utils/crypto'
-import { signToken } from '~/utils/jwt'
+import { signToken, verifyToken } from '~/utils/jwt'
 
 class AuthUserService {
-  private signAccessToken(user_id: string) {
+  private signAccessToken(payload: {
+    user_id: string
+    role: number
+    email: string
+    status: number
+    user_name: string
+  }) {
     return signToken({
       payload: {
-        user_id,
+        user_id: payload.user_id,
+        role: payload.role,
+        email: payload.email,
+        status: payload.status,
+        user_name: payload.user_name,
         token_type: TokenType.AccessToken
       },
       privateKey: envConfig.JWT_SECRET_ACCESS_TOKEN,
@@ -21,16 +31,47 @@ class AuthUserService {
       }
     })
   }
-  private signRefreshToken(user_id: string) {
+  private signRefreshToken(payload: {
+    user_id: string
+    role: number
+    email: string
+    status: number
+    user_name: string
+    exp?: number
+  }) {
+    if (payload.exp) {
+      return signToken({
+        payload: {
+          user_id: payload.user_id,
+          role: payload.role,
+          email: payload.email,
+          status: payload.status,
+          user_name: payload.user_name,
+          token_type: TokenType.RefreshToken,
+          exp: payload.exp
+        },
+        privateKey: envConfig.JWT_SECRET_REFRESH_TOKEN
+      })
+    }
     return signToken({
       payload: {
-        user_id,
+        user_id: payload.user_id,
+        role: payload.role,
+        email: payload.email,
+        status: payload.status,
+        user_name: payload.user_name,
         token_type: TokenType.RefreshToken
       },
       privateKey: envConfig.JWT_SECRET_REFRESH_TOKEN,
       options: {
         expiresIn: envConfig.REFRESH_TOKEN_EXPIRES_IN
       }
+    })
+  }
+  private decodeRefreshToken(refresh_token: string) {
+    return verifyToken({
+      token: refresh_token,
+      secretOrPublicKey: envConfig.JWT_SECRET_REFRESH_TOKEN
     })
   }
   async checkEmailExist(email: string) {
@@ -48,12 +89,26 @@ class AuthUserService {
   async login(payload: UserLoginRequest) {
     const { email } = payload
     const user = await UserModel.findOne({ email })
+    console.log('user', user)
     if (user) {
       const [access_token, refresh_token] = await Promise.all([
-        this.signAccessToken(user._id.toString()),
-        this.signRefreshToken(user._id.toString())
+        this.signAccessToken({
+          user_id: user._id.toString(),
+          role: Number(user.role),
+          email: user.email,
+          status: Number(user.status),
+          user_name: user.user_name
+        }),
+        this.signRefreshToken({
+          user_id: user._id.toString(),
+          role: Number(user.role),
+          email: user.email,
+          status: Number(user.status),
+          user_name: user.user_name
+        })
       ])
-      await RefreshTokenModel.create({ token: refresh_token, user_id: user._id })
+      const { iat, exp } = await this.decodeRefreshToken(refresh_token)
+      await RefreshTokenModel.create({ token: refresh_token, user_id: user._id, iat, exp })
       return {
         access_token,
         refresh_token,
@@ -65,6 +120,41 @@ class AuthUserService {
     const result = await RefreshTokenModel.deleteOne({ token: refresh_token })
     return {
       message: AUTH_USER_MESSAGE.LOGOUT_SUCCESS
+    }
+  }
+  async refreshToken(user: {
+    user_id: string
+    role: number
+    email: string
+    status: number
+    user_name: string
+    refresh_token: string
+    exp: number
+  }) {
+    const [new_access_token, new_refresh_token] = await Promise.all([
+      this.signAccessToken({
+        user_id: user.user_id.toString(),
+        role: Number(user.role),
+        email: user.email,
+        status: Number(user.status),
+        user_name: user.user_name
+      }),
+      this.signRefreshToken({
+        user_id: user.user_id.toString(),
+        role: Number(user.role),
+        email: user.email,
+        status: Number(user.status),
+        user_name: user.user_name,
+        exp: user.exp
+      })
+    ])
+    console.log('user', user)
+    await RefreshTokenModel.deleteOne({ token: user.refresh_token })
+    const { iat, exp } = await this.decodeRefreshToken(new_refresh_token)
+    await RefreshTokenModel.create({ token: new_refresh_token, user_id: user.user_id, iat, exp })
+    return {
+      access_token: new_access_token,
+      refresh_token: new_refresh_token
     }
   }
 }
