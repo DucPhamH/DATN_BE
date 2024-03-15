@@ -1,17 +1,38 @@
 import mongoose from 'mongoose'
+import { UserRoles, UserStatus } from '~/constants/enums'
 
 export interface User {
   name: string
-  image?: string
+  user_name: string
+  email: string
+  password: string
+  avatar?: string
+  cover_avatar?: string
+  role?: string
+  status?: string
 }
 
 const UserSchema = new mongoose.Schema<User>(
   {
     name: { type: String, maxlength: 160, required: true },
-    image: {
+    user_name: { type: String, maxlength: 160, required: true },
+    email: { type: String, maxlength: 160, required: true },
+    password: { type: String, maxlength: 160, required: true },
+    cover_avatar: {
       type: String,
-      maxlength: 1000,
       default: ''
+    },
+    avatar: {
+      type: String,
+      default: ''
+    },
+    role: {
+      type: Number,
+      default: UserRoles.level_1
+    },
+    status: {
+      type: Number,
+      default: UserStatus.active
     }
   },
   {

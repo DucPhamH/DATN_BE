@@ -5,7 +5,7 @@ export interface Blogs {
   description: string
   userID: Types.ObjectId
 }
-const BlogsSchema = new mongoose.Schema<Blogs>(
+const BlogSchema = new mongoose.Schema<Blogs>(
   {
     title: { type: String, default: '', required: true, index: true },
     description: { type: String, maxlength: 1000, default: '' },
@@ -21,6 +21,6 @@ const BlogsSchema = new mongoose.Schema<Blogs>(
   }
 )
 
-const BlogsModel = mongoose.model('blogs', BlogsSchema)
+const BlogModel = mongoose.model('blogs', BlogSchema)
 
-export default BlogsModel
+export default BlogModel
