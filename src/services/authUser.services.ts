@@ -1,10 +1,11 @@
 import { omit } from 'lodash'
 import { envConfig } from '~/constants/config'
 import { TokenType } from '~/constants/enums'
+import { AUTH_USER_MESSAGE } from '~/constants/messages'
 import { UserLoginRequest, UserRegisterRequest } from '~/models/requests/authUser.request'
+import RefreshTokenModel from '~/models/schemas/refreshToken.schema'
 import UserModel from '~/models/schemas/user.schema'
-import { comparePassword, hashPassword } from '~/utils/crypto'
-import { ErrorWithStatus } from '~/utils/error'
+import { hashPassword } from '~/utils/crypto'
 import { signToken } from '~/utils/jwt'
 
 class AuthUserService {
@@ -14,6 +15,7 @@ class AuthUserService {
         user_id,
         token_type: TokenType.AccessToken
       },
+      privateKey: envConfig.JWT_SECRET_ACCESS_TOKEN,
       options: {
         expiresIn: envConfig.ACCESS_TOKEN_EXPIRES_IN
       }
@@ -25,6 +27,7 @@ class AuthUserService {
         user_id,
         token_type: TokenType.RefreshToken
       },
+      privateKey: envConfig.JWT_SECRET_REFRESH_TOKEN,
       options: {
         expiresIn: envConfig.REFRESH_TOKEN_EXPIRES_IN
       }
@@ -43,28 +46,25 @@ class AuthUserService {
     return newUser
   }
   async login(payload: UserLoginRequest) {
-    const { email, password } = payload
+    const { email } = payload
     const user = await UserModel.findOne({ email })
-    console.log('user', user)
-    if (!user) {
-      throw new ErrorWithStatus({ message: 'User not found', status: 404 })
-    }
     if (user) {
-      const compare = await comparePassword(password, user.password)
-      console.log('compare', compare)
-      if (!compare) {
-        throw new Error('Password not match')
-      }
-      const [accessToken, refreshToken] = await Promise.all([
+      const [access_token, refresh_token] = await Promise.all([
         this.signAccessToken(user._id.toString()),
         this.signRefreshToken(user._id.toString())
       ])
-      const newUser = omit(user.toObject(), ['password'])
+      await RefreshTokenModel.create({ token: refresh_token, user_id: user._id })
       return {
-        newUser,
-        accessToken,
-        refreshToken
+        access_token,
+        refresh_token,
+        user: omit(user.toObject(), ['password'])
       }
+    }
+  }
+  async logout(refresh_token: string) {
+    const result = await RefreshTokenModel.deleteOne({ token: refresh_token })
+    return {
+      message: AUTH_USER_MESSAGE.LOGOUT_SUCCESS
     }
   }
 }
