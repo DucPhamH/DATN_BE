@@ -35,7 +35,7 @@ export const registerValidator = validate(
           options: async (value) => {
             const isExistEmail = await authUserService.checkEmailExist(value)
             if (isExistEmail) {
-              throw new Error('Email already exists')
+              throw new Error(AUTH_USER_MESSAGE.EMAIL_ALREADY_EXISTS)
             }
             return true
           }
@@ -76,17 +76,11 @@ export const loginValidator = validate(
           options: async (value, { req }) => {
             const user = await UserModel.findOne({ email: value })
             if (user === null) {
-              throw new ErrorWithStatus({
-                message: AUTH_USER_MESSAGE.USER_NOT_FOUND,
-                status: HTTP_STATUS.UNAUTHORIZED
-              })
+              throw new Error(AUTH_USER_MESSAGE.USER_NOT_FOUND)
             }
             const compare = await comparePassword(req.body.password, user.password)
             if (!compare) {
-              throw new ErrorWithStatus({
-                message: AUTH_USER_MESSAGE.PASSWORD_NOT_MATCH,
-                status: HTTP_STATUS.UNAUTHORIZED
-              })
+              throw new Error(AUTH_USER_MESSAGE.USER_NOT_FOUND)
             }
             return true
           }
