@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { envConfig } from '~/constants/config'
 import { AUTH_USER_MESSAGE } from '~/constants/messages'
 import { TokenPayload } from '~/models/requests/authUser.request'
 
@@ -46,4 +47,14 @@ export const refreshTokenController = async (req: Request, res: Response) => {
     message: AUTH_USER_MESSAGE.REFRESH_TOKEN_SUCCESS,
     result
   })
+}
+
+export const oauthController = async (req: Request, res: Response) => {
+  const { code } = req.query
+  const result = await authUserService.oauth(code as string)
+  console.log('result', result)
+  const urlRedirect = `${envConfig.CLIENT_REDIRECT_CALLBACK}?access_token=${result.access_token}&refresh_token=${
+    result.refresh_token
+  }&user=${JSON.stringify(result.user)}`
+  return res.redirect(urlRedirect)
 }

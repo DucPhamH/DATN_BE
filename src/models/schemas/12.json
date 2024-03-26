@@ -1,0 +1,272 @@
+[
+  {
+    "name": "BÁNH BÍCH CỐT",
+    "energy": "346",
+    "protein": "12.3",
+    "fat": "1.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "71.3"
+  },
+  {
+    "name": "BÁNH BÍCH QUY",
+    "energy": "376",
+    "protein": "8.8",
+    "fat": "4.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "75.1"
+  },
+  {
+    "name": "BÁNH CHẢ",
+    "energy": "395",
+    "protein": "3.4",
+    "fat": "6.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "80.5"
+  },
+  {
+    "name": "BÁNH CON CÁ",
+    "energy": "368",
+    "protein": "7.5",
+    "fat": "2.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "79.6"
+  },
+  {
+    "name": "BÁNH ĐẬU XANH",
+    "energy": "416",
+    "protein": "15.6",
+    "fat": "11.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "62.4"
+  },
+  {
+    "name": "BÁNH KEM XỐP",
+    "energy": "492",
+    "protein": "8.3",
+    "fat": "24.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "60.7"
+  },
+  {
+    "name": "BÁNH KHẢO CHAY",
+    "energy": "376",
+    "protein": "3.2",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "90.2"
+  },
+  {
+    "name": "BÁNH QUẾ",
+    "energy": "435",
+    "protein": "8.3",
+    "fat": "10.7",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "76.4"
+  },
+  {
+    "name": "BÁNH SỐ CÔ LA",
+    "energy": "449",
+    "protein": "3.9",
+    "fat": "17.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "68.8"
+  },
+  {
+    "name": "BÁNH THỎI SÔ CÔ LA",
+    "energy": "543",
+    "protein": "4.9",
+    "fat": "30.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "62.5"
+  },
+  {
+    "name": "BÁNH TRỨNG NHỆN",
+    "energy": "369",
+    "protein": "9.6",
+    "fat": "3.7",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "74.2"
+  },
+  {
+    "name": "BỘT CA CAO",
+    "energy": "414",
+    "protein": "19.6",
+    "fat": "13.7",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "53.0"
+  },
+  {
+    "name": "ĐƯỜNG CÁT",
+    "energy": "390",
+    "protein": "0.0",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "97.4"
+  },
+  {
+    "name": "ĐƯỜNG KÍNH",
+    "energy": "397",
+    "protein": "0.0",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "99.3"
+  },
+  {
+    "name": "KẸO BƠ CỨNG",
+    "energy": "448",
+    "protein": "2.1",
+    "fat": "17.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "71.1"
+  },
+  {
+    "name": "KẸO CẢ PHÊ",
+    "energy": "378",
+    "protein": "0.0",
+    "fat": "1.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "91.5"
+  },
+  {
+    "name": "KẸO CAM CHANH",
+    "energy": "377",
+    "protein": "0.0",
+    "fat": "0.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "93.1"
+  },
+  {
+    "name": "KEO DỪA MỀM",
+    "energy": "415",
+    "protein": "0.6",
+    "fat": "12.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "75.6"
+  },
+  {
+    "name": "KEO DỨA MỀM",
+    "energy": "415",
+    "protein": "0.6",
+    "fat": "12.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "75.6"
+  },
+  {
+    "name": "KẸO LẠC",
+    "energy": "449",
+    "protein": "10.3",
+    "fat": "16.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "64.8"
+  },
+  {
+    "name": "KẸO PASTILLE (KEO NGẬM BẠC HÀ)",
+    "energy": "356",
+    "protein": "5.2",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "83.8"
+  },
+  {
+    "name": "KẸO SÔ CÔ LA",
+    "energy": "388",
+    "protein": "1.6",
+    "fat": "46",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "85.1"
+  },
+  {
+    "name": "KẸO SỮA",
+    "energy": "390",
+    "protein": "2.9",
+    "fat": "5.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "83.0"
+  },
+  {
+    "name": "KẸO VỪNG VIÊN",
+    "energy": "417",
+    "protein": "2.8",
+    "fat": "6.9",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "85.9"
+  },
+  {
+    "name": "MẠCH NHÀ",
+    "energy": "331",
+    "protein": "0.2",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "82.5"
+  },
+  {
+    "name": "MẬT ONG",
+    "energy": "327",
+    "protein": "0.4",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "81.3"
+  },
+  {
+    "name": "MỨT LẠC",
+    "energy": "431",
+    "protein": "5.4",
+    "fat": "8.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed9"
+    },
+    "carbohydrate": "82.9"
+  }
+]

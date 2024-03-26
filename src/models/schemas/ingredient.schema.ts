@@ -1,5 +1,4 @@
 import mongoose, { Types } from 'mongoose'
-import { IngerdientTypes } from '~/constants/enums'
 
 export interface Ingerdients {
   name: string
@@ -7,7 +6,6 @@ export interface Ingerdients {
   protein: number
   fat: number
   carbohydrate: number
-  type: number // 0 la chua duyet, 1 la da duyet
   ingerdient_category_ID: Types.ObjectId
 }
 const IngerdientSchema = new mongoose.Schema<Ingerdients>(
@@ -17,7 +15,6 @@ const IngerdientSchema = new mongoose.Schema<Ingerdients>(
     protein: { type: Number, default: 0 },
     fat: { type: Number, default: 0 },
     carbohydrate: { type: Number, default: 0 },
-    type: { type: Number, default: IngerdientTypes.accept },
     ingerdient_category_ID: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'ingerdient_categories',

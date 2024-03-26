@@ -9,6 +9,10 @@ class UsersService {
     const users = await UserModel.find()
     return users
   }
+  async getMe(id: string) {
+    const me = await UserModel.findById(id)
+    return me
+  }
 }
 
 const usersService = new UsersService()

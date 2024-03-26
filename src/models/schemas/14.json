@@ -1,0 +1,152 @@
+[
+  {
+    "name": "BIA (CỒN: 4,5 G)",
+    "energy": "11",
+    "protein": "0.5",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "2.3"
+  },
+  {
+    "name": "CÔ NHẮC (CỒN 32 G)",
+    "energy": "0",
+    "protein": "0.0",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "0.0"
+  },
+  {
+    "name": "CỐC TAI (CỒN 13 G)",
+    "energy": "63",
+    "protein": "0.0",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "15.7"
+  },
+  {
+    "name": "COCA COLA",
+    "energy": "42",
+    "protein": "0.0",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "10.4"
+  },
+  {
+    "name": "NƯỚC CAM TƯƠI",
+    "energy": "23",
+    "protein": "0.7",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "4.5"
+  },
+  {
+    "name": "NƯỚC DỪA NON TƯƠI",
+    "energy": "21",
+    "protein": "0.4",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "48"
+  },
+  {
+    "name": "NƯỚC ÉP CÀ CHUA",
+    "energy": "19",
+    "protein": "0.8",
+    "fat": "0.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "2.6"
+  },
+  {
+    "name": "NƯỚC KHOÁNG",
+    "energy": "0",
+    "protein": "0.0",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "0.0"
+  },
+  {
+    "name": "NƯỚC QUÍT TƯƠI",
+    "energy": "24",
+    "protein": "0.4",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "5.1"
+  },
+  {
+    "name": "RƯỢU CAM, CHANH (CỒN 24,2 G)",
+    "energy": "0",
+    "protein": "0.0",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "0.0"
+  },
+  {
+    "name": "RƯỢU NẾP (80G/ 24 ML) (CỒN 5 G)",
+    "energy": "167",
+    "protein": "4.0",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "37.7"
+  },
+  {
+    "name": "RƯỢU TRẮNG (CỒN 39 G)",
+    "energy": "273",
+    "protein": "-",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "0.0"
+  },
+  {
+    "name": "RƯỢU VANG ĐỎ (CỒN 9,5 G)",
+    "energy": "9",
+    "protein": "0.2",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "2.0"
+  },
+  {
+    "name": "RƯỢU VANG TRẮNG (CỒN 9,5 G)",
+    "energy": "1",
+    "protein": "0.1",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "0.2"
+  },
+  {
+    "name": "RƯỢU VANG TRẮNG NGỌT (CỒN 10.2 G)",
+    "energy": "24",
+    "protein": "0.2",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffedb"
+    },
+    "carbohydrate": "5.9"
+  }
+]

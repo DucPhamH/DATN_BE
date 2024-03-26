@@ -30,3 +30,12 @@ export const getUsersController = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const getMeController = async (req: Request, res: Response) => {
+  const { decoded_authorization } = req
+  const result = await usersService.getMe(decoded_authorization?.user_id as string)
+  return res.json({
+    message: 'User fetched successfully',
+    result: result
+  })
+}

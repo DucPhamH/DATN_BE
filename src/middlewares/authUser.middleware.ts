@@ -9,7 +9,7 @@ import { comparePassword } from '~/utils/crypto'
 import { ErrorWithStatus } from '~/utils/error'
 import { verifyToken } from '~/utils/jwt'
 import { validate } from '~/utils/validation'
-import { Request, Response, NextFunction } from 'express'
+import { Request } from 'express'
 import RefreshTokenModel from '~/models/schemas/refreshToken.schema'
 import { envConfig } from '~/constants/config'
 
@@ -76,11 +76,11 @@ export const loginValidator = validate(
           options: async (value, { req }) => {
             const user = await UserModel.findOne({ email: value })
             if (user === null) {
-              throw new Error(AUTH_USER_MESSAGE.USER_NOT_FOUND)
+              throw new Error(AUTH_USER_MESSAGE.EMAIL_OR_PASSWORD_INCORRECT)
             }
             const compare = await comparePassword(req.body.password, user.password)
             if (!compare) {
-              throw new Error(AUTH_USER_MESSAGE.USER_NOT_FOUND)
+              throw new Error(AUTH_USER_MESSAGE.EMAIL_OR_PASSWORD_INCORRECT)
             }
             return true
           }
@@ -109,7 +109,6 @@ export const accessTokenValidator = validate(
         custom: {
           options: async (value: string, { req }) => {
             const access_token = value.split(' ')[1]
-            console.log('access_token', access_token)
             if (!access_token) {
               throw new ErrorWithStatus({
                 message: AUTH_USER_MESSAGE.ACCESS_TOKEN_IS_REQUIRED,

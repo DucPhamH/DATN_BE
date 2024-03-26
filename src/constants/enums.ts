@@ -4,9 +4,8 @@ export enum IngerdientTypes {
 }
 
 export enum UserRoles {
-  level_1,
-  level_2,
-  level_3
+  user,
+  chef
 }
 
 export enum UserStatus {
@@ -19,4 +18,14 @@ export enum TokenType {
   RefreshToken,
   ForgotPasswordToken,
   EmailVerifyToken
+}
+
+export enum PostTypes {
+  post,
+  sharePost
+}
+
+export enum PostStatus {
+  publish,
+  private
 }

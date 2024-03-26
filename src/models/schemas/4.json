@@ -1,0 +1,1262 @@
+[
+  {
+    "name": "BẦU",
+    "energy": "14",
+    "protein": "0.6",
+    "fat": "0.02",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.9"
+  },
+  {
+    "name": "BÍ ĐAO (BÍ XANH)",
+    "energy": "12",
+    "protein": "0.6",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.4"
+  },
+  {
+    "name": "BÍ NGÔ",
+    "energy": "27",
+    "protein": "0.3",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "6.1"
+  },
+  {
+    "name": "CẢ BÁT",
+    "energy": "23",
+    "protein": "1.2",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.0"
+  },
+  {
+    "name": "CẢ CHUA",
+    "energy": "20",
+    "protein": "0.6",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.0"
+  },
+  {
+    "name": "CẢ PHÁO",
+    "energy": "20",
+    "protein": "1.45",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.6"
+  },
+  {
+    "name": "CÀ RỐT (CỦ ĐỎ, VÀNG)",
+    "energy": "39",
+    "protein": "1.45",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "7.8"
+  },
+  {
+    "name": "CÀ RỐT KHÔ",
+    "energy": "292",
+    "protein": "9.2",
+    "fat": "1.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "60.4"
+  },
+  {
+    "name": "CẢ TÍM",
+    "energy": "22",
+    "protein": "1.0",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.5"
+  },
+  {
+    "name": "CẢI BẮP",
+    "energy": "29",
+    "protein": "1.8",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "5.3"
+  },
+  {
+    "name": "CẢI BẮP ĐỎ",
+    "energy": "45",
+    "protein": "1.9",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "9.0"
+  },
+  {
+    "name": "CẢI BẮP KHÔ",
+    "energy": "245",
+    "protein": "18.0",
+    "fat": "1.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "39.7"
+  },
+  {
+    "name": "CẢI CÚC",
+    "energy": "14",
+    "protein": "1.6",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.9"
+  },
+  {
+    "name": "CẢI SOONG",
+    "energy": "15",
+    "protein": "2.1",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.3"
+  },
+  {
+    "name": "CẢI THÌA (CẢI TRẮNG)",
+    "energy": "17",
+    "protein": "1.4",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.4"
+  },
+  {
+    "name": "CẢI XANH",
+    "energy": "16",
+    "protein": "1.7",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.9"
+  },
+  {
+    "name": "CẦN TA",
+    "energy": "10",
+    "protein": "1.0",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.5"
+  },
+  {
+    "name": "CẦN TÂY",
+    "energy": "48",
+    "protein": "3.7",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "7.9"
+  },
+  {
+    "name": "CHUỐI XANH",
+    "energy": "74",
+    "protein": "1.2",
+    "fat": "0.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "16.4"
+  },
+  {
+    "name": "CỦ CẢI ĐỎ",
+    "energy": "48",
+    "protein": "1.3",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "10.8"
+  },
+  {
+    "name": "CỦ CẢI TRẮNG",
+    "energy": "21",
+    "protein": "1.45",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.6"
+  },
+  {
+    "name": "CỦ CẢI TRẮNG KHÔ",
+    "energy": "220",
+    "protein": "17.6",
+    "fat": "1.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "33.9"
+  },
+  {
+    "name": "CỦ ĐẬU",
+    "energy": "28",
+    "protein": "1.0",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "6.0"
+  },
+  {
+    "name": "CỦ NIỄNG",
+    "energy": "30",
+    "protein": "2.0",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "5.4"
+  },
+  {
+    "name": "DỌC CỦ CẢI (NON)",
+    "energy": "14",
+    "protein": "1.9",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.6"
+  },
+  {
+    "name": "DỌC MÙNG",
+    "energy": "5",
+    "protein": "0.4",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "0.8"
+  },
+  {
+    "name": "DƯA CHUỘT",
+    "energy": "16",
+    "protein": "0.8",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.9"
+  },
+  {
+    "name": "DƯA GANG",
+    "energy": "11",
+    "protein": "0.8",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.0"
+  },
+  {
+    "name": "ĐẬU CÔ VE",
+    "energy": "73",
+    "protein": "5.0",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "13.3"
+  },
+  {
+    "name": "ĐẬU ĐŨA",
+    "energy": "59",
+    "protein": "6.0",
+    "fat": "0.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "7.9"
+  },
+  {
+    "name": "ĐẬU HÀ LAN",
+    "energy": "72",
+    "protein": "6.5",
+    "fat": "0.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "10.6"
+  },
+  {
+    "name": "ĐẬU RỒNG (QUẢ NON)",
+    "energy": "34",
+    "protein": "1.9",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "6.3"
+  },
+  {
+    "name": "ÐU ĐỦ XANH",
+    "energy": "22",
+    "protein": "0.8",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.6"
+  },
+  {
+    "name": "GẤC",
+    "energy": "122",
+    "protein": "2.1",
+    "fat": "7.9",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "10.5"
+  },
+  {
+    "name": "GIÁ ĐẬU TƯƠNG",
+    "energy": "79",
+    "protein": "7.7",
+    "fat": "1.8",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "8.0"
+  },
+  {
+    "name": "GIÁ ĐẬU XANH",
+    "energy": "44",
+    "protein": "5.5",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "5.1"
+  },
+  {
+    "name": "HÀNH CỦ TƯƠI",
+    "energy": "26",
+    "protein": "1.3",
+    "fat": "0.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.4"
+  },
+  {
+    "name": "HÀNH LÁ (HÀNH HOA)",
+    "energy": "22",
+    "protein": "1.3",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.3"
+  },
+  {
+    "name": "HÀNH TÂY",
+    "energy": "41",
+    "protein": "1.8",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "8.2"
+  },
+  {
+    "name": "HẠT SEN TƯƠI",
+    "energy": "161",
+    "protein": "9.5",
+    "fat": "0.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "29.5"
+  },
+  {
+    "name": "HẠT SEN KHÔ",
+    "energy": "334",
+    "protein": "20.0",
+    "fat": "2.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "58.0"
+  },
+  {
+    "name": "HẸ LÁ",
+    "energy": "18",
+    "protein": "2.2",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.5"
+  },
+  {
+    "name": "HOA CHUỐI",
+    "energy": "20",
+    "protein": "1.45",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.5"
+  },
+  {
+    "name": "HOA LÝ",
+    "energy": "23",
+    "protein": "2.9",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.8"
+  },
+  {
+    "name": "KHẾ",
+    "energy": "16",
+    "protein": "0.6",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.8"
+  },
+  {
+    "name": "LÁ LỐT",
+    "energy": "39",
+    "protein": "4.3",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "5.4"
+  },
+  {
+    "name": "LÁ ME",
+    "energy": "46",
+    "protein": "7.5",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.0"
+  },
+  {
+    "name": "LÁ MƠ LÔNG",
+    "energy": "27",
+    "protein": "3.9",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.9"
+  },
+  {
+    "name": "LÁ SẮN TƯƠI",
+    "energy": "78",
+    "protein": "7.0",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "12.6"
+  },
+  {
+    "name": "MĂNG CHUA",
+    "energy": "11",
+    "protein": "1.4",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.4"
+  },
+  {
+    "name": "MĂNG KHÔ",
+    "energy": "157",
+    "protein": "13.0",
+    "fat": "2.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "21.5"
+  },
+  {
+    "name": "MĂNG TÂY",
+    "energy": "14",
+    "protein": "2.2",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "41.1"
+  },
+  {
+    "name": "MĂNG TRE",
+    "energy": "15",
+    "protein": "1.7",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.4"
+  },
+  {
+    "name": "MƯỚP",
+    "energy": "17",
+    "protein": "0.9",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.8"
+  },
+  {
+    "name": "MƯỚP ĐẮNG",
+    "energy": "16",
+    "protein": "0.9",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.8"
+  },
+  {
+    "name": "MƯỚP NHẬT BẢN",
+    "energy": "10",
+    "protein": "0.8",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.8"
+  },
+  {
+    "name": "NGẢI CỨU",
+    "energy": "25",
+    "protein": "3.8",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.4"
+  },
+  {
+    "name": "NGÔ BAO TỬ",
+    "energy": "40",
+    "protein": "2.2",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "7.4"
+  },
+  {
+    "name": "NGÓ SEN",
+    "energy": "61",
+    "protein": "1.0",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "13.9"
+  },
+  {
+    "name": "NỤ MƯỚP",
+    "energy": "30",
+    "protein": "4.9",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.5"
+  },
+  {
+    "name": "ỚT ĐỎ TO",
+    "energy": "23",
+    "protein": "1.0",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.0"
+  },
+  {
+    "name": "ỚT VÀNG TO",
+    "energy": "29",
+    "protein": "1.3",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "5.5"
+  },
+  {
+    "name": "ỚT XANH TO",
+    "energy": "25",
+    "protein": "1.3",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.5"
+  },
+  {
+    "name": "QUÁ DỌC",
+    "energy": "19",
+    "protein": "0.8",
+    "fat": "0.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.9"
+  },
+  {
+    "name": "QUÁ ME CHUA",
+    "energy": "27",
+    "protein": "1.9",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.8"
+  },
+  {
+    "name": "RAU BÍ",
+    "energy": "18",
+    "protein": "2.7",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.7"
+  },
+  {
+    "name": "RAU CÂU KHÔ",
+    "energy": "198",
+    "protein": "11.2",
+    "fat": "1.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "35.8"
+  },
+  {
+    "name": "RAU CÂU TƯƠI",
+    "energy": "25",
+    "protein": "1.9",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.1"
+  },
+  {
+    "name": "RAU DIẾP",
+    "energy": "14",
+    "protein": "1.2",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.8"
+  },
+  {
+    "name": "RAU ĐAY",
+    "energy": "25",
+    "protein": "2.8",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.0"
+  },
+  {
+    "name": "RAU GIẤP CÁ, DIẾP CÁ",
+    "energy": "22",
+    "protein": "2.9",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.7"
+  },
+  {
+    "name": "RAU GIỀN CƠM",
+    "energy": "21",
+    "protein": "3.4",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "41.1"
+  },
+  {
+    "name": "RAU GIỀN ĐỎ",
+    "energy": "41",
+    "protein": "3.3",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "6.2"
+  },
+  {
+    "name": "RAU GIỀN TRẮNG",
+    "energy": "42",
+    "protein": "3.2",
+    "fat": "0.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "6.3"
+  },
+  {
+    "name": "RAU HÚNG",
+    "energy": "20",
+    "protein": "2.2",
+    "fat": "0.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.5"
+  },
+  {
+    "name": "RAU KHOAI LANG",
+    "energy": "23",
+    "protein": "2.6",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.5"
+  },
+  {
+    "name": "RAU KINH GIỚI",
+    "energy": "22",
+    "protein": "2.7",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.8"
+  },
+  {
+    "name": "RAU MÁ RỪNG",
+    "energy": "25",
+    "protein": "3.1",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.1"
+  },
+  {
+    "name": "RAU MÁ, MÁ MƠ",
+    "energy": "20",
+    "protein": "3.2",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.8"
+  },
+  {
+    "name": "RAU MỒNG TƠI",
+    "energy": "14",
+    "protein": "2.0",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.4"
+  },
+  {
+    "name": "RAU MÙI",
+    "energy": "16",
+    "protein": "2.6",
+    "fat": "0.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "0.2"
+  },
+  {
+    "name": "RAU MÙI TÀU",
+    "energy": "25",
+    "protein": "2.1",
+    "fat": "0.8",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.4"
+  },
+  {
+    "name": "RAU MUỐNG",
+    "energy": "25",
+    "protein": "3.2",
+    "fat": "0.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.1"
+  },
+  {
+    "name": "RAU MUỐNG KHÔ",
+    "energy": "245",
+    "protein": "34.2",
+    "fat": "18",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "23.0"
+  },
+  {
+    "name": "RAU NGỔ",
+    "energy": "15",
+    "protein": "1.45",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.3"
+  },
+  {
+    "name": "RAU NGÓT",
+    "energy": "35",
+    "protein": "5.3",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.4"
+  },
+  {
+    "name": "RAU NGÓT KHÔ",
+    "energy": "239",
+    "protein": "32.2",
+    "fat": "2.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "21.8"
+  },
+  {
+    "name": "RAU RĂM",
+    "energy": "30",
+    "protein": "4.7",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.8"
+  },
+  {
+    "name": "RAU RÚT",
+    "energy": "28",
+    "protein": "5.1",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.8"
+  },
+  {
+    "name": "RAU SÀ LÁCH",
+    "energy": "17",
+    "protein": "1.45",
+    "fat": "0.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.8"
+  },
+  {
+    "name": "RAU SAM",
+    "energy": "18",
+    "protein": "1.4",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.0"
+  },
+  {
+    "name": "RAU SẮNG (CHÙA HƯƠNG)",
+    "energy": "48",
+    "protein": "6.5",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "5.5"
+  },
+  {
+    "name": "RAU TÀU BAY",
+    "energy": "18",
+    "protein": "2.5",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.9"
+  },
+  {
+    "name": "RAU THƠM",
+    "energy": "18",
+    "protein": "2.0",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.4"
+  },
+  {
+    "name": "SẤU XANH",
+    "energy": "19",
+    "protein": "1.8",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.0"
+  },
+  {
+    "name": "SU HÀO",
+    "energy": "37",
+    "protein": "2.8",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "6.2"
+  },
+  {
+    "name": "SU HÀO KHÔ",
+    "energy": "261",
+    "protein": "20.0",
+    "fat": "1.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "42.1"
+  },
+  {
+    "name": "SU SU, QUẢ",
+    "energy": "19",
+    "protein": "0.8",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.6"
+  },
+  {
+    "name": "SÚP LƠ TRẮNG",
+    "energy": "30",
+    "protein": "2.5",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.8"
+  },
+  {
+    "name": "SÚP LƠ XANH",
+    "energy": "26",
+    "protein": "3.0",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.9"
+  },
+  {
+    "name": "THÌA LÀ",
+    "energy": "28",
+    "protein": "2.6",
+    "fat": "1.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.8"
+  },
+  {
+    "name": "TÍA TÔ",
+    "energy": "25",
+    "protein": "2.9",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.4"
+  },
+  {
+    "name": "TỎI TA",
+    "energy": "121",
+    "protein": "6.0",
+    "fat": "0.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "23.0"
+  },
+  {
+    "name": "TỎI TÂY (CẢ LÁ)",
+    "energy": "29",
+    "protein": "1.4",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "5.9"
+  },
+  {
+    "name": "TRÁM ĐEN CHÍN",
+    "energy": "114",
+    "protein": "2.5",
+    "fat": "10.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.6"
+  },
+  {
+    "name": "TRÁM XANH SỐNG, TRÁM TRẮNG",
+    "energy": "37",
+    "protein": "1.2",
+    "fat": "1.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.4"
+  },
+  {
+    "name": "XƯƠNG SÔNG",
+    "energy": "15",
+    "protein": "2.2",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.5"
+  },
+  {
+    "name": "CÀ CHUA MUỐI",
+    "energy": "6",
+    "protein": "0.6",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.0"
+  },
+  {
+    "name": "CÀ MUỐI NÉN",
+    "energy": "13",
+    "protein": "1.3",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.0"
+  },
+  {
+    "name": "CÀ MUỐI SỐI",
+    "energy": "16",
+    "protein": "1.45",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.5"
+  },
+  {
+    "name": "DƯA CẢI BẮP",
+    "energy": "18",
+    "protein": "1.2",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.3"
+  },
+  {
+    "name": "DƯA CẢI BẸ",
+    "energy": "17",
+    "protein": "1.8",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.4"
+  },
+  {
+    "name": "DƯA CẢI SEN",
+    "energy": "10",
+    "protein": "1.1",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.3"
+  },
+  {
+    "name": "DƯA CHUỘT MUỐI",
+    "energy": "13",
+    "protein": "0.8",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.5"
+  },
+  {
+    "name": "DƯA GIÁ (ĐẬU XANH)",
+    "energy": "39",
+    "protein": "5.0",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.8"
+  },
+  {
+    "name": "HÀNH CỦ MUỐI",
+    "energy": "22",
+    "protein": "1.4",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.0"
+  },
+  {
+    "name": "KIỆU MUỐI",
+    "energy": "24",
+    "protein": "1.3",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.7"
+  },
+  {
+    "name": "NHÚT (MUỐI TỪ MÍT NON, NGỌN ĐẬU XANH NON...)",
+    "energy": "16",
+    "protein": "2.5",
+    "fat": "-",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "1.5"
+  },
+  {
+    "name": "MEN BIA KHÔ",
+    "energy": "340",
+    "protein": "52.5",
+    "fat": "3.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "25.4"
+  },
+  {
+    "name": "MEN BIA TƯƠI",
+    "energy": "95",
+    "protein": "16.2",
+    "fat": "1.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "4.5"
+  },
+  {
+    "name": "MỘC NHĨ",
+    "energy": "304",
+    "protein": "10.6",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "65.0"
+  },
+  {
+    "name": "NẤM HƯƠNG KHÔ",
+    "energy": "274",
+    "protein": "36.0",
+    "fat": "4.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "23.5"
+  },
+  {
+    "name": "NẤM HƯƠNG TƯƠI",
+    "energy": "39",
+    "protein": "5.5",
+    "fat": "0.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.1"
+  },
+  {
+    "name": "NẤM MỠ (NẤM TÂY)",
+    "energy": "32",
+    "protein": "4.0",
+    "fat": "0.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.4"
+  },
+  {
+    "name": "NẤM RƠM",
+    "energy": "57",
+    "protein": "3.6",
+    "fat": "3.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "3.4"
+  },
+  {
+    "name": "NẤM THƯỜNG TƯƠI",
+    "energy": "34",
+    "protein": "4.6",
+    "fat": "0.8",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed1"
+    },
+    "carbohydrate": "2.2"
+  }
+]

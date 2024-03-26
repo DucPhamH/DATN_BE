@@ -1,0 +1,112 @@
+[
+  {
+    "name": "TRỨNG GÀ",
+    "energy": "166",
+    "protein": "14.8",
+    "fat": "11.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "0.5"
+  },
+  {
+    "name": "LÒNG ĐỎ TRỨNG GÀ",
+    "energy": "327",
+    "protein": "13.6",
+    "fat": "29.8",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "1.0"
+  },
+  {
+    "name": "LÒNG TRẮNG TRỨNG GÀ",
+    "energy": "46",
+    "protein": "10.3",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "1.0"
+  },
+  {
+    "name": "TRỨNG VỊT",
+    "energy": "184",
+    "protein": "13.0",
+    "fat": "14.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "1.0"
+  },
+  {
+    "name": "LÒNG ĐỎ TRỨNG VỊT",
+    "energy": "364",
+    "protein": "13.6",
+    "fat": "32.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "4.8"
+  },
+  {
+    "name": "LÒNG TRẮNG TRỨNG VỊT",
+    "energy": "47",
+    "protein": "10.7",
+    "fat": "0.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "0.8"
+  },
+  {
+    "name": "TRỨNG CHIM CÚT",
+    "energy": "154",
+    "protein": "13.1",
+    "fat": "11.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "0.4"
+  },
+  {
+    "name": "TRỨNG CÁ",
+    "energy": "171",
+    "protein": "20.5",
+    "fat": "9.9",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "0.0"
+  },
+  {
+    "name": "TRỨNG CÁ MUỐI",
+    "energy": "274",
+    "protein": "24.6",
+    "fat": "17.9",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "3.5"
+  },
+  {
+    "name": "TRỨNG VỊT LỘN",
+    "energy": "182",
+    "protein": "13.6",
+    "fat": "12.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "4.0"
+  },
+  {
+    "name": "BỘT TRỨNG",
+    "energy": "563",
+    "protein": "44.0",
+    "fat": "42.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed6"
+    },
+    "carbohydrate": "1.8"
+  }
+]

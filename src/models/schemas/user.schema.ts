@@ -8,8 +8,8 @@ export interface User {
   password: string
   avatar?: string
   cover_avatar?: string
-  role?: string
-  status?: string
+  role?: UserRoles
+  status?: UserStatus
 }
 
 const UserSchema = new mongoose.Schema<User>(
@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema<User>(
     },
     role: {
       type: Number,
-      default: UserRoles.level_1
+      default: UserRoles.user
     },
     status: {
       type: Number,

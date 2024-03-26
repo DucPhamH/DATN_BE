@@ -1,0 +1,332 @@
+[
+  {
+    "name": "CÙI DỪA GIÀ",
+    "energy": "368",
+    "protein": "48",
+    "fat": "36.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "6.2"
+  },
+  {
+    "name": "CÙI DỪA NON",
+    "energy": "40",
+    "protein": "3.5",
+    "fat": "1.7",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "2.6"
+  },
+  {
+    "name": "ĐẬU CÔ VE (HẠT)",
+    "energy": "321",
+    "protein": "21.8",
+    "fat": "1.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "54.9"
+  },
+  {
+    "name": "ĐẬU ĐEN (HẠT)",
+    "energy": "325",
+    "protein": "24.2",
+    "fat": "1.7",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "53.3"
+  },
+  {
+    "name": "ĐẬU ĐŨA (HẠT)",
+    "energy": "320",
+    "protein": "23.7",
+    "fat": "2.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "51.9"
+  },
+  {
+    "name": "ĐẬU HÀ LAN (HẠT)",
+    "energy": "318",
+    "protein": "22.2",
+    "fat": "1.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "54.1"
+  },
+  {
+    "name": "ĐẬU TƯƠNG (ĐẬU NÀNH)",
+    "energy": "400",
+    "protein": "34.0",
+    "fat": "18.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "24.6"
+  },
+  {
+    "name": "ĐẬU TRẮNG HẠT (ĐẬU TÂY)",
+    "energy": "327",
+    "protein": "23.2",
+    "fat": "2.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "53.8"
+  },
+  {
+    "name": "ĐẬU TRỨNG CUỐC",
+    "energy": "321",
+    "protein": "25.8",
+    "fat": "2.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "50.0"
+  },
+  {
+    "name": "ĐẬU XANH (ĐẬU TẮT)",
+    "energy": "328",
+    "protein": "23.4",
+    "fat": "2.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "53.1"
+  },
+  {
+    "name": "HẠT DẺ TO",
+    "energy": "638",
+    "protein": "18.0",
+    "fat": "59.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "8.7"
+  },
+  {
+    "name": "HẠT DẺ TƯƠI",
+    "energy": "223",
+    "protein": "4.2",
+    "fat": "1.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "49.1"
+  },
+  {
+    "name": "HẠT DẺ KHÔ",
+    "energy": "363",
+    "protein": "6.8",
+    "fat": "1.8",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "79.8"
+  },
+  {
+    "name": "HẠT ĐEN",
+    "energy": "472",
+    "protein": "17.3",
+    "fat": "29.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "35.5"
+  },
+  {
+    "name": "HẠT ĐIỀU",
+    "energy": "605",
+    "protein": "18.4",
+    "fat": "46.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "28.7"
+  },
+  {
+    "name": "HẠT MÍT",
+    "energy": "166",
+    "protein": "0.7",
+    "fat": "1.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "38.3"
+  },
+  {
+    "name": "LẠC HẠT",
+    "energy": "573",
+    "protein": "27.5",
+    "fat": "44.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "15.5"
+  },
+  {
+    "name": "QUÁ CỌ TƯƠI",
+    "energy": "178",
+    "protein": "2.3",
+    "fat": "13.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "12.1"
+  },
+  {
+    "name": "QUÁ ĐẠI HÁI TƯƠI",
+    "energy": "427",
+    "protein": "20.0",
+    "fat": "38.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "1.2"
+  },
+  {
+    "name": "VỮNG (ĐEN, TRẮNG)",
+    "energy": "568",
+    "protein": "20.1",
+    "fat": "46.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "17.6"
+  },
+  {
+    "name": "BỘT ĐẬU TƯƠNG ĐÃ LOẠI BÉO (ĐẬU NÀNH)",
+    "energy": "321",
+    "protein": "49.0",
+    "fat": "1.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "29.0"
+  },
+  {
+    "name": "BỘT ĐẬU TƯƠNG RANG CHÍN",
+    "energy": "418",
+    "protein": "41.0",
+    "fat": "18.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "22.9"
+  },
+  {
+    "name": "BỘT ĐẬU XANH",
+    "energy": "347",
+    "protein": "24.6",
+    "fat": "2.5",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "56.5"
+  },
+  {
+    "name": "BỘT LẠC",
+    "energy": "575",
+    "protein": "27.5",
+    "fat": "45.0",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "15.0"
+  },
+  {
+    "name": "ĐẬU PHỤ",
+    "energy": "95",
+    "protein": "10.9",
+    "fat": "5.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "0.7"
+  },
+  {
+    "name": "ĐẬU PHỤ CHÚC",
+    "energy": "414",
+    "protein": "50.2",
+    "fat": "20.8",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "6.5"
+  },
+  {
+    "name": "ĐẬU PHỤ NƯỚNG",
+    "energy": "114",
+    "protein": "13.4",
+    "fat": "6.4",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "0.8"
+  },
+  {
+    "name": "HẠT BÍ ĐỎ RANG",
+    "energy": "519",
+    "protein": "35.1",
+    "fat": "31.8",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "23.0"
+  },
+  {
+    "name": "HẠT DƯA ĐỎ RANG (DƯA HẤU)",
+    "energy": "551",
+    "protein": "31.8",
+    "fat": "39.1",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "18.0"
+  },
+  {
+    "name": "HẠT ĐIỀU KHÔ, CHIÊN DẦU",
+    "energy": "583",
+    "protein": "18.3",
+    "fat": "49.3",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "16.4"
+  },
+  {
+    "name": "SỮA BỘT ĐẬU NÀNH",
+    "energy": "405",
+    "protein": "31.1",
+    "fat": "9.7",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "48.2"
+  },
+  {
+    "name": "SỮA ĐẬU NÀNH (100G ĐẬU/LÍT)",
+    "energy": "28",
+    "protein": "3.1",
+    "fat": "1.6",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "0.4"
+  },
+  {
+    "name": "TÀO PHỚ",
+    "energy": "37",
+    "protein": "2.3",
+    "fat": "0.2",
+    "ingerdient_category_ID": {
+      "$oid": "66001fbf3a2cbc145d2ffed0"
+    },
+    "carbohydrate": "6.4"
+  }
+]

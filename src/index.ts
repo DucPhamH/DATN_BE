@@ -10,6 +10,10 @@ import usersRouter from './routes/user.routes'
 import blogsRouter from './routes/blog.routes'
 import authUserRouter from './routes/authUser.routes'
 import { defaultErrorHandler } from './middlewares/error.middleware'
+import upload from './utils/multer'
+import sharp from 'sharp'
+import { deleteFileFromS3, uploadFileToS3 } from './utils/s3'
+import postsRouter from './routes/post.routes'
 const app: Express = express()
 const port = envConfig.port
 
@@ -36,9 +40,29 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')
 })
 
+// app.post('/api/upload', upload.array('image', 5), async (req, res) => {
+//   const file = req.files
+//   console.log(file)
+//   const { content, privacy } = req.body
+//   console.log(content, privacy)
+//   // console.log(content)
+//   // const newBuffer = await sharp(file?.buffer as Buffer)
+//   //   .jpeg()
+//   //   .toBuffer()
+//   // const uploadRes = await uploadFileToS3({
+//   //   filename: file?.originalname as string,
+//   //   contentType: file?.mimetype as string,
+//   //   body: newBuffer
+//   // })
+//   // console.log(uploadRes)
+//   // await deleteFileFromS3('download (1).jpg')
+//   res.send('File uploaded')
+// })
+
 app.use('/api/auth/users', authUserRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/blogs', blogsRouter)
+app.use('/api/posts', postsRouter)
 app.use(defaultErrorHandler)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
