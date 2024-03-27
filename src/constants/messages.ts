@@ -33,5 +33,6 @@ export const POST_MESSAGE = {
   UPDATE_COMMENT_POST_SUCCESS: 'Cập nhật bình luận bài viết thành công',
   DELETE_COMMENT_POST_FAIL: 'Không thể xóa bình luận bài viết',
   DELETE_POST_FAIL: 'Không thể xóa bài viết',
-  UPDATE_POST_FAIL: 'Không thể cập nhật bài viết'
+  UPDATE_POST_FAIL: 'Không thể cập nhật bài viết',
+  GET_POST_SUCCESS: 'Lấy bài viết thành công'
 } as const

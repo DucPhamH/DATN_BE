@@ -160,8 +160,8 @@ class AuthUserService {
       await RefreshTokenModel.create({
         token: refresh_token,
         user_id: user._id,
-        iat: refresh_token_iat,
-        exp: refresh_token_exp
+        iat: new Date(refresh_token_iat * 1000),
+        exp: new Date(refresh_token_exp * 1000)
       })
       return {
         access_token: `Bearer ${access_token}`,
@@ -203,8 +203,8 @@ class AuthUserService {
       await RefreshTokenModel.create({
         token: refresh_token,
         user_id: newUser._id,
-        iat: refresh_token_iat,
-        exp: refresh_token_exp
+        iat: new Date(refresh_token_iat * 1000),
+        exp: new Date(refresh_token_exp * 1000)
       })
       return {
         access_token: `Bearer ${access_token}`,
@@ -250,8 +250,8 @@ class AuthUserService {
       await RefreshTokenModel.create({
         token: refresh_token,
         user_id: user._id,
-        iat: refresh_token_iat,
-        exp: refresh_token_exp
+        iat: new Date(refresh_token_iat * 1000),
+        exp: new Date(refresh_token_exp * 1000)
       })
       return {
         access_token: `Bearer ${access_token}`,
@@ -299,7 +299,12 @@ class AuthUserService {
     console.log('user', user)
     await RefreshTokenModel.deleteOne({ token: user.refresh_token })
     const { iat, exp } = await this.decodeRefreshToken(new_refresh_token)
-    await RefreshTokenModel.create({ token: new_refresh_token, user_id: user.user_id, iat, exp })
+    await RefreshTokenModel.create({
+      token: new_refresh_token,
+      user_id: user.user_id,
+      iat: new Date(iat * 1000),
+      exp: new Date(exp * 1000)
+    })
     return {
       access_token: `Bearer ${new_access_token}`,
       refresh_token: new_refresh_token

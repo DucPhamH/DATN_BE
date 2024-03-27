@@ -23,3 +23,47 @@ export const createPostController = async (req: Request, res: Response) => {
     result
   })
 }
+
+export const likePostController = async (req: Request, res: Response) => {
+  const { post_id } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await postService.likePostService({ post_id, user_id: user.user_id })
+
+  return res.json({
+    message: POST_MESSAGE.LIKE_POST_SUCCESS,
+    result
+  })
+}
+
+export const unLikePostController = async (req: Request, res: Response) => {
+  const { post_id } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await postService.unLikePostService({ post_id, user_id: user.user_id })
+
+  return res.json({
+    message: POST_MESSAGE.UNLIKE_POST_SUCCESS,
+    result
+  })
+}
+
+export const sharePostController = async (req: Request, res: Response) => {
+  const { post_id, privacy, content } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await postService.sharePostService({ user_id: user.user_id, post_id, privacy, content })
+
+  return res.json({
+    message: POST_MESSAGE.SHARE_POST_SUCCESS,
+    result
+  })
+}
+
+export const getPostController = async (req: Request, res: Response) => {
+  const { post_id } = req.params
+  const user = req.decoded_authorization as TokenPayload
+  const result = await postService.getPostService({ post_id, user_id: user.user_id })
+
+  return res.json({
+    message: POST_MESSAGE.GET_POST_SUCCESS,
+    result
+  })
+}
