@@ -36,27 +36,29 @@ class PostService {
     //su dung sharp de resize mang hinh anh
     if (file?.length > 0) {
       // giu nguyen cac thuoc tinh cua mang chi thay doi buffer
-      const newFile = await Promise.all(
-        file.map(async (f: any) => {
-          f = {
-            ...f,
-            originalname: f?.originalname.split('.')[0] + new Date().getTime() + '.' + f?.originalname.split('.')[1],
-            buffer: await sharp(f?.buffer as Buffer)
-              .jpeg()
-              .toBuffer()
-          }
+      // const newFile = await Promise.all(
+      //   file.map(async (f: any) => {
+      //     f = {
+      //       ...f,
+      //       originalname: f?.originalname.split('.')[0] + new Date().getTime() + '.' + f?.originalname.split('.')[1],
+      //       buffer: await sharp(f?.buffer as Buffer)
+      //         .jpeg()
+      //         .toBuffer()
+      //     }
 
-          const uploadRes = await uploadFileToS3({
-            filename: `post/${f?.originalname}` as string,
-            contentType: f?.mimetype as string,
-            body: f?.buffer as Buffer
-          })
-          return uploadRes.Location
-        })
-      )
-      const newImage = newFile.map((f) => {
+      //     const uploadRes = await uploadFileToS3({
+      //       filename: `post/${f?.originalname}` as string,
+      //       contentType: f?.mimetype as string,
+      //       body: f?.buffer as Buffer
+      //     })
+      //     return uploadRes.Location
+      //   })
+      // )
+      // const newImage = newFile.map((f) => {
+      // tạm thời để 1 ảnh mặc định
+      const newImage = file.map((f: any) => {
         return {
-          url: f,
+          url: 'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
           post_id: newPost._id
         }
       })
@@ -71,7 +73,6 @@ class PostService {
     }
   }
   async getPostService({ post_id, user_id }: { post_id: string; user_id: string }) {
-    console.log(post_id, user_id)
     const post = await PostModel.aggregate([
       {
         // check neu la post cua user thi cho xem ca post private va public cua user do, con khong thi chi xem public
@@ -114,6 +115,21 @@ class PostService {
           localField: '_id',
           foreignField: 'post_id',
           as: 'likes'
+        }
+      },
+      //bo nhung thu du thua trong bang like, giu lai post_id va user_id
+      {
+        $addFields: {
+          likes: {
+            $map: {
+              input: '$likes',
+              as: 'like',
+              in: {
+                user_id: '$$like.user_id',
+                post_id: '$$like.post_id'
+              }
+            }
+          }
         }
       },
       // check neu user da like post thi tra ve true, con khong thi tra ve false
@@ -214,6 +230,172 @@ class PostService {
     }
     return post
   }
+  async getNewFeedsService({ user_id, page, limit }: { user_id: string; page: number; limit: number }) {
+    if (!limit) {
+      limit = 5
+    }
+    if (!page) {
+      page = 1
+    }
+
+    const newFeeds = await PostModel.aggregate([
+      {
+        $match: {
+          status: PostStatus.publish
+        }
+      },
+      {
+        $lookup: {
+          from: 'image_posts',
+          localField: '_id',
+          foreignField: 'post_id',
+          as: 'images'
+        }
+      },
+      {
+        $addFields: {
+          images: {
+            $map: {
+              input: '$images',
+              as: 'image',
+              in: '$$image.url'
+            }
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: 'like_posts',
+          localField: '_id',
+          foreignField: 'post_id',
+          as: 'likes'
+        }
+      },
+
+      //bo nhung thu du thua trong bang like, giu lai post_id va user_id
+      {
+        $addFields: {
+          likes: {
+            $map: {
+              input: '$likes',
+              as: 'like',
+              in: {
+                user_id: '$$like.user_id',
+                post_id: '$$like.post_id'
+              }
+            }
+          }
+        }
+      },
+      // check neu user da like post thi tra ve true, con khong thi tra ve false
+      {
+        $addFields: {
+          is_like: {
+            $in: [new ObjectId(user_id), '$likes.user_id']
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $lookup: {
+          from: 'posts',
+          localField: 'parent_id',
+          foreignField: '_id',
+          as: 'parent_post'
+        }
+      },
+      {
+        $unwind: { path: '$parent_post', preserveNullAndEmptyArrays: true }
+      },
+      //lay image array cua post cha
+      {
+        $lookup: {
+          from: 'image_posts',
+          localField: 'parent_post._id',
+          foreignField: 'post_id',
+          as: 'parent_images'
+        }
+      },
+      {
+        $addFields: {
+          parent_images: {
+            $map: {
+              input: '$parent_images',
+              as: 'image',
+              in: '$$image.url'
+            }
+          }
+        }
+      },
+      // noi parent_post voi user de lay thong tin user cua post cha
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'parent_post.user_id',
+          foreignField: '_id',
+          as: 'parent_user'
+        }
+      },
+      {
+        $unwind: { path: '$parent_user', preserveNullAndEmptyArrays: true }
+      },
+      {
+        $lookup: {
+          from: 'posts',
+          localField: '_id',
+          foreignField: 'parent_id',
+          as: 'share_posts'
+        }
+      },
+      // dem so luong like
+      {
+        $addFields: {
+          like_count: { $size: '$likes' }
+        }
+      },
+      //dem so luong share
+      {
+        $addFields: {
+          share_count: { $size: '$share_posts' }
+        }
+      },
+      // bo het password cua user va parent_user
+      {
+        $project: {
+          'user.password': 0,
+          'parent_user.password': 0
+        }
+      },
+      {
+        $sort: {
+          createdAt: -1
+        }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+    if (!newFeeds) {
+      throw new ErrorWithStatus({
+        message: POST_MESSAGE.POST_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    return { newFeeds, page, limit }
+  }
   async likePostService({ user_id, post_id }: { user_id: string; post_id: string }) {
     const newLike = await LikePostModel.findOneAndUpdate(
       {
@@ -240,12 +422,12 @@ class PostService {
   }
   async sharePostService({
     user_id,
-    post_id,
+    parent_id,
     privacy,
     content
   }: {
     user_id: string
-    post_id: string
+    parent_id: string
     privacy: string
     content: string
   }) {
@@ -253,7 +435,7 @@ class PostService {
       content: content,
       status: Number(privacy),
       user_id: user_id,
-      parent_id: post_id,
+      parent_id: parent_id,
       type: PostTypes.sharePost
     })
     if (!newPost) {

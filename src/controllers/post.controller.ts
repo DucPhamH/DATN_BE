@@ -47,9 +47,9 @@ export const unLikePostController = async (req: Request, res: Response) => {
 }
 
 export const sharePostController = async (req: Request, res: Response) => {
-  const { post_id, privacy, content } = req.body
+  const { parent_id, privacy, content } = req.body
   const user = req.decoded_authorization as TokenPayload
-  const result = await postService.sharePostService({ user_id: user.user_id, post_id, privacy, content })
+  const result = await postService.sharePostService({ user_id: user.user_id, parent_id, privacy, content })
 
   return res.json({
     message: POST_MESSAGE.SHARE_POST_SUCCESS,
@@ -64,6 +64,21 @@ export const getPostController = async (req: Request, res: Response) => {
 
   return res.json({
     message: POST_MESSAGE.GET_POST_SUCCESS,
+    result
+  })
+}
+
+export const getNewFeeds = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { limit, page } = req.query
+  const result = await postService.getNewFeedsService({
+    user_id: user.user_id,
+    limit: Number(limit),
+    page: Number(page)
+  })
+
+  return res.json({
+    message: POST_MESSAGE.GET_NEW_FEEDS_SUCCESS,
     result
   })
 }
