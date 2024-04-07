@@ -6,6 +6,7 @@ export interface Post {
   user_id: Types.ObjectId
   type?: PostTypes
   status?: PostStatus
+  is_banned?: boolean
   parent_id: Types.ObjectId | null
 }
 
@@ -19,6 +20,7 @@ const PostSchema = new mongoose.Schema<Post>(
     },
     type: { type: Number, default: PostTypes.post },
     status: { type: Number, default: PostStatus.publish },
+    is_banned: { type: Boolean, default: false },
     parent_id: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'posts',

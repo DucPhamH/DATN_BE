@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { omit } from 'lodash'
 import { envConfig } from '~/constants/config'
-import { TokenType } from '~/constants/enums'
+import { TokenType, UserStatus } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { AUTH_USER_MESSAGE } from '~/constants/messages'
 import { UserLoginRequest, UserRegisterRequest } from '~/models/requests/authUser.request'
@@ -138,6 +138,12 @@ class AuthUserService {
       })
     }
     const user = await UserModel.findOne({ email: userInfo.email })
+    if (user && user.status === UserStatus.banned) {
+      return {
+        message: AUTH_USER_MESSAGE.ACCOUNT_BANNED,
+        user: null
+      }
+    }
     if (user) {
       const [access_token, refresh_token] = await Promise.all([
         this.signAccessToken({
@@ -274,40 +280,43 @@ class AuthUserService {
     user_id: string
     role: number
     email: string
-    status: number
     user_name: string
     refresh_token: string
     exp: number
   }) {
-    const [new_access_token, new_refresh_token] = await Promise.all([
-      this.signAccessToken({
-        user_id: user.user_id.toString(),
-        role: Number(user.role),
-        email: user.email,
-        status: Number(user.status),
-        user_name: user.user_name
-      }),
-      this.signRefreshToken({
-        user_id: user.user_id.toString(),
-        role: Number(user.role),
-        email: user.email,
-        status: Number(user.status),
-        user_name: user.user_name,
-        exp: user.exp
+    const findUser = await UserModel.findOne({ _id: user.user_id })
+    if (findUser) {
+      const [new_access_token, new_refresh_token] = await Promise.all([
+        this.signAccessToken({
+          user_id: user.user_id.toString(),
+          role: Number(user.role),
+          email: user.email,
+          status: Number(findUser.status),
+          user_name: user.user_name
+        }),
+        this.signRefreshToken({
+          user_id: user.user_id.toString(),
+          role: Number(user.role),
+          email: user.email,
+          status: Number(findUser.status),
+          user_name: user.user_name,
+          exp: user.exp
+        })
+      ])
+
+      console.log('user', user)
+      await RefreshTokenModel.deleteOne({ token: user.refresh_token })
+      const { iat, exp } = await this.decodeRefreshToken(new_refresh_token)
+      await RefreshTokenModel.create({
+        token: new_refresh_token,
+        user_id: user.user_id,
+        iat: new Date(iat * 1000),
+        exp: new Date(exp * 1000)
       })
-    ])
-    console.log('user', user)
-    await RefreshTokenModel.deleteOne({ token: user.refresh_token })
-    const { iat, exp } = await this.decodeRefreshToken(new_refresh_token)
-    await RefreshTokenModel.create({
-      token: new_refresh_token,
-      user_id: user.user_id,
-      iat: new Date(iat * 1000),
-      exp: new Date(exp * 1000)
-    })
-    return {
-      access_token: `Bearer ${new_access_token}`,
-      refresh_token: new_refresh_token
+      return {
+        access_token: `Bearer ${new_access_token}`,
+        refresh_token: new_refresh_token
+      }
     }
   }
 }

@@ -12,6 +12,7 @@ import { validate } from '~/utils/validation'
 import { Request } from 'express'
 import RefreshTokenModel from '~/models/schemas/refreshToken.schema'
 import { envConfig } from '~/constants/config'
+import { UserStatus } from '~/constants/enums'
 
 export const registerValidator = validate(
   checkSchema(
@@ -78,6 +79,9 @@ export const loginValidator = validate(
             if (user === null) {
               throw new Error(AUTH_USER_MESSAGE.EMAIL_OR_PASSWORD_INCORRECT)
             }
+            if (user.status === UserStatus.banned) {
+              throw new Error(AUTH_USER_MESSAGE.ACCOUNT_BANNED)
+            }
             const compare = await comparePassword(req.body.password, user.password)
             if (!compare) {
               throw new Error(AUTH_USER_MESSAGE.EMAIL_OR_PASSWORD_INCORRECT)
@@ -120,6 +124,12 @@ export const accessTokenValidator = validate(
                 token: access_token,
                 secretOrPublicKey: envConfig.JWT_SECRET_ACCESS_TOKEN
               })
+              if (decoded_authorization.status === UserStatus.banned) {
+                throw new ErrorWithStatus({
+                  message: AUTH_USER_MESSAGE.ACCOUNT_BANNED,
+                  status: HTTP_STATUS.UNAUTHORIZED
+                })
+              }
               ;(req as Request).decoded_authorization = decoded_authorization
             } catch (error) {
               throw new ErrorWithStatus({
@@ -156,6 +166,12 @@ export const refreshTokenValidator = validate(
               if (refresh_token === null) {
                 throw new ErrorWithStatus({
                   message: AUTH_USER_MESSAGE.USED_REFRESH_TOKEN_OR_NOT_EXIST,
+                  status: HTTP_STATUS.UNAUTHORIZED
+                })
+              }
+              if (decoded_refresh_token.status === UserStatus.banned) {
+                throw new ErrorWithStatus({
+                  message: AUTH_USER_MESSAGE.ACCOUNT_BANNED,
                   status: HTTP_STATUS.UNAUTHORIZED
                 })
               }

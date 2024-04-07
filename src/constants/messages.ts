@@ -13,7 +13,8 @@ export const AUTH_USER_MESSAGE = {
   REFRESH_TOKEN_SUCCESS: 'Lấy refresh token thành công',
   PASSWORD_INCORRECT: 'Mật khẩu không chính xác',
   EMAIL_OR_PASSWORD_INCORRECT: 'Email hoặc mật khẩu không chính xác',
-  GMAIL_NOT_VERIFIED: 'Email chưa được xác thực'
+  GMAIL_NOT_VERIFIED: 'Email chưa được xác thực',
+  ACCOUNT_BANNED: 'Tài khoản đã bị khóa'
 } as const
 
 export const POST_MESSAGE = {
@@ -35,5 +36,8 @@ export const POST_MESSAGE = {
   DELETE_POST_FAIL: 'Không thể xóa bài viết',
   UPDATE_POST_FAIL: 'Không thể cập nhật bài viết',
   GET_POST_SUCCESS: 'Lấy bài viết thành công',
-  GET_NEW_FEEDS_SUCCESS: 'Lấy new feeds thành công'
+  GET_NEW_FEEDS_SUCCESS: 'Lấy new feeds thành công',
+  CREATE_POST_COMMENT_SUCCESS: 'Tạo bình luận bài viết thành công',
+  COMMENT_MUST_NOT_BE_EMPTY: 'Bình luận không được để trống',
+  GET_POST_COMMENTS_SUCCESS: 'Lấy bình luận bài viết thành công'
 } as const

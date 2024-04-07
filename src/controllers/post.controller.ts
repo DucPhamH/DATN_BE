@@ -68,7 +68,7 @@ export const getPostController = async (req: Request, res: Response) => {
   })
 }
 
-export const getNewFeeds = async (req: Request, res: Response) => {
+export const getNewFeedsController = async (req: Request, res: Response) => {
   const user = req.decoded_authorization as TokenPayload
   const { limit, page } = req.query
   const result = await postService.getNewFeedsService({
@@ -79,6 +79,93 @@ export const getNewFeeds = async (req: Request, res: Response) => {
 
   return res.json({
     message: POST_MESSAGE.GET_NEW_FEEDS_SUCCESS,
+    result
+  })
+}
+
+export const getPostCommentsController = async (req: Request, res: Response) => {
+  const { post_id, limit, page } = req.query
+  const result = await postService.getCommentsPostService({
+    post_id: post_id as string,
+    limit: Number(limit),
+    page: Number(page)
+  })
+
+  return res.json({
+    message: POST_MESSAGE.GET_POST_COMMENTS_SUCCESS,
+    result
+  })
+}
+
+export const getPostChildCommentsController = async (req: Request, res: Response) => {
+  const { parent_comment_id, limit, page } = req.query
+  const result = await postService.getChildCommentsPostService({
+    parent_comment_id: parent_comment_id as string,
+    limit: Number(limit),
+    page: Number(page)
+  })
+
+  return res.json({
+    message: POST_MESSAGE.GET_POST_COMMENTS_SUCCESS,
+    result
+  })
+}
+
+export const createPostCommentController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { post_id, content, parent_comment_id } = req.body
+
+  const result = await postService.createCommentPostService({
+    user_id: user.user_id,
+    post_id,
+    content,
+    parent_comment_id
+  })
+  return res.json({
+    message: POST_MESSAGE.CREATE_POST_COMMENT_SUCCESS,
+    result
+  })
+}
+
+export const deletePostForEachUserController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { post_id } = req.body
+  const result = await postService.deletePostforEachUserService({ post_id, user_id: user.user_id })
+
+  return res.json({
+    message: POST_MESSAGE.DELETE_POST_SUCCESS,
+    result
+  })
+}
+
+export const getMePostsController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { limit, page } = req.query
+  const result = await postService.getMePostsService({
+    user_id: user.user_id,
+    limit: Number(limit),
+    page: Number(page)
+  })
+
+  return res.json({
+    message: POST_MESSAGE.GET_POST_SUCCESS,
+    result
+  })
+}
+
+export const getUserPostController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const user = req.decoded_authorization as TokenPayload
+  const { limit, page } = req.query
+  const result = await postService.getUserPostsService({
+    id,
+    user_id: user.user_id,
+    limit: Number(limit),
+    page: Number(page)
+  })
+
+  return res.json({
+    message: POST_MESSAGE.GET_POST_SUCCESS,
     result
   })
 }

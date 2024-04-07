@@ -38,7 +38,6 @@ export const refreshTokenController = async (req: Request, res: Response) => {
     user_id: user.user_id,
     role: user.role,
     email: user.email,
-    status: user.status,
     user_name: user.user_name,
     refresh_token: refresh_token,
     exp: user.exp
@@ -53,6 +52,9 @@ export const oauthController = async (req: Request, res: Response) => {
   const { code } = req.query
   const result = await authUserService.oauth(code as string)
   console.log('result', result)
+  if (result.user === null) {
+    return res.redirect(envConfig.CLIENT_REDIRECT_CALLBACK)
+  }
   const urlRedirect = `${envConfig.CLIENT_REDIRECT_CALLBACK}?access_token=${result.access_token}&refresh_token=${
     result.refresh_token
   }&user=${JSON.stringify(result.user)}`

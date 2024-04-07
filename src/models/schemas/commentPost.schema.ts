@@ -5,6 +5,7 @@ export interface CommentPost {
   user_id: Types.ObjectId
   post_id: Types.ObjectId
   parent_comment_id?: Types.ObjectId | null
+  is_banned?: boolean
 }
 
 const CommentPostSchema = new mongoose.Schema<CommentPost>(
@@ -24,7 +25,8 @@ const CommentPostSchema = new mongoose.Schema<CommentPost>(
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'comment_posts',
       default: null
-    }
+    },
+    is_banned: { type: Boolean, default: false }
   },
   {
     timestamps: true,

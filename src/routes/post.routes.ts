@@ -1,14 +1,20 @@
 import { Router } from 'express'
 import {
+  createPostCommentController,
   createPostController,
-  getNewFeeds,
+  deletePostForEachUserController,
+  getMePostsController,
+  getNewFeedsController,
+  getPostChildCommentsController,
+  getPostCommentsController,
   getPostController,
+  getUserPostController,
   likePostController,
   sharePostController,
   unLikePostController
 } from '~/controllers/post.controller'
 import { accessTokenValidator } from '~/middlewares/authUser.middleware'
-import { newFeedsValidator } from '~/middlewares/post.middleware'
+import { commentPostValidator, limitAndPageValidator } from '~/middlewares/post.middleware'
 import { wrapRequestHandler } from '~/utils/handler'
 import upload from '~/utils/multer'
 
@@ -19,6 +25,32 @@ postsRouter.post('/actions/like', accessTokenValidator, wrapRequestHandler(likeP
 postsRouter.post('/actions/unlike', accessTokenValidator, wrapRequestHandler(unLikePostController))
 postsRouter.post('/actions/share', accessTokenValidator, wrapRequestHandler(sharePostController))
 postsRouter.get('/:post_id', accessTokenValidator, wrapRequestHandler(getPostController))
-postsRouter.get('/', accessTokenValidator, newFeedsValidator, wrapRequestHandler(getNewFeeds))
+postsRouter.get('/', accessTokenValidator, limitAndPageValidator, wrapRequestHandler(getNewFeedsController))
+postsRouter.post(
+  '/actions/comment',
+  accessTokenValidator,
+  commentPostValidator,
+  wrapRequestHandler(createPostCommentController)
+)
+postsRouter.get(
+  '/actions/comment',
+  accessTokenValidator,
+  limitAndPageValidator,
+  wrapRequestHandler(getPostCommentsController)
+)
+postsRouter.get(
+  '/actions/child-comment',
+  accessTokenValidator,
+  limitAndPageValidator,
+  wrapRequestHandler(getPostChildCommentsController)
+)
+postsRouter.post('/actions/delete-post', accessTokenValidator, wrapRequestHandler(deletePostForEachUserController))
+postsRouter.get(
+  '/me/get-me-posts',
+  accessTokenValidator,
+  limitAndPageValidator,
+  wrapRequestHandler(getMePostsController)
+)
+postsRouter.get('/user/:id', accessTokenValidator, limitAndPageValidator, wrapRequestHandler(getUserPostController))
 
 export default postsRouter
