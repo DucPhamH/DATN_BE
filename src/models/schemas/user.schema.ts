@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { UserRoles, UserStatus } from '~/constants/enums'
+import { UserGender, UserRoles, UserStatus } from '~/constants/enums'
 
 export interface User {
   name: string
@@ -8,6 +8,9 @@ export interface User {
   password: string
   avatar?: string
   cover_avatar?: string
+  birth_day?: Date
+  address?: string
+  gender?: string
   role?: UserRoles
   status?: UserStatus
 }
@@ -25,6 +28,18 @@ const UserSchema = new mongoose.Schema<User>(
     avatar: {
       type: String,
       default: ''
+    },
+    birth_day: {
+      type: Date,
+      default: null
+    },
+    address: {
+      type: String,
+      default: ''
+    },
+    gender: {
+      type: String,
+      default: UserGender.other
     },
     role: {
       type: Number,

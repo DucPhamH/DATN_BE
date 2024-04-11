@@ -39,5 +39,35 @@ export const POST_MESSAGE = {
   GET_NEW_FEEDS_SUCCESS: 'Lấy new feeds thành công',
   CREATE_POST_COMMENT_SUCCESS: 'Tạo bình luận bài viết thành công',
   COMMENT_MUST_NOT_BE_EMPTY: 'Bình luận không được để trống',
-  GET_POST_COMMENTS_SUCCESS: 'Lấy bình luận bài viết thành công'
+  GET_POST_COMMENTS_SUCCESS: 'Lấy bình luận bài viết thành công',
+  COMMENT_NOT_FOUND: 'Không tìm thấy bình luận'
+} as const
+
+export const USER_MESSAGE = {
+  GET_USER_SUCCESS: 'Lấy thông tin người dùng thành công',
+  UPDATE_USER_SUCCESS: 'Cập nhật thông tin người dùng thành công',
+  CHANGE_PASSWORD_SUCCESS: 'Đổi mật khẩu thành công',
+  FOLLOW_USER_SUCCESS: 'Theo dõi người dùng thành công',
+  CANNOT_FOLLOW_YOURSELF: 'Không thể theo dõi chính mình',
+  GET_ME_SUCCESS: 'Lấy thông tin cá nhân thành công',
+  UNFOLLOW_USER_SUCCESS: 'Bỏ theo dõi người dùng thành công'
+} as const
+
+export const BLOG_MESSAGE = {
+  GET_BLOG_SUCCESS: 'Lấy thông tin blog thành công',
+  GET_BLOGS_SUCCESS: 'Lấy danh sách blog thành công',
+  GET_BLOG_CATEGORIES_SUCCESS: 'Lấy danh sách danh mục blog thành công',
+  GET_BLOG_CATEGORY_SUCCESS: 'Lấy thông tin danh mục blog thành công',
+  CREATE_BLOG_SUCCESS: 'Tạo blog thành công',
+  UPDATE_BLOG_SUCCESS: 'Cập nhật blog thành công',
+  DELETE_BLOG_SUCCESS: 'Xóa blog thành công',
+  DELETE_BLOG_FAIL: 'Không thể xóa blog',
+  CREATE_BLOG_CATEGORY_SUCCESS: 'Tạo danh mục blog thành công',
+  UPDATE_BLOG_CATEGORY_SUCCESS: 'Cập nhật danh mục blog thành công',
+  DELETE_BLOG_CATEGORY_SUCCESS: 'Xóa danh mục blog thành công',
+  DELETE_BLOG_CATEGORY_FAIL: 'Không thể xóa danh mục blog',
+  BLOG_NOT_FOUND: 'Không tìm thấy blog',
+  BLOG_CATEGORY_NOT_FOUND: 'Không tìm thấy danh mục blog',
+  BLOG_CATEGORY_ALREADY_EXISTS: 'Danh mục blog đã tồn tại',
+  BLOG_ALREADY_EXISTS: 'Blog đã tồn tại'
 } as const

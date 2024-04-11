@@ -22,7 +22,6 @@ const IngerdientSchema = new mongoose.Schema<Ingerdients>(
     }
   },
   {
-    timestamps: true,
     collection: 'ingerdients'
   }
 )

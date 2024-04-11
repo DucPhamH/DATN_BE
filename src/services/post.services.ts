@@ -1,3 +1,4 @@
+import moment from 'moment-timezone'
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
 import { PostStatus, PostTypes } from '~/constants/enums'
@@ -1274,6 +1275,36 @@ class PostService {
       })
     }
     return { posts, page, limit }
+  }
+  async deletecommentPostService({ comment_id, user_id }: { comment_id: string; user_id: string }) {
+    const comment = await CommentPostModel.findOne({
+      _id: comment_id,
+      parent_comment_id: null
+    })
+    if (comment) {
+      const commentId = comment._id
+      await Promise.all([
+        CommentPostModel.deleteMany({
+          parent_comment_id: commentId
+        }),
+        CommentPostModel.deleteOne({
+          _id: commentId
+        })
+      ])
+    }
+
+    return true
+  }
+  async deleteChildCommentPostService({ comment_id, user_id }: { comment_id: string; user_id: string }) {
+    const comment = await CommentPostModel.findOne({
+      _id: comment_id
+    })
+    if (comment) {
+      await CommentPostModel.deleteOne({
+        _id: comment_id
+      })
+    }
+    return true
   }
 }
 

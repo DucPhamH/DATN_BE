@@ -6,14 +6,12 @@ import helmet from 'helmet'
 import morgan from 'morgan'
 import { envConfig } from './constants/config'
 import connectDB from './services/database.services'
-import usersRouter from './routes/user.routes'
-import blogsRouter from './routes/blog.routes'
-import authUserRouter from './routes/authUser.routes'
+import usersRouter from './routes/userRoutes/user.routes'
+import blogsRouter from './routes/userRoutes/blog.routes'
+import authUserRouter from './routes/userRoutes/authUser.routes'
 import { defaultErrorHandler } from './middlewares/error.middleware'
-import upload from './utils/multer'
-import sharp from 'sharp'
-import { deleteFileFromS3, uploadFileToS3 } from './utils/s3'
-import postsRouter from './routes/post.routes'
+
+import postsRouter from './routes/userRoutes/post.routes'
 const app: Express = express()
 const port = envConfig.port
 
@@ -39,25 +37,6 @@ app.use(bodyParser.json())
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')
 })
-
-// app.post('/api/upload', upload.array('image', 5), async (req, res) => {
-//   const file = req.files
-//   console.log(file)
-//   const { content, privacy } = req.body
-//   console.log(content, privacy)
-//   // console.log(content)
-//   // const newBuffer = await sharp(file?.buffer as Buffer)
-//   //   .jpeg()
-//   //   .toBuffer()
-//   // const uploadRes = await uploadFileToS3({
-//   //   filename: file?.originalname as string,
-//   //   contentType: file?.mimetype as string,
-//   //   body: newBuffer
-//   // })
-//   // console.log(uploadRes)
-//   // await deleteFileFromS3('download (1).jpg')
-//   res.send('File uploaded')
-// })
 
 app.use('/api/auth/users', authUserRouter)
 app.use('/api/users', usersRouter)

@@ -2,6 +2,8 @@ import { Router } from 'express'
 import {
   createPostCommentController,
   createPostController,
+  deleteChildCommentPostController,
+  deleteCommentPostController,
   deletePostForEachUserController,
   getMePostsController,
   getNewFeedsController,
@@ -45,6 +47,12 @@ postsRouter.get(
   wrapRequestHandler(getPostChildCommentsController)
 )
 postsRouter.post('/actions/delete-post', accessTokenValidator, wrapRequestHandler(deletePostForEachUserController))
+postsRouter.post('/actions/delete-comment', accessTokenValidator, wrapRequestHandler(deleteCommentPostController))
+postsRouter.post(
+  '/actions/delete-child-comment',
+  accessTokenValidator,
+  wrapRequestHandler(deleteChildCommentPostController)
+)
 postsRouter.get(
   '/me/get-me-posts',
   accessTokenValidator,

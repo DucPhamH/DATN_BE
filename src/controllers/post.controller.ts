@@ -169,3 +169,25 @@ export const getUserPostController = async (req: Request, res: Response) => {
     result
   })
 }
+
+export const deleteCommentPostController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { comment_id } = req.body
+  const result = await postService.deletecommentPostService({ comment_id, user_id: user.user_id })
+
+  return res.json({
+    message: POST_MESSAGE.DELETE_COMMENT_POST_SUCCESS,
+    result
+  })
+}
+
+export const deleteChildCommentPostController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { comment_id } = req.body
+  const result = await postService.deleteChildCommentPostService({ comment_id, user_id: user.user_id })
+
+  return res.json({
+    message: POST_MESSAGE.DELETE_COMMENT_POST_SUCCESS,
+    result
+  })
+}

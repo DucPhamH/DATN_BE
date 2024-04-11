@@ -29,3 +29,13 @@ export enum PostStatus {
   publish,
   private
 }
+export enum BlogStatus {
+  pending,
+  accepted
+}
+
+export const UserGender = {
+  male: 'male',
+  female: 'female',
+  other: 'other'
+}

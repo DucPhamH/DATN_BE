@@ -8,7 +8,6 @@ const IngerdientCategorySchema = new mongoose.Schema<IngerdientCategories>(
     name: { type: String, default: '', required: true, index: true }
   },
   {
-    timestamps: true,
     collection: 'ingerdient_categories'
   }
 )
