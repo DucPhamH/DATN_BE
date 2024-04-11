@@ -14,7 +14,7 @@ import {
   likePostController,
   sharePostController,
   unLikePostController
-} from '~/controllers/post.controller'
+} from '~/controllers/userControllers/post.controller'
 import { accessTokenValidator } from '~/middlewares/authUser.middleware'
 import { commentPostValidator, limitAndPageValidator } from '~/middlewares/post.middleware'
 import { wrapRequestHandler } from '~/utils/handler'

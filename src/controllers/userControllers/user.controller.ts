@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { USER_MESSAGE } from '~/constants/messages'
 import { TokenPayload } from '~/models/requests/authUser.request'
-import usersService from '~/services/user.services'
+import usersService from '~/services/userServices/user.services'
 import { ErrorWithStatus } from '~/utils/error'
 
 export const getMeController = async (req: Request, res: Response) => {

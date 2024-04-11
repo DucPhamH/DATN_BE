@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { POST_MESSAGE } from '~/constants/messages'
 import { TokenPayload } from '~/models/requests/authUser.request'
-import postService from '~/services/post.services'
+import postService from '~/services/userServices/post.services'
 import { ErrorWithStatus } from '~/utils/error'
 
 export const createPostController = async (req: Request, res: Response) => {

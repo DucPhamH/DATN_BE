@@ -4,7 +4,7 @@ import {
   getMeController,
   getUserController,
   unfollowUserController
-} from '~/controllers/user.controller'
+} from '~/controllers/userControllers/user.controller'
 import { accessTokenValidator } from '~/middlewares/authUser.middleware'
 import { followValidator } from '~/middlewares/user.middleware'
 import { wrapRequestHandler } from '~/utils/handler'

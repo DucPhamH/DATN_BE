@@ -3,7 +3,7 @@ import { envConfig } from '~/constants/config'
 import { AUTH_USER_MESSAGE } from '~/constants/messages'
 import { TokenPayload } from '~/models/requests/authUser.request'
 
-import authUserService from '~/services/authUser.services'
+import authUserService from '~/services/userServices/authUser.services'
 
 export const registerController = async (req: Request, res: Response) => {
   const { name, email, password } = req.body

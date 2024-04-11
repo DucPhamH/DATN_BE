@@ -14,7 +14,8 @@ export const AUTH_USER_MESSAGE = {
   PASSWORD_INCORRECT: 'Mật khẩu không chính xác',
   EMAIL_OR_PASSWORD_INCORRECT: 'Email hoặc mật khẩu không chính xác',
   GMAIL_NOT_VERIFIED: 'Email chưa được xác thực',
-  ACCOUNT_BANNED: 'Tài khoản đã bị khóa'
+  ACCOUNT_BANNED: 'Tài khoản đã bị khóa',
+  UNAUTHORIZED: 'Không có quyền truy cập'
 } as const
 
 export const POST_MESSAGE = {
