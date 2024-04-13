@@ -4,6 +4,7 @@ import sharp from 'sharp'
 import { PostStatus, PostTypes } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { POST_MESSAGE } from '~/constants/messages'
+import { CreatePostBody } from '~/models/requests/post.request'
 import CommentPostModel from '~/models/schemas/commentPost.schema'
 import ImagePostModel from '~/models/schemas/imagePost.schema'
 import LikePostModel from '~/models/schemas/likePost.schema'
@@ -12,17 +13,7 @@ import { ErrorWithStatus } from '~/utils/error'
 import { uploadFileToS3 } from '~/utils/s3'
 
 class PostService {
-  async createPostService({
-    content = '',
-    privacy,
-    file = [],
-    user_id
-  }: {
-    content: string
-    privacy: string
-    file: any
-    user_id: string
-  }) {
+  async createPostService({ content = '', privacy, file = [], user_id }: CreatePostBody) {
     const newPost = await PostModel.create({
       content: content,
       status: Number(privacy),

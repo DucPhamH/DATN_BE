@@ -98,7 +98,9 @@ class BlogsService {
       }
     ])
 
-    const totalPage = Math.ceil(blogs.length / limit)
+    const findBlogs = await BlogModel.find(condition)
+    const totalPage = Math.ceil(findBlogs.length / limit)
+
     return { blogs, totalPage, limit, page }
   }
   async getBlogForChefService({ user_id, blog_id }: { user_id: string; blog_id: string }) {
@@ -143,6 +145,7 @@ class BlogsService {
     image,
     category_blog_id
   }: UpdateBlogForChefBody) {
+    console.log(user_id, blog_id, title, content, description, image, category_blog_id)
     // update có thể update 1 hay nhiều field
     const blog = await BlogModel.findOneAndUpdate(
       {
