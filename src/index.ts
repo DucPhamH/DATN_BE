@@ -8,7 +8,7 @@ import { envConfig } from './constants/config'
 import connectDB from './services/database.services'
 import usersRouter from './routes/userRoutes/user.routes'
 import blogsRouter from './routes/userRoutes/blog.routes'
-import authUserRouter from './routes/userRoutes/authUser.routes'
+import authUserRouter from './routes/authUser.routes'
 import { defaultErrorHandler } from './middlewares/error.middleware'
 
 import postsRouter from './routes/userRoutes/post.routes'

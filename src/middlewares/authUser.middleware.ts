@@ -4,7 +4,7 @@ import { capitalize } from 'lodash'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { AUTH_USER_MESSAGE } from '~/constants/messages'
 import UserModel from '~/models/schemas/user.schema'
-import authUserService from '~/services/userServices/authUser.services'
+import authUserService from '~/services/authUser.services'
 import { comparePassword } from '~/utils/crypto'
 import { ErrorWithStatus } from '~/utils/error'
 import { verifyToken } from '~/utils/jwt'
@@ -12,7 +12,7 @@ import { validate } from '~/utils/validation'
 import { Request } from 'express'
 import RefreshTokenModel from '~/models/schemas/refreshToken.schema'
 import { envConfig } from '~/constants/config'
-import { UserStatus } from '~/constants/enums'
+import { UserRoles, UserStatus } from '~/constants/enums'
 
 export const registerValidator = validate(
   checkSchema(
@@ -85,6 +85,47 @@ export const loginValidator = validate(
             const compare = await comparePassword(req.body.password, user.password)
             if (!compare) {
               throw new Error(AUTH_USER_MESSAGE.EMAIL_OR_PASSWORD_INCORRECT)
+            }
+            return true
+          }
+        }
+      },
+      password: {
+        notEmpty: true,
+        isString: true,
+        isLength: {
+          options: {
+            min: 6,
+            max: 50
+          }
+        }
+      }
+    },
+    ['body']
+  )
+)
+
+export const loginAdminValidator = validate(
+  checkSchema(
+    {
+      user_name: {
+        isString: true,
+        trim: true,
+        custom: {
+          options: async (value, { req }) => {
+            const user = await UserModel.findOne({ user_name: value })
+            if (user === null) {
+              throw new Error(AUTH_USER_MESSAGE.USER_NAME_OR_PASSWORD_INCORRECT)
+            }
+            if (user.status === UserStatus.banned) {
+              throw new Error(AUTH_USER_MESSAGE.ACCOUNT_BANNED)
+            }
+            if (user.role === UserRoles.user || user.role === UserRoles.chef) {
+              throw new Error(AUTH_USER_MESSAGE.USER_NAME_OR_PASSWORD_INCORRECT)
+            }
+            const compare = await comparePassword(req.body.password, user.password)
+            if (!compare) {
+              throw new Error(AUTH_USER_MESSAGE.USER_NAME_OR_PASSWORD_INCORRECT)
             }
             return true
           }

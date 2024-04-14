@@ -5,7 +5,10 @@ export enum IngerdientTypes {
 
 export enum UserRoles {
   user,
-  chef
+  chef,
+  admin,
+  writter,
+  inspector
 }
 
 export enum UserStatus {

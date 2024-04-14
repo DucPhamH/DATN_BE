@@ -270,6 +270,44 @@ class AuthUserService {
       }
     }
   }
+  async loginAdmin({ user_name, password }: { user_name: string; password: string }) {
+    const user = await UserModel.findOne({ user_name })
+    if (user) {
+      const [access_token, refresh_token] = await Promise.all([
+        this.signAccessToken({
+          user_id: user._id.toString(),
+          role: Number(user.role),
+          email: user.email,
+          status: Number(user.status),
+          user_name: user.user_name
+        }),
+        this.signRefreshToken({
+          user_id: user._id.toString(),
+          role: Number(user.role),
+          email: user.email,
+          status: Number(user.status),
+          user_name: user.user_name
+        })
+      ])
+      const { iat: refresh_token_iat, exp: refresh_token_exp } = await this.decodeRefreshToken(refresh_token)
+      const { iat: access_token_iat, exp: access_token_exp } = await this.decodeAccessToken(access_token)
+      await RefreshTokenModel.create({
+        token: refresh_token,
+        user_id: user._id,
+        iat: new Date(refresh_token_iat * 1000),
+        exp: new Date(refresh_token_exp * 1000)
+      })
+      return {
+        access_token: `Bearer ${access_token}`,
+        refresh_token,
+        access_token_iat,
+        access_token_exp,
+        refresh_token_iat,
+        refresh_token_exp,
+        user: omit(user.toObject(), ['password'])
+      }
+    }
+  }
   async logout(refresh_token: string) {
     const result = await RefreshTokenModel.deleteOne({ token: refresh_token })
     return {

@@ -1,13 +1,15 @@
 import { Router } from 'express'
 import {
+  loginAdminController,
   loginController,
   logoutController,
   oauthController,
   refreshTokenController,
   registerController
-} from '~/controllers/userControllers/authUser.controller'
+} from '~/controllers/authUser.controller'
 import {
   accessTokenValidator,
+  loginAdminValidator,
   loginValidator,
   refreshTokenValidator,
   registerValidator
@@ -17,6 +19,7 @@ import { wrapRequestHandler } from '~/utils/handler'
 const authUserRouter = Router()
 
 authUserRouter.post('/login', loginValidator, wrapRequestHandler(loginController))
+authUserRouter.post('/login/admin', loginAdminValidator, wrapRequestHandler(loginAdminController))
 authUserRouter.post('/register', registerValidator, wrapRequestHandler(registerController))
 authUserRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapRequestHandler(logoutController))
 authUserRouter.post('/refresh-token', refreshTokenValidator, wrapRequestHandler(refreshTokenController))
