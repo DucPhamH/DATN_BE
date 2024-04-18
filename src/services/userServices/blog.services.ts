@@ -32,7 +32,6 @@ class BlogsService {
     console.log(sort, status, search, category_blog_id)
     const condition: any = {
       user_id: new ObjectId(user_id),
-      writer_id: null,
       is_banned: false
     }
 

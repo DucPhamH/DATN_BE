@@ -342,7 +342,6 @@ class AuthUserService {
         })
       ])
 
-      console.log('user', user)
       await RefreshTokenModel.deleteOne({ token: user.refresh_token })
       const { iat, exp } = await this.decodeRefreshToken(new_refresh_token)
       await RefreshTokenModel.create({

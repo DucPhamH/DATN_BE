@@ -7,7 +7,6 @@ export interface Blog {
   description: string
   image: string
   user_id?: Types.ObjectId
-  writer_id?: Types.ObjectId
   category_blog_id?: Types.ObjectId
   is_banned?: boolean
   status?: number
@@ -23,11 +22,6 @@ const BlogSchema = new mongoose.Schema<Blog>(
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'users',
       required: true
-    },
-    writer_id: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'users',
-      default: null
     },
     category_blog_id: {
       type: mongoose.SchemaTypes.ObjectId,
