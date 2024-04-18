@@ -6,7 +6,7 @@ import {
   oauthController,
   refreshTokenController,
   registerController
-} from '~/controllers/authUser.controller'
+} from '~/controllers/userControllers/authUser.controller'
 import {
   accessTokenValidator,
   loginAdminValidator,

@@ -1,14 +1,8 @@
-import axios from 'axios'
 import { omit } from 'lodash'
 import { envConfig } from '~/constants/config'
-import { TokenType, UserStatus } from '~/constants/enums'
-import HTTP_STATUS from '~/constants/httpStatus'
+import { TokenType } from '~/constants/enums'
 import { AUTH_USER_MESSAGE } from '~/constants/messages'
-import { UserLoginRequest, UserRegisterRequest } from '~/models/requests/authUser.request'
-import RefreshTokenModel from '~/models/schemas/refreshToken.schema'
 import UserModel from '~/models/schemas/user.schema'
-import { hashPassword } from '~/utils/crypto'
-import { ErrorWithStatus } from '~/utils/error'
 import { signToken, verifyToken } from '~/utils/jwt'
 
 class AuthAdminService {
@@ -61,7 +55,7 @@ class AuthAdminService {
       }
     }
   }
-  async logout() {
+  async logoutAdmin() {
     return {
       message: AUTH_USER_MESSAGE.LOGOUT_SUCCESS
     }

@@ -10,3 +10,10 @@ export const loginAdminController = async (req: Request, res: Response) => {
     result
   })
 }
+
+export const logoutAdminController = async (req: Request, res: Response) => {
+  const { decoded_authorization } = req
+  console.log('decoded_authorization', decoded_authorization)
+  const result = await authAdminService.logoutAdmin()
+  return res.json(result)
+}
