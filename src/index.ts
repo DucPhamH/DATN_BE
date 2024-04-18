@@ -12,6 +12,7 @@ import authUserRouter from './routes/authUser.routes'
 import { defaultErrorHandler } from './middlewares/error.middleware'
 
 import postsRouter from './routes/userRoutes/post.routes'
+import authAdminRouter from './routes/adminRoutes/authAdmin.routes'
 const app: Express = express()
 const port = envConfig.port
 
@@ -47,6 +48,9 @@ app.use('/api/auth/users', authUserRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/posts', postsRouter)
+
+app.use('/api/admin/auth/admins', authAdminRouter)
+
 app.use(defaultErrorHandler)
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
