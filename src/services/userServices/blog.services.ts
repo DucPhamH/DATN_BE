@@ -196,7 +196,7 @@ class BlogsService {
     }
 
     if (!limit) {
-      limit = 10
+      limit = 8
     }
 
     console.log(condition)
