@@ -11,6 +11,7 @@ export interface Blog {
   is_banned?: boolean
   status?: number
   user_view?: number
+  search_fields?: string
 }
 const BlogSchema = new mongoose.Schema<Blog>(
   {
@@ -28,6 +29,7 @@ const BlogSchema = new mongoose.Schema<Blog>(
       ref: 'category_blogs',
       required: true
     },
+    search_fields: { type: String, default: '' },
     is_banned: { type: Boolean, default: false },
     status: { type: Number, default: BlogStatus.pending },
     user_view: { type: Number, default: 0 }
@@ -37,6 +39,15 @@ const BlogSchema = new mongoose.Schema<Blog>(
     collection: 'blogs'
   }
 )
+
+BlogSchema.pre('save', async function (next) {
+  try {
+    this.search_fields = `${this.title} ${this.description}`.toLowerCase()
+    next()
+  } catch (error: any) {
+    next(error)
+  }
+})
 
 const BlogModel = mongoose.model('blogs', BlogSchema)
 

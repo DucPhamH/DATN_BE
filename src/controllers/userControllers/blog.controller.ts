@@ -49,10 +49,37 @@ export const getListBlogForChefController = async (req: Request, res: Response) 
   })
 }
 
+export const getListBlogForUserController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { page, limit, sort, search, category_blog_id } = req.query
+  const result = await blogsService.getListBlogForUserService({
+    user_id: user.user_id,
+    page: Number(page),
+    limit: Number(limit),
+    sort: sort as string,
+    search: search as string,
+    category_blog_id: category_blog_id as string
+  })
+  return res.json({
+    message: BLOG_MESSAGE.GET_BLOGS_SUCCESS,
+    result
+  })
+}
+
 export const getBlogForChefController = async (req: Request, res: Response) => {
   const user = req.decoded_authorization as TokenPayload
   const { id } = req.params
   const result = await blogsService.getBlogForChefService({ user_id: user.user_id, blog_id: id })
+  return res.json({
+    message: BLOG_MESSAGE.GET_BLOG_SUCCESS,
+    result
+  })
+}
+
+export const getBlogForUserController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { id } = req.params
+  const result = await blogsService.getBlogForUserService({ blog_id: id })
   return res.json({
     message: BLOG_MESSAGE.GET_BLOG_SUCCESS,
     result
@@ -74,6 +101,53 @@ export const updateBlogForChefController = async (req: Request, res: Response) =
   })
   return res.json({
     message: BLOG_MESSAGE.UPDATE_BLOG_SUCCESS,
+    result
+  })
+}
+
+export const createCommentBlogController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { blog_id, content } = req.body
+  const result = await blogsService.createCommentBlogService({
+    user_id: user.user_id,
+    blog_id,
+    content
+  })
+  return res.json({
+    message: BLOG_MESSAGE.CREATE_COMMENT_BLOG_SUCCESS,
+    result
+  })
+}
+
+export const deleteCommentBlogController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { comment_id } = req.body
+  const result = await blogsService.deleteCommentBlogService({ user_id: user.user_id, comment_id: comment_id })
+  return res.json({
+    message: BLOG_MESSAGE.DELETE_COMMENT_BLOG_SUCCESS,
+    result
+  })
+}
+
+export const getCommentsBlogController = async (req: Request, res: Response) => {
+  const { blog_id, page, limit } = req.query
+  const result = await blogsService.getCommentsBlogService({
+    blog_id: blog_id as string,
+    page: Number(page),
+    limit: Number(limit)
+  })
+  return res.json({
+    message: BLOG_MESSAGE.GET_COMMENTS_BLOG_SUCCESS,
+    result
+  })
+}
+
+export const deleteBlogForChefController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { id } = req.params
+  const result = await blogsService.deleteBlogForChefService({ user_id: user.user_id, blog_id: id })
+  return res.json({
+    message: BLOG_MESSAGE.DELETE_BLOG_SUCCESS,
     result
   })
 }

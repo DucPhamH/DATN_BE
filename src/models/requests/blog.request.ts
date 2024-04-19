@@ -17,6 +17,15 @@ export interface GetListBlogForChefQuery {
   category_blog_id?: string
 }
 
+export interface GetListBlogForUserQuery {
+  user_id: string
+  page?: number
+  limit?: number
+  sort?: string
+  search?: string
+  category_blog_id?: string
+}
+
 export interface UpdateBlogForChefBody {
   user_id: string
   blog_id: string

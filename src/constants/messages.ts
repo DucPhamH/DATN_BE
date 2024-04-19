@@ -71,5 +71,9 @@ export const BLOG_MESSAGE = {
   BLOG_NOT_FOUND: 'Không tìm thấy blog',
   BLOG_CATEGORY_NOT_FOUND: 'Không tìm thấy danh mục blog',
   BLOG_CATEGORY_ALREADY_EXISTS: 'Danh mục blog đã tồn tại',
-  BLOG_ALREADY_EXISTS: 'Blog đã tồn tại'
+  BLOG_ALREADY_EXISTS: 'Blog đã tồn tại',
+  COMMENT_MUST_NOT_BE_EMPTY: 'Bình luận không được để trống',
+  CREATE_COMMENT_BLOG_SUCCESS: 'Tạo bình luận blog thành công',
+  DELETE_COMMENT_BLOG_SUCCESS: 'Xóa bình luận blog thành công',
+  GET_COMMENTS_BLOG_SUCCESS: 'Lấy bình luận blog thành công'
 } as const

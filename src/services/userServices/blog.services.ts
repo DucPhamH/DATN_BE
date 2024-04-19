@@ -1,8 +1,17 @@
 import { ObjectId } from 'mongodb'
 import { BlogStatus } from '~/constants/enums'
-import { CreateBlogBody, GetListBlogForChefQuery, UpdateBlogForChefBody } from '~/models/requests/blog.request'
+import HTTP_STATUS from '~/constants/httpStatus'
+import { BLOG_MESSAGE } from '~/constants/messages'
+import {
+  CreateBlogBody,
+  GetListBlogForChefQuery,
+  GetListBlogForUserQuery,
+  UpdateBlogForChefBody
+} from '~/models/requests/blog.request'
 import BlogModel, { Blog } from '~/models/schemas/blog.schema'
 import BlogCategoryModel from '~/models/schemas/blogCategory.schema'
+import CommentBlogModel from '~/models/schemas/commentBlog.schema'
+import { ErrorWithStatus } from '~/utils/error'
 
 class BlogsService {
   async getAllCategoryBlogsService() {
@@ -40,7 +49,7 @@ class BlogsService {
     }
 
     if (search !== undefined) {
-      condition.title = { $regex: search, $options: 'i' }
+      condition.search_fields = { $regex: search, $options: 'i' }
     }
 
     if (category_blog_id !== undefined) {
@@ -130,6 +139,11 @@ class BlogsService {
         $unwind: '$user'
       },
       {
+        $project: {
+          'user.password': 0
+        }
+      },
+      {
         $unwind: '$category_blog'
       }
     ])
@@ -162,6 +176,272 @@ class BlogsService {
       { new: true }
     )
     return blog
+  }
+  async getListBlogForUserService({ page, limit, sort, search, category_blog_id, user_id }: GetListBlogForUserQuery) {
+    const condition: any = {
+      is_banned: false,
+      status: BlogStatus.accepted
+    }
+
+    if (search !== undefined) {
+      condition.search_fields = { $regex: search, $options: 'i' }
+    }
+
+    if (category_blog_id !== undefined) {
+      condition.category_blog_id = new ObjectId(category_blog_id)
+    }
+
+    if (!page) {
+      page = 1
+    }
+
+    if (!limit) {
+      limit = 10
+    }
+
+    console.log(condition)
+
+    const blogs = await BlogModel.aggregate([
+      {
+        $match: condition
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $lookup: {
+          from: 'category_blogs',
+          localField: 'category_blog_id',
+          foreignField: '_id',
+          as: 'category_blog'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      // bỏ password của user
+      {
+        $project: {
+          'user.password': 0
+        }
+      },
+      {
+        $unwind: '$category_blog'
+      },
+      // nối comment
+      {
+        $lookup: {
+          from: 'comment_blogs',
+          localField: '_id',
+          foreignField: 'blog_id',
+          as: 'comments'
+        }
+      },
+      // bỏ qua những comments bị banned
+      {
+        $addFields: {
+          comments: {
+            $filter: {
+              input: '$comments',
+              as: 'comment',
+              cond: { $eq: ['$$comment.is_banned', false] }
+            }
+          }
+        }
+      },
+      // đếm số lượng comment
+      {
+        $addFields: {
+          comment_count: { $size: '$comments' }
+        }
+      },
+      // nếu không có sort thì mặc định là mới nhất
+      {
+        $sort: {
+          createdAt: sort === 'asc' ? 1 : -1
+        }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+
+    const findBlogs = await BlogModel.find(condition)
+    const totalPage = Math.ceil(findBlogs.length / limit)
+
+    return { blogs, totalPage, limit, page }
+  }
+  async getBlogForUserService({ blog_id }: { blog_id: string }) {
+    const blog = await BlogModel.aggregate([
+      {
+        $match: {
+          _id: new ObjectId(blog_id),
+          is_banned: false,
+          status: BlogStatus.accepted
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $lookup: {
+          from: 'category_blogs',
+          localField: 'category_blog_id',
+          foreignField: '_id',
+          as: 'category_blog'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $project: {
+          'user.password': 0
+        }
+      },
+      {
+        $unwind: '$category_blog'
+      },
+      {
+        $lookup: {
+          from: 'comment_blogs',
+          localField: '_id',
+          foreignField: 'blog_id',
+          as: 'comments'
+        }
+      },
+      {
+        $addFields: {
+          comments: {
+            $filter: {
+              input: '$comments',
+              as: 'comment',
+              cond: { $eq: ['$$comment.is_banned', false] }
+            }
+          }
+        }
+      },
+      {
+        $addFields: {
+          comment_count: { $size: '$comments' }
+        }
+      }
+    ])
+    // tăng user view lên 1
+    if (blog[0]) {
+      await BlogModel.updateOne(
+        {
+          _id: new ObjectId(blog_id)
+        },
+        {
+          user_view: blog[0].user_view + 1
+        }
+      )
+    }
+
+    return blog
+  }
+  async createCommentBlogService({ content, user_id, blog_id }: { content: string; user_id: string; blog_id: string }) {
+    const comment = await CommentBlogModel.create({
+      content,
+      user_id: new ObjectId(user_id),
+      blog_id: new ObjectId(blog_id)
+    })
+    return comment
+  }
+  async deleteCommentBlogService({ user_id, comment_id }: { user_id: string; comment_id: string }) {
+    await CommentBlogModel.findOneAndDelete({
+      _id: new ObjectId(comment_id),
+      user_id: new ObjectId(user_id)
+    })
+    return true
+  }
+  async getCommentsBlogService({ page, limit, blog_id }: { page: number; limit: number; blog_id: string }) {
+    if (!limit) {
+      limit = 3
+    }
+    if (!page) {
+      page = 1
+    }
+    const comments = await CommentBlogModel.aggregate([
+      {
+        $match: {
+          blog_id: new ObjectId(blog_id),
+          is_banned: false
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $project: {
+          'user.password': 0
+        }
+      },
+      {
+        $sort: {
+          createdAt: -1
+        }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+    return {
+      comments,
+      limit,
+      page
+    }
+  }
+  async deleteBlogForChefService({ user_id, blog_id }: { user_id: string; blog_id: string }) {
+    // tìm blog
+    const blog = await BlogModel.findOne({
+      _id: new ObjectId(blog_id),
+      user_id: new ObjectId(user_id)
+    })
+    console.log(blog)
+    if (!blog) {
+      throw new ErrorWithStatus({
+        message: BLOG_MESSAGE.BLOG_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    if (blog) {
+      // xóa comment
+      await CommentBlogModel.deleteMany({
+        blog_id: new ObjectId(blog_id)
+      })
+      // xóa blog
+      await BlogModel.deleteOne({
+        _id: new ObjectId(blog_id),
+        user_id: new ObjectId(user_id)
+      })
+    }
+    return true
   }
 }
 
