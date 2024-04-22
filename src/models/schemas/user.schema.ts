@@ -8,10 +8,17 @@ export interface User {
   password: string
   avatar?: string
   cover_avatar?: string
-  birth_day?: Date
+  birthday?: Date
   address?: string
   gender?: string
+  weight?: number
+  height?: number
+  age?: number
+  hip?: number
+  neck?: number
+  waist?: number
   role?: UserRoles
+  banned_count?: number
   status?: UserStatus
 }
 
@@ -29,7 +36,7 @@ const UserSchema = new mongoose.Schema<User>(
       type: String,
       default: ''
     },
-    birth_day: {
+    birthday: {
       type: Date,
       default: null
     },
@@ -41,9 +48,37 @@ const UserSchema = new mongoose.Schema<User>(
       type: String,
       default: UserGender.other
     },
+    weight: {
+      type: Number,
+      default: 0
+    },
+    height: {
+      type: Number,
+      default: 0
+    },
+    age: {
+      type: Number,
+      default: 0
+    },
+    hip: {
+      type: Number,
+      default: 0
+    },
+    neck: {
+      type: Number,
+      default: 0
+    },
+    waist: {
+      type: Number,
+      default: 0
+    },
     role: {
       type: Number,
       default: UserRoles.user
+    },
+    banned_count: {
+      type: Number,
+      default: 0
     },
     status: {
       type: Number,

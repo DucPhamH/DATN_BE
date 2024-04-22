@@ -1,4 +1,3 @@
-import exp from 'constants'
 import { Request, Response } from 'express'
 import { BLOG_MESSAGE } from '~/constants/messages'
 import { TokenPayload } from '~/models/requests/authUser.request'

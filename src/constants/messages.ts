@@ -77,3 +77,25 @@ export const BLOG_MESSAGE = {
   DELETE_COMMENT_BLOG_SUCCESS: 'Xóa bình luận blog thành công',
   GET_COMMENTS_BLOG_SUCCESS: 'Lấy bình luận blog thành công'
 } as const
+
+export const ACTIVITY_MESSAGE = {
+  GET_LIST_ACTIVITY_CATEGORY_SUCCESS: 'Lấy danh sách danh mục hoạt động thành công',
+  GET_LIST_ACTIVITY_SUCCESS: 'Lấy danh sách hoạt động thành công'
+} as const
+
+export const CALCULATOR_MESSAGE = {
+  CALCULATE_BMI_SUCCESS: 'Tính chỉ số BMI thành công',
+  HEIGHT_MUST_GREATER_THAN_0: 'Chiều cao phải lớn hơn 0',
+  CALCULATE_BMR_SUCCESS: 'Tính chỉ số BMR thành công',
+  AGE_MUST_GREATER_THAN_0: 'Tuổi phải lớn hơn 0',
+  GENDER_MUST_BE_MALE_OR_FEMALE: 'Giới tính phải là male hoặc female',
+  WEIGHT_MUST_GREATER_THAN_0: 'Cân nặng phải lớn hơn 0',
+  CALCULATE_TDDE_SUCCESS: 'Tính chỉ số TDDE thành công',
+  ACTIVITY_MUST_BE_IN_ACTIVITY_VALUE: 'Hoạt động phải thuộc 1 trong các giá trị của ActivityValue',
+  CALCULATE_BODY_FAT_SUCCESS: 'Tính chỉ số body fat thành công',
+  CALCULATE_LBM_SUCCESS: 'Tính chỉ số LBM thành công',
+  CALCULATE__CALORIE_BURNED_SUCCESS: 'Tính chỉ số calorie burned thành công',
+  CALCULATE__WATER_INTAKE_SUCCESS: 'Tính chỉ số water intake thành công',
+  CALCULATE_IBW_SUCCESS: 'Tính chỉ số IBW thành công',
+  TIME_MUST_GREATER_THAN_0: 'Thời gian phải lớn hơn 0'
+} as const
