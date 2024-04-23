@@ -97,5 +97,11 @@ export const CALCULATOR_MESSAGE = {
   CALCULATE__CALORIE_BURNED_SUCCESS: 'Tính chỉ số calorie burned thành công',
   CALCULATE__WATER_INTAKE_SUCCESS: 'Tính chỉ số water intake thành công',
   CALCULATE_IBW_SUCCESS: 'Tính chỉ số IBW thành công',
-  TIME_MUST_GREATER_THAN_0: 'Thời gian phải lớn hơn 0'
+  TIME_MUST_GREATER_THAN_0: 'Thời gian phải lớn hơn 0',
+  SAVE_BMI_SUCCESS: 'Lưu chỉ số BMI thành công',
+  SAVE_BMR_SUCCESS: 'Lưu chỉ số BMR thành công',
+  SAVE_TDEE_SUCCESS: 'Lưu chỉ số TDEE thành công',
+  SAVE_BODY_FAT_SUCCESS: 'Lưu chỉ số body fat thành công',
+  SAVE_LBM_SUCCESS: 'Lưu chỉ số LBM thành công',
+  SAVE_IBW_SUCCESS: 'Lưu chỉ số IBW thành công'
 } as const

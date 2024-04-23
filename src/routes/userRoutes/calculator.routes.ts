@@ -7,8 +7,15 @@ import {
   calculateIBWController,
   calculateLBMController,
   calculateTDEEController,
-  calculateWaterIntakeController
+  calculateWaterIntakeController,
+  saveBMIController,
+  saveBMRController,
+  saveBodyFatController,
+  saveIBWController,
+  saveLBMController,
+  saveTDEEController
 } from '~/controllers/userControllers/calculator.controller'
+import { accessTokenValidator } from '~/middlewares/authUser.middleware'
 import {
   activityValidator,
   calculateBMIValidator,
@@ -39,5 +46,23 @@ calculatorsRouter.post(
   wrapRequestHandler(calculateCalorieBurnedController)
 )
 calculatorsRouter.post('/lbm', calculateLBMValidator, wrapRequestHandler(calculateLBMController))
+
+calculatorsRouter.post('/bmi/save', accessTokenValidator, calculateBMIValidator, wrapRequestHandler(saveBMIController))
+calculatorsRouter.post('/bmr/save', accessTokenValidator, calculateBMRValidator, wrapRequestHandler(saveBMRController))
+calculatorsRouter.post(
+  '/tdee/save',
+  accessTokenValidator,
+  calculateBMRValidator,
+  activityValidator,
+  wrapRequestHandler(saveTDEEController)
+)
+calculatorsRouter.post(
+  '/body-fat/save',
+  accessTokenValidator,
+  calculateBodyFatValidator,
+  wrapRequestHandler(saveBodyFatController)
+)
+calculatorsRouter.post('/lbm/save', accessTokenValidator, calculateLBMValidator, wrapRequestHandler(saveLBMController))
+calculatorsRouter.post('/ibw/save', accessTokenValidator, calculateIBWValidator, wrapRequestHandler(saveIBWController))
 
 export default calculatorsRouter

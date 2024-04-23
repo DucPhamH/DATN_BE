@@ -17,6 +17,13 @@ export interface User {
   hip?: number
   neck?: number
   waist?: number
+  activity_level?: number
+  BMI?: number
+  BMR?: number
+  TDEE?: number
+  body_fat?: number
+  IBW?: number
+  LBM?: number
   role?: UserRoles
   banned_count?: number
   status?: UserStatus
@@ -50,27 +57,55 @@ const UserSchema = new mongoose.Schema<User>(
     },
     weight: {
       type: Number,
-      default: 0
+      default: null
     },
     height: {
       type: Number,
-      default: 0
+      default: null
     },
     age: {
       type: Number,
-      default: 0
+      default: null
     },
     hip: {
       type: Number,
-      default: 0
+      default: null
     },
     neck: {
       type: Number,
-      default: 0
+      default: null
     },
     waist: {
       type: Number,
-      default: 0
+      default: null
+    },
+    activity_level: {
+      type: Number,
+      default: null
+    },
+    BMI: {
+      type: Number,
+      default: null
+    },
+    BMR: {
+      type: Number,
+      default: null
+    },
+    TDEE: {
+      type: Number,
+      default: null
+    },
+    body_fat: {
+      type: Number,
+      default: null
+    },
+    IBW: {
+      type: Number,
+      default: null
+    },
+    LBM: {
+      type: Number,
+      default: null
     },
     role: {
       type: Number,
