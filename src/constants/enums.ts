@@ -30,6 +30,7 @@ export enum PostTypes {
 
 export enum PostStatus {
   publish,
+  following,
   private
 }
 export enum BlogStatus {
@@ -37,10 +38,45 @@ export enum BlogStatus {
   accepted
 }
 
+export enum RegionFood {
+  north,
+  central,
+  south,
+  asian,
+  european
+}
+export enum DifficultLevel {
+  easy,
+  normal,
+  hard
+}
+
+export enum FoodType {
+  chef,
+  writter
+}
+
 export const UserGender = {
   male: 'male',
   female: 'female',
   other: 'other'
+}
+
+export const ProcessingFood = {
+  hot_pot: 'lẩu',
+  stir_fry: 'Xào',
+  grill: 'Nướng',
+  steam: 'Hấp',
+  fry: 'Chiên',
+  stew: 'Kho',
+  simmer: 'Hầm',
+  salad: 'Gỏi/Trộn',
+  soup: 'Canh/Súp',
+  roast: 'Quay',
+  braised: 'Om/Rim',
+  fried: 'Rang',
+  raw: 'Đồ sống',
+  other: 'Khác'
 }
 
 export const ActivityValue = {

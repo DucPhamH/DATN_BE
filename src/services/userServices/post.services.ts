@@ -6,6 +6,7 @@ import HTTP_STATUS from '~/constants/httpStatus'
 import { POST_MESSAGE } from '~/constants/messages'
 import { CreatePostBody } from '~/models/requests/post.request'
 import CommentPostModel from '~/models/schemas/commentPost.schema'
+import FollowModel from '~/models/schemas/follow.schema'
 import ImagePostModel from '~/models/schemas/imagePost.schema'
 import LikePostModel from '~/models/schemas/likePost.schema'
 import PostModel from '~/models/schemas/post.schema'
@@ -75,6 +76,9 @@ class PostService {
           $or: [
             {
               status: PostStatus.publish
+            },
+            {
+              status: PostStatus.following
             },
             {
               status: PostStatus.private,
@@ -306,10 +310,29 @@ class PostService {
       page = 1
     }
 
+    const user_id_obj = new ObjectId(user_id)
+    // tìm những tài khoản mà user đã theo dõi
+    const follow_ids = await FollowModel.find({
+      user_id: user_id_obj
+    }).select('follow_id')
+
+    const follow_ids_arr = follow_ids.map((f) => f.follow_id)
+    follow_ids_arr.push(user_id_obj)
+    console.log(follow_ids_arr)
+
     const newFeeds = await PostModel.aggregate([
       {
+        // lấy post public và những post trong trạng thái chỉ cho người đã theo dõi xem
         $match: {
-          status: PostStatus.publish,
+          $or: [
+            {
+              status: PostStatus.publish
+            },
+            {
+              status: PostStatus.following,
+              user_id: { $in: follow_ids_arr }
+            }
+          ],
           is_banned: false
         }
       },
@@ -1019,7 +1042,7 @@ class PostService {
   }
   async getUserPostsService({
     id,
-    user_id,
+    user_id: follow_user,
     page,
     limit
   }: {
@@ -1034,12 +1057,40 @@ class PostService {
     if (!page) {
       page = 1
     }
+
+    // lấy những user đã theo dõi user này
+
+    const follow_ids = await FollowModel.find({
+      follow_id: new ObjectId(id)
+    }).select('user_id')
+
+    const follow_ids_arr = follow_ids.map((f) => f.user_id)
+    console.log(follow_ids_arr)
+
     const posts = await PostModel.aggregate([
       {
+        // thêm 1 trường is_follow để check xem user đã follow user này chưa
+        $addFields: {
+          is_follow: {
+            $in: [new ObjectId(follow_user), follow_ids_arr]
+          }
+        }
+      },
+      {
+        // lấy post public và những post trong trạng thái chỉ cho người đã theo dõi xem
         $match: {
           user_id: new ObjectId(id),
-          status: PostStatus.publish,
-          is_banned: false
+          is_banned: false,
+          $or: [
+            {
+              status: PostStatus.publish
+            },
+            // nếu is_follow = true thì cho xem những post là following
+            {
+              status: PostStatus.following,
+              is_follow: true
+            }
+          ]
         }
       },
       {
@@ -1089,7 +1140,7 @@ class PostService {
       {
         $addFields: {
           is_like: {
-            $in: [new ObjectId(user_id), '$likes.user_id']
+            $in: [new ObjectId(follow_user), '$likes.user_id']
           }
         }
       },

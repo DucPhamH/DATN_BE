@@ -15,6 +15,7 @@ import postsRouter from './routes/userRoutes/post.routes'
 import authAdminRouter from './routes/adminRoutes/authAdmin.routes'
 import activitiesRouter from './routes/userRoutes/activity.routes'
 import calculatorsRouter from './routes/userRoutes/calculator.routes'
+import workoutScheduleRouter from './routes/userRoutes/workoutSchedule.routes'
 const app: Express = express()
 const port = envConfig.port
 
@@ -52,6 +53,7 @@ app.use('/api/blogs', blogsRouter)
 app.use('/api/posts', postsRouter)
 app.use('/api/activities', activitiesRouter)
 app.use('/api/calculators', calculatorsRouter)
+app.use('/api/workout-schedules', workoutScheduleRouter)
 
 app.use('/api/admin/auth/admins', authAdminRouter)
 

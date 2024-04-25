@@ -105,3 +105,11 @@ export const CALCULATOR_MESSAGE = {
   SAVE_LBM_SUCCESS: 'Lưu chỉ số LBM thành công',
   SAVE_IBW_SUCCESS: 'Lưu chỉ số IBW thành công'
 } as const
+
+export const WORKOUT_MESSAGE = {
+  CREATE_WORKOUT_SUCCESS: 'Tạo workout thành công',
+  GET_LIST_WORKOUT_SUCCESS: 'Lấy danh sách workout thành công',
+  START_DATE_INVALID: 'Ngày bắt đầu không hợp lệ',
+  END_DATE_INVALID: 'Ngày kết thúc không hợp lệ',
+  GET_WORKOUT_SUCCESS: 'Lấy thông tin workout thành công'
+}
