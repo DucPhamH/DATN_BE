@@ -111,5 +111,9 @@ export const WORKOUT_MESSAGE = {
   GET_LIST_WORKOUT_SUCCESS: 'Lấy danh sách workout thành công',
   START_DATE_INVALID: 'Ngày bắt đầu không hợp lệ',
   END_DATE_INVALID: 'Ngày kết thúc không hợp lệ',
-  GET_WORKOUT_SUCCESS: 'Lấy thông tin workout thành công'
+  GET_WORKOUT_SUCCESS: 'Lấy thông tin workout thành công',
+  CREATE_WORKOUT_ITEM_SUCCESS: 'Tạo workout item thành công',
+  GET_LIST_DATE_WORKOUT_ITEM_SUCCESS: 'Lấy danh sách ngày workout item thành công',
+  COMPLETE_DATE_WORKOUT_ITEM_SUCCESS: 'Hoàn thành ngày workout item thành công',
+  DELETE_DATE_WORKOUT_ITEM_SUCCESS: 'Xóa ngày workout item thành công'
 }

@@ -6,3 +6,13 @@ export interface CreateWorkoutScheduleBody {
   start_date: Date
   end_date: Date
 }
+
+export interface CreateWorkoutItemsBody {
+  arrayWorkoutItems: {
+    workout_schedule_id: string
+    activity_name: string
+    time: number
+    met: number
+    current_date: Date
+  }[]
+}

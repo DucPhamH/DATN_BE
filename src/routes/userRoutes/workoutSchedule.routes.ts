@@ -1,6 +1,10 @@
 import { Router } from 'express'
 import {
+  completeDateWorkoutItemController,
+  createWorkoutItemController,
   createWorkoutScheduleController,
+  deleteDateWorkoutItemController,
+  getListDateWorkoutItemController,
   getListWorkoutScheduleController,
   getWorkoutScheduleByIdController
 } from '~/controllers/userControllers/workoutSchedule.controller'
@@ -24,4 +28,15 @@ workoutScheduleRouter.post(
 )
 workoutScheduleRouter.get('/:id', accessTokenValidator, wrapRequestHandler(getWorkoutScheduleByIdController))
 
+workoutScheduleRouter.post(
+  '/workout-items/create',
+  accessTokenValidator,
+  wrapRequestHandler(createWorkoutItemController)
+)
+
+workoutScheduleRouter.get('/workout-items/get', wrapRequestHandler(getListDateWorkoutItemController))
+
+workoutScheduleRouter.post('/workout-items/complete', wrapRequestHandler(completeDateWorkoutItemController))
+
+workoutScheduleRouter.post('/workout-items/delete', wrapRequestHandler(deleteDateWorkoutItemController))
 export default workoutScheduleRouter
