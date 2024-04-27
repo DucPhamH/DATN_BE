@@ -7,6 +7,7 @@ import workoutScheduleService from '~/services/userServices/workoutSchedule.serv
 export const createWorkoutScheduleController = async (req: Request, res: Response) => {
   const { name, weight, calo_target, start_date, end_date } = req.body
   const user = req.decoded_authorization as TokenPayload
+  console.log(start_date, end_date)
 
   const result = await workoutScheduleService.createWorkoutScheduleService({
     user_id: user.user_id,

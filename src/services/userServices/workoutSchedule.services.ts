@@ -18,13 +18,17 @@ class WorkoutScheduleService {
     start_date,
     end_date
   }: CreateWorkoutScheduleBody) {
+    const newStartDate = moment.utc(start_date).startOf('day').toDate()
+    const newEndDate = moment.utc(end_date).startOf('day').toDate()
+    console.log(newStartDate, newEndDate)
+
     const workoutSchedule = await WorkoutScheduleModel.create({
       user_id: new ObjectId(user_id),
       name,
       weight,
       calo_target,
-      start_date,
-      end_date
+      start_date: newStartDate,
+      end_date: newEndDate
     })
 
     return workoutSchedule
@@ -63,7 +67,7 @@ class WorkoutScheduleService {
       // tính calo tiêu hao trong từng item và lưu vào db
       const arrayWorkoutItemsWithCaloBurn = arrayWorkoutItems.map((item) => {
         const calo_burn = this.CalorieBurnedCalculator(workoutSchedule.weight, item.time, item.met)
-        return { ...item, calo_burn }
+        return { ...item, calo_burn, current_date: moment.utc(item.current_date).startOf('day').toDate() }
       })
       console.log(arrayWorkoutItemsWithCaloBurn)
 
@@ -82,7 +86,6 @@ class WorkoutScheduleService {
     page: number
     limit: number
   }) {
-    console.log(page)
     if (!page) page = 1
     if (!limit) limit = 10
     const workoutDate = await WorkoutItemModel.aggregate([
