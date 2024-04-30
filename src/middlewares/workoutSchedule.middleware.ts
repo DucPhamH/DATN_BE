@@ -61,6 +61,37 @@ export const workoutScheduleValidator = validate(
   )
 )
 
+export const updateWorkoutScheduleValidator = validate(
+  checkSchema(
+    {
+      name: {
+        notEmpty: true,
+        isString: true,
+        trim: true
+      },
+
+      calo_target: {
+        notEmpty: true,
+        isNumeric: true
+      },
+      end_date: {
+        notEmpty: true,
+        custom: {
+          options: (value) => {
+            if (isNaN(new Date(value).getTime())) throw new Error(WORKOUT_MESSAGE.END_DATE_INVALID)
+
+            if (new Date(value).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)) {
+              throw new Error(WORKOUT_MESSAGE.END_DATE_INVALID)
+            }
+            return true
+          }
+        }
+      }
+    },
+    ['body']
+  )
+)
+
 export const limitAndPageValidator = validate(
   checkSchema(
     {

@@ -7,6 +7,14 @@ export interface CreateWorkoutScheduleBody {
   end_date: Date
 }
 
+export interface UpdateWorkoutScheduleBody {
+  id: string
+  user_id: string
+  name: string
+  calo_target: number
+  end_date: Date
+}
+
 export interface CreateWorkoutItemsBody {
   arrayWorkoutItems: {
     workout_schedule_id: string

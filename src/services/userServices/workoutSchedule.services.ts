@@ -1,6 +1,11 @@
 import moment from 'moment'
 import { ObjectId } from 'mongodb'
-import { CreateWorkoutItemsBody, CreateWorkoutScheduleBody } from '~/models/requests/workoutSchedule.request'
+import {
+  CreateWorkoutItemsBody,
+  CreateWorkoutScheduleBody,
+  UpdateWorkoutScheduleBody
+} from '~/models/requests/workoutSchedule.request'
+import UserModel from '~/models/schemas/user.schema'
 import WorkoutItemModel from '~/models/schemas/workoutItem.schemas'
 import WorkoutScheduleModel from '~/models/schemas/workoutSchedule.schema'
 
@@ -32,6 +37,109 @@ class WorkoutScheduleService {
     })
 
     return workoutSchedule
+  }
+  async updateWorkoutScheduleService({ id, name, calo_target, end_date, user_id }: UpdateWorkoutScheduleBody) {
+    const newEndDate = moment.utc(end_date).startOf('day').toDate()
+    const workoutSchedule = await WorkoutScheduleModel.findByIdAndUpdate(
+      id,
+      {
+        name,
+        calo_target,
+        end_date: newEndDate
+      },
+      { new: true }
+    )
+
+    return workoutSchedule
+  }
+  async deleteWorkoutScheduleService({ id, user_id }: { id: string; user_id: string }) {
+    //xóa hết item của workout_item
+    await WorkoutItemModel.deleteMany({ workout_schedule_id: new ObjectId(id) })
+
+    //xóa workout_schedule
+    await WorkoutScheduleModel.findByIdAndDelete({ _id: new ObjectId(id), user_id: new ObjectId(user_id) })
+    return true
+  }
+  async weightSyncService({ user_id, workout_schedule_id }: { user_id: string; workout_schedule_id: string }) {
+    // lấy weight của user_id
+    console.log(user_id, workout_schedule_id)
+    const user = await UserModel.findById(user_id)
+    if (user && user.weight) {
+      // cập nhật lại weight của workout_schedule_id
+      await WorkoutScheduleModel.updateOne(
+        {
+          _id: new ObjectId(workout_schedule_id)
+        },
+        {
+          $set: {
+            weight: user.weight
+          }
+        }
+      )
+      // cập nhật lại calo_burn của các item trong workout_schedule_id
+      const workoutItems = await WorkoutItemModel.find({
+        workout_schedule_id: new ObjectId(workout_schedule_id)
+      })
+
+      // chuyển workoutItems từ document sang mảng
+
+      console.log(workoutItems)
+      const newWorkoutItems = workoutItems.map((item) => {
+        const calo_burn = user.weight ? this.CalorieBurnedCalculator(user.weight, item.time, item.met) : 0
+
+        return { calo_burn }
+      })
+      console.log(newWorkoutItems)
+
+      // cập nhật lại calo_burn của các item
+
+      for (let i = 0; i < workoutItems.length; i++) {
+        await WorkoutItemModel.updateOne(
+          {
+            _id: new ObjectId(workoutItems[i]._id)
+          },
+          {
+            $set: {
+              calo_burn: newWorkoutItems[i].calo_burn
+            }
+          }
+        )
+      }
+
+      // cập nhật lại total_calo_burn của workout_schedule_id điều kiện là is_completed = true
+      const total_calories_burn = await WorkoutItemModel.aggregate([
+        {
+          $match: {
+            workout_schedule_id: new ObjectId(workout_schedule_id),
+            is_completed: true
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            total_calories: { $sum: '$calo_burn' }
+          }
+        }
+      ])
+      console.log(total_calories_burn)
+
+      const workoutSchedule = await WorkoutScheduleModel.findById(workout_schedule_id)
+      if (workoutSchedule) {
+        // nếu total_calories_burn là mảng rỗng thì total_calo_burn = 0
+        const total_calo_burn = total_calories_burn.length > 0 ? total_calories_burn[0].total_calories.toFixed(1) : 0
+        console.log(total_calo_burn)
+        await WorkoutScheduleModel.updateOne(
+          {
+            _id: new ObjectId(workout_schedule_id)
+          },
+          {
+            $set: {
+              total_calo_burn
+            }
+          }
+        )
+      }
+    }
   }
   async getListWorkoutScheduleService({ page, limit, user_id }: { page: number; limit: number; user_id: string }) {
     if (!page) page = 1

@@ -115,5 +115,8 @@ export const WORKOUT_MESSAGE = {
   CREATE_WORKOUT_ITEM_SUCCESS: 'Tạo workout item thành công',
   GET_LIST_DATE_WORKOUT_ITEM_SUCCESS: 'Lấy danh sách ngày workout item thành công',
   COMPLETE_DATE_WORKOUT_ITEM_SUCCESS: 'Hoàn thành ngày workout item thành công',
-  DELETE_DATE_WORKOUT_ITEM_SUCCESS: 'Xóa ngày workout item thành công'
+  DELETE_DATE_WORKOUT_ITEM_SUCCESS: 'Xóa ngày workout item thành công',
+  UPDATE_WORKOUT_SUCCESS: 'Cập nhật workout thành công',
+  DELETE_WORKOUT_SUCCESS: 'Xóa workout thành công',
+  WEIGHT_SYNC_SUCCESS: 'Đồng bộ cân nặng thành công'
 }

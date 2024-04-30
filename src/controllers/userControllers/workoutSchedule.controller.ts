@@ -24,6 +24,40 @@ export const createWorkoutScheduleController = async (req: Request, res: Respons
   })
 }
 
+export const updateWorkoutScheduleController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const { name, calo_target, end_date } = req.body
+  const user = req.decoded_authorization as TokenPayload
+
+  const result = await workoutScheduleService.updateWorkoutScheduleService({
+    id,
+    user_id: user.user_id,
+    name,
+    calo_target: Number(calo_target),
+    end_date: new Date(end_date)
+  })
+
+  return res.json({
+    result,
+    message: WORKOUT_MESSAGE.UPDATE_WORKOUT_SUCCESS
+  })
+}
+
+export const deleteWorkoutScheduleController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const user = req.decoded_authorization as TokenPayload
+
+  const result = await workoutScheduleService.deleteWorkoutScheduleService({
+    id,
+    user_id: user.user_id
+  })
+
+  return res.json({
+    result,
+    message: WORKOUT_MESSAGE.DELETE_WORKOUT_SUCCESS
+  })
+}
+
 export const getListWorkoutScheduleController = async (req: Request, res: Response) => {
   const { page, limit } = req.query
   const user = req.decoded_authorization as TokenPayload
@@ -116,5 +150,19 @@ export const deleteDateWorkoutItemController = async (req: Request, res: Respons
   return res.json({
     result,
     message: WORKOUT_MESSAGE.DELETE_DATE_WORKOUT_ITEM_SUCCESS
+  })
+}
+
+export const weightSyncController = async (req: Request, res: Response) => {
+  const { workout_schedule_id } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await workoutScheduleService.weightSyncService({
+    user_id: user.user_id,
+    workout_schedule_id: workout_schedule_id as string
+  })
+
+  return res.json({
+    result,
+    message: WORKOUT_MESSAGE.WEIGHT_SYNC_SUCCESS
   })
 }
