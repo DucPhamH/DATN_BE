@@ -41,7 +41,8 @@ class BlogsService {
     console.log(sort, status, search, category_blog_id)
     const condition: any = {
       user_id: new ObjectId(user_id),
-      is_banned: false
+      // không lấy những blog bị banned
+      status: { $ne: BlogStatus.banned }
     }
 
     if (status) {
@@ -179,7 +180,6 @@ class BlogsService {
   }
   async getListBlogForUserService({ page, limit, sort, search, category_blog_id, user_id }: GetListBlogForUserQuery) {
     const condition: any = {
-      is_banned: false,
       status: BlogStatus.accepted
     }
 
@@ -284,7 +284,6 @@ class BlogsService {
       {
         $match: {
           _id: new ObjectId(blog_id),
-          is_banned: false,
           status: BlogStatus.accepted
         }
       },

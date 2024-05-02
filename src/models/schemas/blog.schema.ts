@@ -8,7 +8,6 @@ export interface Blog {
   image: string
   user_id?: Types.ObjectId
   category_blog_id?: Types.ObjectId
-  is_banned?: boolean
   status?: BlogStatus
   user_view?: number
   search_fields?: string
@@ -30,7 +29,6 @@ const BlogSchema = new mongoose.Schema<Blog>(
       required: true
     },
     search_fields: { type: String, default: '' },
-    is_banned: { type: Boolean, default: false },
     status: { type: Number, default: BlogStatus.pending },
     user_view: { type: Number, default: 0 }
   },

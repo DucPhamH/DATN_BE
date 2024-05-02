@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 import ActivityModel from '~/models/schemas/activity.schema'
-import ActivityCategoryModel from '~/models/schemas/activityCategory'
+import ActivityCategoryModel from '~/models/schemas/activityCategory.schema'
 
 class ActivityService {
   async getListActivityCategoryService() {

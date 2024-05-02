@@ -35,10 +35,11 @@ export enum PostStatus {
 }
 export enum BlogStatus {
   pending,
-  accepted
+  accepted,
+  banned
 }
 
-export enum RegionFood {
+export enum RegionRecipe {
   north,
   central,
   south,
@@ -50,8 +51,13 @@ export enum DifficultLevel {
   normal,
   hard
 }
+export enum RecipeStatus {
+  pending,
+  accepted,
+  banned
+}
 
-export enum FoodType {
+export enum RecipeType {
   chef,
   writter
 }
@@ -62,7 +68,7 @@ export const UserGender = {
   other: 'other'
 }
 
-export const ProcessingFood = {
+export const ProcessingRecipe = {
   hot_pot: 'lẩu',
   stir_fry: 'Xào',
   grill: 'Nướng',

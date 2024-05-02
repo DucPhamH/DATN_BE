@@ -42,7 +42,9 @@ export const POST_MESSAGE = {
   CREATE_POST_COMMENT_SUCCESS: 'Tạo bình luận bài viết thành công',
   COMMENT_MUST_NOT_BE_EMPTY: 'Bình luận không được để trống',
   GET_POST_COMMENTS_SUCCESS: 'Lấy bình luận bài viết thành công',
-  COMMENT_NOT_FOUND: 'Không tìm thấy bình luận'
+  COMMENT_NOT_FOUND: 'Không tìm thấy bình luận',
+  REPORT_POST_SUCCESS: 'Báo cáo bài viết thành công',
+  REPORTED_POST: 'Bài viết đã được báo cáo'
 } as const
 
 export const USER_MESSAGE = {

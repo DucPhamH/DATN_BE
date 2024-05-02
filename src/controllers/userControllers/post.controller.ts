@@ -191,3 +191,14 @@ export const deleteChildCommentPostController = async (req: Request, res: Respon
     result
   })
 }
+
+export const createReportPostController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { post_id, reason } = req.body
+  const result = await postService.createReportPostService({ post_id, user_id: user.user_id, reason })
+
+  return res.json({
+    message: POST_MESSAGE.REPORT_POST_SUCCESS,
+    result
+  })
+}

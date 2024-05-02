@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
   createPostCommentController,
   createPostController,
+  createReportPostController,
   deleteChildCommentPostController,
   deleteCommentPostController,
   deletePostForEachUserController,
@@ -53,6 +54,7 @@ postsRouter.post(
   accessTokenValidator,
   wrapRequestHandler(deleteChildCommentPostController)
 )
+postsRouter.post('/actions/report', accessTokenValidator, wrapRequestHandler(createReportPostController))
 postsRouter.get(
   '/me/get-me-posts',
   accessTokenValidator,
