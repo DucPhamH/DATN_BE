@@ -30,7 +30,7 @@ blogsRouter.post('/', accessTokenValidator, createBlogValidator, wrapRequestHand
 blogsRouter.get(
   '/chef/get-blogs',
   accessTokenValidator,
-  checkRole([UserRoles.user]),
+  wrapRequestHandler(checkRole([UserRoles.user])),
   getListBlogsForChefValidator,
   wrapRequestHandler(getListBlogForChefController)
 )
@@ -43,7 +43,7 @@ blogsRouter.get(
 blogsRouter.get(
   '/chef/get-blog/:id',
   accessTokenValidator,
-  checkRole([UserRoles.user]),
+  wrapRequestHandler(checkRole([UserRoles.user])),
   wrapRequestHandler(getBlogForChefController)
 )
 blogsRouter.get('/user/get-blog/:id', accessTokenValidator, wrapRequestHandler(getBlogForUserController))
@@ -51,7 +51,7 @@ blogsRouter.get('/user/get-blog/:id', accessTokenValidator, wrapRequestHandler(g
 blogsRouter.put(
   '/chef/update-blog/:id',
   accessTokenValidator,
-  checkRole([UserRoles.user]),
+  wrapRequestHandler(checkRole([UserRoles.user])),
   wrapRequestHandler(updateBlogForChefController)
 )
 
@@ -73,7 +73,7 @@ blogsRouter.post('/actions/delete-comment', accessTokenValidator, wrapRequestHan
 blogsRouter.delete(
   '/chef/delete-blog/:id',
   accessTokenValidator,
-  checkRole([UserRoles.user]),
+  wrapRequestHandler(checkRole([UserRoles.user])),
   wrapRequestHandler(deleteBlogForChefController)
 )
 

@@ -15,10 +15,13 @@ export interface Recipe {
   protein?: number
   fat?: number
   carbohydrate?: number
+  unit?: string
+  quantity?: number
   user_id?: Types.ObjectId
   processing_food?: string
   status?: RecipeStatus
   type?: RecipeType
+  album_id?: Types.ObjectId
   user_view?: number
   category_recipe_id?: Types.ObjectId
   search_fields?: string
@@ -39,10 +42,17 @@ const RecipeSchema = new mongoose.Schema<Recipe>(
     protein: { type: Number, default: 0 },
     fat: { type: Number, default: 0 },
     carbohydrate: { type: Number, default: 0 },
+    unit: { type: String, default: '' },
+    quantity: { type: Number, default: 0 },
     user_id: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'users',
       required: true
+    },
+    album_id: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'albums',
+      default: null
     },
     category_recipe_id: {
       type: mongoose.SchemaTypes.ObjectId,

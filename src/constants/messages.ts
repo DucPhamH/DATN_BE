@@ -122,3 +122,26 @@ export const WORKOUT_MESSAGE = {
   DELETE_WORKOUT_SUCCESS: 'Xóa workout thành công',
   WEIGHT_SYNC_SUCCESS: 'Đồng bộ cân nặng thành công'
 }
+
+export const RECIPE_MESSAGE = {
+  CREATE_RECIPE_SUCCESS: 'Tạo công thức thành công',
+  GET_RECIPE_SUCCESS: 'Lấy thông tin công thức thành công',
+  IMAGE_REQUIRED: 'Ảnh không được để trống',
+  REGION_INVALID: 'Khu vực không hợp lệ',
+  TITLE_REQUIRED: 'Tiêu đề không được để trống',
+  CONTENT_REQUIRED: 'Nội dung không được để trống',
+  DESCRIPTION_REQUIRED: 'Mô tả không được để trống',
+  TIME_INVALID: 'Thời gian không hợp lệ',
+  DIFFICULT_LEVEL_INVALID: 'Độ khó không hợp lệ',
+  PROCESSING_FOOD_INVALID: 'Chế biến thức ăn không hợp lệ',
+  GET_ALL_RECIPE_CATEGORY_SUCCESS: 'Lấy danh mục công thức thành công',
+  GET_LIST_RECIPE_FOR_CHEF_SUCCESS: 'Lấy danh sách công thức cho đầu bếp thành công',
+  GET_RECIPE_FOR_CHEF_SUCCESS: 'Lấy thông tin công thức cho đầu bếp thành công',
+  UPDATE_RECIPE_SUCCESS: 'Cập nhật công thức thành công'
+}
+
+export const ALBUM_MESSAGE = {
+  CREATE_ALBUM_SUCCESS: 'Tạo album thành công',
+  GET_LIST_ALBUM_SUCCESS: 'Lấy danh sách album thành công',
+  GET_ALBUM_SUCCESS: 'Lấy thông tin album thành công'
+}
