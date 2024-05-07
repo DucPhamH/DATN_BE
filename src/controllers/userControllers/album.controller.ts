@@ -40,6 +40,33 @@ export const getListAlbumForChefController = async (req: Request, res: Response)
   })
 }
 
+export const getListAlbumForUserController = async (req: Request, res: Response) => {
+  const { page, limit, search, category_album, sort, status } = req.query
+  const result = await albumService.getListAlbumForUserService({
+    page: Number(page),
+    limit: Number(limit),
+    search: search as string,
+    category_album: category_album as string,
+    sort: sort as string,
+    status: status as string
+  })
+
+  return res.json({
+    message: ALBUM_MESSAGE.GET_LIST_ALBUM_SUCCESS,
+    result
+  })
+}
+
+export const getAlbumForUserController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await albumService.getAlbumForUserService({ album_id: id })
+
+  return res.json({
+    message: ALBUM_MESSAGE.GET_ALBUM_SUCCESS,
+    result
+  })
+}
+
 export const getAlbumForChefController = async (req: Request, res: Response) => {
   const user = req.decoded_authorization as TokenPayload
   const { id } = req.params
@@ -50,6 +77,41 @@ export const getAlbumForChefController = async (req: Request, res: Response) => 
 
   return res.json({
     message: ALBUM_MESSAGE.GET_ALBUM_SUCCESS,
+    result
+  })
+}
+
+export const deleteRecipeInAlbumForChefController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { album_id, recipe_id } = req.body
+  const result = await albumService.deleteRecipeInAlbumForChefService({
+    user_id: user.user_id,
+    album_id,
+    recipe_id
+  })
+
+  return res.json({
+    message: ALBUM_MESSAGE.DELETE_RECIPE_IN_ALBUM_SUCCESS,
+    result
+  })
+}
+
+export const updateAlbumForChefController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { id } = req.params
+  const { title, description, image, category_album, array_recipes_id } = req.body
+  const result = await albumService.updateAlbumForChefService({
+    user_id: user.user_id,
+    title,
+    description,
+    image,
+    category_album,
+    array_recipes_id,
+    album_id: id
+  })
+
+  return res.json({
+    message: ALBUM_MESSAGE.UPDATE_ALBUM_SUCCESS,
     result
   })
 }

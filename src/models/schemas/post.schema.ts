@@ -9,6 +9,8 @@ export interface Post {
   status?: PostStatus
   is_banned?: boolean
   parent_id: Types.ObjectId | null
+  // mảng object report_post: { user_id: Types.ObjectId, reason: string, created_at: Date }
+  report_post?: { user_id: Types.ObjectId; reason: string; created_at: Date }[]
 }
 
 const PostSchema = new mongoose.Schema<Post>(
@@ -26,7 +28,18 @@ const PostSchema = new mongoose.Schema<Post>(
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'posts',
       default: null
-    }
+    },
+    report_post: [
+      {
+        user_id: {
+          type: mongoose.SchemaTypes.ObjectId,
+          ref: 'users',
+          default: null
+        },
+        reason: { type: String, default: '' },
+        created_at: { type: Date, default: moment().toDate() }
+      }
+    ]
   },
   {
     timestamps: true,

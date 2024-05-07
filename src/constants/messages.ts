@@ -137,11 +137,21 @@ export const RECIPE_MESSAGE = {
   GET_ALL_RECIPE_CATEGORY_SUCCESS: 'Lấy danh mục công thức thành công',
   GET_LIST_RECIPE_FOR_CHEF_SUCCESS: 'Lấy danh sách công thức cho đầu bếp thành công',
   GET_RECIPE_FOR_CHEF_SUCCESS: 'Lấy thông tin công thức cho đầu bếp thành công',
-  UPDATE_RECIPE_SUCCESS: 'Cập nhật công thức thành công'
+  UPDATE_RECIPE_SUCCESS: 'Cập nhật công thức thành công',
+  GET_LIST_RECIPE_FOR_USER_SUCCESS: 'Lấy danh sách công thức cho người dùng thành công',
+  GET_RECIPE_FOR_USER_SUCCESS: 'Lấy thông tin công thức cho người dùng thành công',
+  LIKE_RECIPE_SUCCESS: 'Like công thức thành công',
+  CREATE_COMMENT_RECIPE_SUCCESS: 'Tạo bình luận công thức thành công',
+  DELETE_COMMENT_RECIPE_SUCCESS: 'Xóa bình luận công thức thành công',
+  BOOKMARK_RECIPE_SUCCESS: 'Bookmark công thức thành công',
+  UNBOOKMARK_RECIPE_SUCCESS: 'Unbookmark công thức thành công'
 }
 
 export const ALBUM_MESSAGE = {
   CREATE_ALBUM_SUCCESS: 'Tạo album thành công',
   GET_LIST_ALBUM_SUCCESS: 'Lấy danh sách album thành công',
-  GET_ALBUM_SUCCESS: 'Lấy thông tin album thành công'
+  GET_ALBUM_SUCCESS: 'Lấy thông tin album thành công',
+  ALBUM_NOT_FOUND: 'Không tìm thấy album',
+  DELETE_RECIPE_IN_ALBUM_SUCCESS: 'Xóa công thức trong album thành công',
+  UPDATE_ALBUM_SUCCESS: 'Cập nhật album thành công'
 }

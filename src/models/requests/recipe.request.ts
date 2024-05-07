@@ -40,3 +40,16 @@ export interface GetListRecipeForChefQuery {
   region?: number
   interval_time?: number
 }
+
+export interface GetListRecipeForUserQuery {
+  user_id: string
+  page?: number
+  limit?: number
+  sort?: string
+  search?: string
+  category_recipe_id?: string
+  difficult_level?: number
+  processing_food?: string
+  region?: number
+  interval_time?: number
+}

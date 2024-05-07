@@ -1,22 +1,16 @@
-import { ObjectId } from 'mongodb'
 import ActivityModel from '~/models/schemas/activity.schema'
-import ActivityCategoryModel from '~/models/schemas/activityCategory.schema'
 
 class ActivityService {
-  async getListActivityCategoryService() {
-    const categories = await ActivityCategoryModel.find()
-    return categories
-  }
   async getListActivityService({
     page,
     limit,
     search,
-    activity_category_id
+    activity_category
   }: {
     page: number
     limit: number
     search: string
-    activity_category_id: string
+    activity_category: string
   }) {
     const condition: any = {}
 
@@ -24,8 +18,8 @@ class ActivityService {
       condition.activity = { $regex: search, $options: 'i' }
     }
 
-    if (activity_category_id !== undefined) {
-      condition.activity_category_id = new ObjectId(activity_category_id)
+    if (activity_category !== undefined) {
+      condition.activity_category = activity_category
     }
 
     if (!page) {
@@ -37,7 +31,6 @@ class ActivityService {
     }
 
     const activities = await ActivityModel.find(condition)
-      .populate('activity_category_id')
       .skip((page - 1) * limit)
       .limit(limit)
 

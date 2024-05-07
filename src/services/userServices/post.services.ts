@@ -10,7 +10,6 @@ import FollowModel from '~/models/schemas/follow.schema'
 import ImagePostModel from '~/models/schemas/imagePost.schema'
 import LikePostModel from '~/models/schemas/likePost.schema'
 import PostModel from '~/models/schemas/post.schema'
-import ReportPostModel from '~/models/schemas/reportPost.schema'
 import { ErrorWithStatus } from '~/utils/error'
 import { uploadFileToS3 } from '~/utils/s3'
 
@@ -1350,24 +1349,33 @@ class PostService {
     return true
   }
   async createReportPostService({ post_id, user_id, reason }: { post_id: string; user_id: string; reason: string }) {
-    // tìm xem đã report chưa
-    const report = await ReportPostModel.findOne({
-      post_id: post_id,
-      reporter_id: user_id
+    // tìm xem trong mảng report_post đã có bài post này chưa
+    const report = await PostModel.findOne({
+      _id: post_id,
+      'report_post.user_id': user_id
     })
-
     if (report) {
       throw new ErrorWithStatus({
         message: POST_MESSAGE.REPORTED_POST,
         status: HTTP_STATUS.BAD_REQUEST
       })
     }
-
-    const newReport = await ReportPostModel.create({
-      post_id: post_id,
-      reporter_id: user_id,
-      reason: reason
-    })
+    const newReport = await PostModel.findOneAndUpdate(
+      {
+        _id: post_id
+      },
+      {
+        $push: {
+          report_post: {
+            user_id: user_id,
+            reason: reason
+          }
+        }
+      },
+      {
+        new: true
+      }
+    )
 
     return newReport
   }

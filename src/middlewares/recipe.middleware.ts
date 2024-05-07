@@ -119,3 +119,56 @@ export const getListRecipeForChefValidator = validate(
     ['query']
   )
 )
+
+export const getListRecipeForUserValidator = validate(
+  checkSchema(
+    {
+      page: {
+        optional: true,
+        isInt: true,
+        toInt: true
+      },
+      limit: {
+        optional: true,
+        isInt: true,
+        toInt: true
+      },
+      sort: {
+        optional: true,
+        isString: true,
+        trim: true
+      },
+      search: {
+        optional: true,
+        isString: true,
+        trim: true
+      },
+      category_recipe_id: {
+        optional: true,
+        isString: true,
+        trim: true
+      },
+      difficult_level: {
+        optional: true,
+        isInt: true,
+        toInt: true
+      },
+      processing_food: {
+        optional: true,
+        isString: true,
+        trim: true
+      },
+      region: {
+        optional: true,
+        isInt: true,
+        toInt: true
+      },
+      interval_time: {
+        optional: true,
+        isInt: true,
+        toInt: true
+      }
+    },
+    ['query']
+  )
+)

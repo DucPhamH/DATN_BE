@@ -107,6 +107,39 @@ export const getListRecipesForChefController = async (req: Request, res: Respons
   })
 }
 
+export const getListRecipesForUserController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const {
+    page,
+    limit,
+    sort,
+    status,
+    search,
+    category_recipe_id,
+    difficult_level,
+    processing_food,
+    region,
+    interval_time
+  } = req.query
+
+  const result = await recipeService.getListRecipesForUserService({
+    user_id: user.user_id,
+    page: Number(page),
+    limit: Number(limit),
+    sort: sort as string,
+    search: search as string,
+    category_recipe_id: category_recipe_id as string,
+    difficult_level: Number(difficult_level),
+    processing_food: processing_food as string,
+    region: Number(region),
+    interval_time: Number(interval_time)
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.GET_LIST_RECIPE_FOR_USER_SUCCESS
+  })
+}
+
 export const getRecicpeForChefController = async (req: Request, res: Response) => {
   const { id } = req.params
   const user = req.decoded_authorization as TokenPayload
@@ -117,5 +150,97 @@ export const getRecicpeForChefController = async (req: Request, res: Response) =
   return res.json({
     result,
     message: RECIPE_MESSAGE.GET_RECIPE_FOR_CHEF_SUCCESS
+  })
+}
+
+export const getRecipeForUserController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const user = req.decoded_authorization as TokenPayload
+  const result = await recipeService.getRecipeForUserService({
+    user_id: user.user_id,
+    recipe_id: id
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.GET_RECIPE_FOR_USER_SUCCESS
+  })
+}
+
+export const likeRecipeController = async (req: Request, res: Response) => {
+  const { recipe_id } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await recipeService.likeRecipeService({
+    user_id: user.user_id,
+    recipe_id
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.LIKE_RECIPE_SUCCESS
+  })
+}
+
+export const unlikeRecipeController = async (req: Request, res: Response) => {
+  const { recipe_id } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await recipeService.unlikeRecipeService({
+    user_id: user.user_id,
+    recipe_id
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.LIKE_RECIPE_SUCCESS
+  })
+}
+
+export const createCommentRecipeController = async (req: Request, res: Response) => {
+  const { recipe_id, content } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await recipeService.createCommentRecipeService({
+    user_id: user.user_id,
+    recipe_id,
+    content
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.CREATE_COMMENT_RECIPE_SUCCESS
+  })
+}
+
+export const deleteCommentRecipeController = async (req: Request, res: Response) => {
+  const { comment_id } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await recipeService.deleteCommentRecipeService({
+    user_id: user.user_id,
+    comment_id
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.DELETE_COMMENT_RECIPE_SUCCESS
+  })
+}
+
+export const bookmarkRecipeController = async (req: Request, res: Response) => {
+  const { recipe_id } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await recipeService.bookmarkRecipeService({
+    user_id: user.user_id,
+    recipe_id
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.BOOKMARK_RECIPE_SUCCESS
+  })
+}
+
+export const unbookmarkRecipeController = async (req: Request, res: Response) => {
+  const { recipe_id } = req.body
+  const user = req.decoded_authorization as TokenPayload
+  const result = await recipeService.unbookmarkRecipeService({
+    user_id: user.user_id,
+    recipe_id
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.UNBOOKMARK_RECIPE_SUCCESS
   })
 }
