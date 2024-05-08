@@ -167,6 +167,11 @@ export const getListRecipeForUserValidator = validate(
         optional: true,
         isInt: true,
         toInt: true
+      },
+      type: {
+        optional: true,
+        isInt: true,
+        toInt: true
       }
     },
     ['query']

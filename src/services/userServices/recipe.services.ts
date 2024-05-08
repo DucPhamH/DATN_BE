@@ -1,6 +1,8 @@
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
 import { RecipeStatus, RecipeTime } from '~/constants/enums'
+import HTTP_STATUS from '~/constants/httpStatus'
+import { RECIPE_MESSAGE } from '~/constants/messages'
 import {
   CreateRecipeBody,
   GetListRecipeForChefQuery,
@@ -198,7 +200,8 @@ class RecipeService {
     difficult_level,
     processing_food,
     region,
-    interval_time
+    interval_time,
+    type
   }: GetListRecipeForUserQuery) {
     const condition: any = {
       status: RecipeStatus.accepted
@@ -257,6 +260,10 @@ class RecipeService {
       if (interval_time === RecipeTime.moreThan120) {
         condition.time = { $gte: 120 }
       }
+    }
+
+    if (type || type === 0) {
+      condition.type = type
     }
 
     const recipes = await RecipeModel.aggregate([
@@ -551,13 +558,14 @@ class RecipeService {
 
     if (!recipe) {
       throw new ErrorWithStatus({
-        message: 'Recipe not found',
-        status: 404
+        message: RECIPE_MESSAGE.RECIPE_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
       })
     }
 
     // nếu time là NaN thì gán time = time cũ
     if (isNaN(Number(time))) {
+      console.log('time', time)
       time = recipe.time
     }
 
@@ -566,6 +574,7 @@ class RecipeService {
     }
 
     if (isNaN(Number(difficult_level))) {
+      console.log('difficult_level', difficult_level)
       difficult_level = recipe.difficult_level
     }
 
@@ -711,6 +720,62 @@ class RecipeService {
       recipe_id: new ObjectId(recipe_id)
     })
     return bookmark
+  }
+  async getCommentRecipeService({ recipe_id, page, limit }: { recipe_id: string; page: number; limit: number }) {
+    if (!limit) {
+      limit = 3
+    }
+    if (!page) {
+      page = 1
+    }
+    const comments = await CommentRecipeModel.aggregate([
+      {
+        $match: {
+          recipe_id: new ObjectId(recipe_id),
+          is_banned: false
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      // loại bỏ password của user
+      {
+        $project: {
+          'user.password': 0
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+
+    const findComments = await CommentRecipeModel.find({
+      recipe_id: new ObjectId(recipe_id),
+      is_banned: false
+    })
+
+    const totalPage = Math.ceil(findComments.length / limit)
+
+    return {
+      comments,
+      totalPage,
+      page,
+      limit
+    }
   }
 }
 

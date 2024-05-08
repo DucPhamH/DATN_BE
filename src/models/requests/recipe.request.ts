@@ -52,4 +52,5 @@ export interface GetListRecipeForUserQuery {
   processing_food?: string
   region?: number
   interval_time?: number
+  type?: number
 }

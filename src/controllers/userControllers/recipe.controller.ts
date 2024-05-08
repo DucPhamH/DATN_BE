@@ -48,7 +48,6 @@ export const createRecipeForChefController = async (req: Request, res: Response)
 
 export const updateRecipeForChefController = async (req: Request, res: Response) => {
   const file = req.file
-  console.log(req.file)
   const { title, description, content, video, time, region, difficult_level, category_recipe_id, processing_food } =
     req.body
   const { id } = req.params
@@ -113,13 +112,13 @@ export const getListRecipesForUserController = async (req: Request, res: Respons
     page,
     limit,
     sort,
-    status,
     search,
     category_recipe_id,
     difficult_level,
     processing_food,
     region,
-    interval_time
+    interval_time,
+    type
   } = req.query
 
   const result = await recipeService.getListRecipesForUserService({
@@ -132,7 +131,8 @@ export const getListRecipesForUserController = async (req: Request, res: Respons
     difficult_level: Number(difficult_level),
     processing_food: processing_food as string,
     region: Number(region),
-    interval_time: Number(interval_time)
+    interval_time: Number(interval_time),
+    type: Number(type)
   })
   return res.json({
     result,
@@ -242,5 +242,18 @@ export const unbookmarkRecipeController = async (req: Request, res: Response) =>
   return res.json({
     result,
     message: RECIPE_MESSAGE.UNBOOKMARK_RECIPE_SUCCESS
+  })
+}
+
+export const getCommentRecipeController = async (req: Request, res: Response) => {
+  const { recipe_id, page, limit } = req.query
+  const result = await recipeService.getCommentRecipeService({
+    recipe_id: recipe_id as string,
+    page: Number(page),
+    limit: Number(limit)
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.GET_COMMENT_RECIPE_SUCCESS
   })
 }

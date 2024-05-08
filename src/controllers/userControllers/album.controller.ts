@@ -59,10 +59,27 @@ export const getListAlbumForUserController = async (req: Request, res: Response)
 
 export const getAlbumForUserController = async (req: Request, res: Response) => {
   const { id } = req.params
-  const result = await albumService.getAlbumForUserService({ album_id: id })
+  const user = req.decoded_authorization as TokenPayload
+  const result = await albumService.getAlbumForUserService({ album_id: id, user_id: user.user_id })
 
   return res.json({
     message: ALBUM_MESSAGE.GET_ALBUM_SUCCESS,
+    result
+  })
+}
+
+export const getRecipesInAlbumController = async (req: Request, res: Response) => {
+  const { album_id, limit, page } = req.query
+  const user = req.decoded_authorization as TokenPayload
+  const result = await albumService.getRecipesInAlbumService({
+    user_id: user.user_id,
+    album_id: album_id as string,
+    limit: Number(limit),
+    page: Number(page)
+  })
+
+  return res.json({
+    message: ALBUM_MESSAGE.GET_RECIPES_IN_ALBUM_SUCCESS,
     result
   })
 }
@@ -112,6 +129,34 @@ export const updateAlbumForChefController = async (req: Request, res: Response) 
 
   return res.json({
     message: ALBUM_MESSAGE.UPDATE_ALBUM_SUCCESS,
+    result
+  })
+}
+
+export const bookmarkAlbumController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { album_id } = req.body
+  const result = await albumService.bookmarkAlbumService({
+    user_id: user.user_id,
+    album_id
+  })
+
+  return res.json({
+    message: ALBUM_MESSAGE.BOOKMARK_ALBUM_SUCCESS,
+    result
+  })
+}
+
+export const unBookmarkAlbumController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { album_id } = req.body
+  const result = await albumService.unBookmarkAlbumService({
+    user_id: user.user_id,
+    album_id
+  })
+
+  return res.json({
+    message: ALBUM_MESSAGE.UN_BOOKMARK_ALBUM_SUCCESS,
     result
   })
 }

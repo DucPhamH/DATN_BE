@@ -8,7 +8,6 @@ export const checkRole = (roles: number[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     // try {
     const user = req.decoded_authorization
-    console.log(user)
     if (user && roles.includes(user.role)) {
       return next()
     }

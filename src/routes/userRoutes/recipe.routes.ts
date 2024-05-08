@@ -6,6 +6,7 @@ import {
   createRecipeForChefController,
   deleteCommentRecipeController,
   getAllRecipeCategoryController,
+  getCommentRecipeController,
   getListRecipesForChefController,
   getListRecipesForUserController,
   getRecicpeForChefController,
@@ -41,6 +42,7 @@ recipesRouter.post('/actions/like', accessTokenValidator, wrapRequestHandler(lik
 recipesRouter.post('/actions/unlike', accessTokenValidator, wrapRequestHandler(unlikeRecipeController))
 
 recipesRouter.post('/actions/comment', accessTokenValidator, wrapRequestHandler(createCommentRecipeController))
+recipesRouter.get('/actions/comment', accessTokenValidator, wrapRequestHandler(getCommentRecipeController))
 recipesRouter.post('/actions/delete-comment', accessTokenValidator, wrapRequestHandler(deleteCommentRecipeController))
 
 recipesRouter.post('/actions/bookmark', accessTokenValidator, wrapRequestHandler(bookmarkRecipeController))

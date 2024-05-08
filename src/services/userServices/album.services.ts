@@ -10,6 +10,7 @@ import {
   UpdateAlbumForChefBody
 } from '~/models/requests/album.request'
 import AlbumModel from '~/models/schemas/album.schema'
+import BookmarkAlbumModel from '~/models/schemas/bookmarkAlbum.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
 import { ErrorWithStatus } from '~/utils/error'
 
@@ -205,7 +206,8 @@ class AlbumService {
     return album
   }
 
-  async getAlbumForUserService({ album_id }: { album_id: string }) {
+  async getAlbumForUserService({ album_id, user_id }: { album_id: string; user_id: string }) {
+    //nối với bảng recipe
     const album = await AlbumModel.aggregate([
       {
         $match: {
@@ -220,10 +222,169 @@ class AlbumService {
           foreignField: 'album_id',
           as: 'recipes'
         }
+      },
+      // lookup tới bảng bookmark
+      {
+        $lookup: {
+          from: 'bookmark_albums',
+          localField: '_id',
+          foreignField: 'album_id',
+          as: 'bookmarks'
+        }
+      },
+      // // check xem user_id đã bookmark  album_id chưa
+      {
+        $addFields: {
+          is_bookmarked: {
+            $in: [new ObjectId(user_id), '$bookmarks.user_id']
+          }
+        }
+      },
+      // đếm số lượt bookmark
+      {
+        $addFields: {
+          total_bookmarks: { $size: '$bookmarks' }
+        }
       }
     ])
 
     return album
+  }
+
+  async getRecipesInAlbumService({
+    album_id,
+    user_id,
+    limit,
+    page
+  }: {
+    album_id: string
+    user_id: string
+    limit: number
+    page: number
+  }) {
+    if (!page) {
+      page = 1
+    }
+
+    if (!limit) {
+      limit = 10
+    }
+    const recipes = await RecipeModel.aggregate([
+      {
+        $match: {
+          album_id: new ObjectId(album_id)
+        }
+      },
+      {
+        $lookup: {
+          from: 'recipe_categories',
+          localField: 'category_recipe_id',
+          foreignField: '_id',
+          as: 'category_recipe'
+        }
+      },
+      {
+        $unwind: '$category_recipe'
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      // loại bỏ password của user
+      {
+        $project: {
+          'user.password': 0
+        }
+      },
+      // lookup tới bảng bookmark
+      {
+        $lookup: {
+          from: 'bookmark_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'bookmarks'
+        }
+      },
+      // // check xem user_id đã bookmark recipe_id chưa
+      {
+        $addFields: {
+          is_bookmarked: {
+            $in: [new ObjectId(user_id), '$bookmarks.user_id']
+          }
+        }
+      },
+      // đếm số lượt bookmark
+      {
+        $addFields: {
+          total_bookmarks: { $size: '$bookmarks' }
+        }
+      },
+      // nối bảng like
+      {
+        $lookup: {
+          from: 'like_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'likes'
+        }
+      },
+      // check xem user_id đã like recipe_id chưa
+      {
+        $addFields: {
+          is_liked: {
+            $in: [new ObjectId(user_id), '$likes.user_id']
+          }
+        }
+      },
+      // đếm số lượt like
+      {
+        $addFields: {
+          total_likes: { $size: '$likes' }
+        }
+      },
+
+      // nối bảng comment
+      {
+        $lookup: {
+          from: 'comment_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'comments'
+        }
+      },
+      // đếm số lượt comment
+      {
+        $addFields: {
+          total_comments: { $size: '$comments' }
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+
+    const findRecipes = await RecipeModel.find({ album_id: new ObjectId(album_id) })
+    const totalPage = Math.ceil(findRecipes.length / limit)
+
+    return {
+      recipes,
+      totalPage,
+      page,
+      limit
+    }
   }
 
   async deleteRecipeInAlbumForChefService({ user_id, album_id, recipe_id }: DeleteRecipeInAlbumForChefBody) {
@@ -256,6 +417,29 @@ class AlbumService {
     // sửa trường album_id trong bảng recipe có id nằm trong array_recipes_id
     await RecipeModel.updateMany({ _id: { $in: array_recipes_id } }, { album_id: new ObjectId(album_id) })
     return album
+  }
+
+  async bookmarkAlbumService({ user_id, album_id }: { user_id: string; album_id: string }) {
+    const newBookmark = await BookmarkAlbumModel.findOneAndUpdate(
+      {
+        user_id: new ObjectId(user_id),
+        album_id: new ObjectId(album_id)
+      },
+      {
+        user_id: new ObjectId(user_id),
+        album_id: new ObjectId(album_id)
+      },
+      { upsert: true, new: true }
+    )
+    return newBookmark
+  }
+
+  async unBookmarkAlbumService({ user_id, album_id }: { user_id: string; album_id: string }) {
+    await BookmarkAlbumModel.findOneAndDelete({
+      user_id: new ObjectId(user_id),
+      album_id: new ObjectId(album_id)
+    })
+    return true
   }
 }
 

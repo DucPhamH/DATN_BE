@@ -1,11 +1,14 @@
 import { Router } from 'express'
 import {
+  bookmarkAlbumController,
   createAlbumController,
   deleteRecipeInAlbumForChefController,
   getAlbumForChefController,
   getAlbumForUserController,
   getListAlbumForChefController,
   getListAlbumForUserController,
+  getRecipesInAlbumController,
+  unBookmarkAlbumController,
   updateAlbumForChefController
 } from '~/controllers/userControllers/album.controller'
 import { createAlbumValidator, getListAlbumForChefValidator } from '~/middlewares/album.middleware'
@@ -25,7 +28,11 @@ albumsRouter.get(
 
 albumsRouter.get('/user/get-albums', getListAlbumForChefValidator, wrapRequestHandler(getListAlbumForUserController))
 
-albumsRouter.get('/user/get-album/:id', wrapRequestHandler(getAlbumForUserController))
+albumsRouter.get('/user/get-album/:id', accessTokenValidator, wrapRequestHandler(getAlbumForUserController))
+albumsRouter.get('/user/get-recipes-in-album', accessTokenValidator, wrapRequestHandler(getRecipesInAlbumController))
+
+albumsRouter.post('/actions/bookmark', accessTokenValidator, wrapRequestHandler(bookmarkAlbumController))
+albumsRouter.post('/actions/unbookmark', accessTokenValidator, wrapRequestHandler(unBookmarkAlbumController))
 
 albumsRouter.post(
   '/chef/delete-recipe-in-album',

@@ -144,7 +144,9 @@ export const RECIPE_MESSAGE = {
   CREATE_COMMENT_RECIPE_SUCCESS: 'Tạo bình luận công thức thành công',
   DELETE_COMMENT_RECIPE_SUCCESS: 'Xóa bình luận công thức thành công',
   BOOKMARK_RECIPE_SUCCESS: 'Bookmark công thức thành công',
-  UNBOOKMARK_RECIPE_SUCCESS: 'Unbookmark công thức thành công'
+  UNBOOKMARK_RECIPE_SUCCESS: 'Unbookmark công thức thành công',
+  GET_COMMENT_RECIPE_SUCCESS: 'Lấy bình luận công thức thành công',
+  RECIPE_NOT_FOUND: 'Không tìm thấy công thức'
 }
 
 export const ALBUM_MESSAGE = {
@@ -153,5 +155,8 @@ export const ALBUM_MESSAGE = {
   GET_ALBUM_SUCCESS: 'Lấy thông tin album thành công',
   ALBUM_NOT_FOUND: 'Không tìm thấy album',
   DELETE_RECIPE_IN_ALBUM_SUCCESS: 'Xóa công thức trong album thành công',
-  UPDATE_ALBUM_SUCCESS: 'Cập nhật album thành công'
+  UPDATE_ALBUM_SUCCESS: 'Cập nhật album thành công',
+  GET_RECIPES_IN_ALBUM_SUCCESS: 'Lấy danh sách công thức trong album thành công',
+  BOOKMARK_ALBUM_SUCCESS: 'Bookmark album thành công',
+  UN_BOOKMARK_ALBUM_SUCCESS: 'Unbookmark album thành công'
 }
