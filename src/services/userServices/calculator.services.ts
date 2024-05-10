@@ -115,17 +115,33 @@ class CalculatorServices {
   async saveBMIService({ weight, height, BMI, user_id }: SaveBMIReqBody) {
     // save vào db
     const convertHeight = convertMetterToCentimeter(height)
-    const user = await UserModel.findByIdAndUpdate(user_id, { weight, height: convertHeight, BMI }, { new: true })
 
-    // cập nhật lại những chỉ số cùng sử dụng các giá trị với BMI , nếu chỉ số đó mà bằng null tức là chưa tính toán thì sẽ không cập nhật chỉ số đó
-    const updateData: Record<string, any> = {}
+    // tìm user theo id và so sánh weight cũ với weight mới nếu khác thì cập nhật lại weight và thêm weight mới vào pre_weight còn nếu giống nhau thì cập nhập lại date của weight cũ trong pre_weight
+    const user = await UserModel.findOne({ _id: user_id })
+
     if (!user) {
       throw new ErrorWithStatus({
         message: AUTH_USER_MESSAGE.USER_NOT_FOUND,
         status: HTTP_STATUS.NOT_FOUND
       })
     }
-    // nếu các chỉ số khác null thì cập nhật
+
+    if (user.weight !== weight) {
+      const pre_weight = user.pre_weight || []
+      pre_weight.push({ weight: weight, date: new Date() })
+      await UserModel.findByIdAndUpdate(user_id, { weight, height: convertHeight, BMI, pre_weight }, { new: true })
+    } else {
+      const pre_weight = user.pre_weight || []
+      pre_weight[pre_weight.length - 1].date = new Date()
+      await UserModel.findByIdAndUpdate(user_id, { weight, height: convertHeight, BMI, pre_weight }, { new: true })
+    }
+
+    // const user = await UserModel.findByIdAndUpdate(user_id, { weight, height: convertHeight, BMI }, { new: true })
+
+    // cập nhật lại những chỉ số cùng sử dụng các giá trị với BMI , nếu chỉ số đó mà bằng null tức là chưa tính toán thì sẽ không cập nhật chỉ số đó
+    const updateData: Record<string, any> = {}
+
+    // // nếu các chỉ số khác null thì cập nhật
     if (user.BMR !== null) {
       updateData['BMR'] = this.BMRCalculator(weight, convertHeight, user.age as number, user.gender as string)
     }
@@ -154,7 +170,7 @@ class CalculatorServices {
       updateData['LBM'] = this.LBMCalculator(weight, convertHeight, user.gender as string)
     }
 
-    // cập nhật lại db
+    // // cập nhật lại db
     const updatedUser = await UserModel.findByIdAndUpdate(user_id, updateData, { new: true })
     if (updatedUser) {
       return omit(updatedUser.toObject(), ['password'])
@@ -164,17 +180,39 @@ class CalculatorServices {
     // save vào db
     const convertHeight = convertCentimeterToMetter(height)
     console.log(convertHeight)
-    const user = await UserModel.findByIdAndUpdate(user_id, { weight, height, age, BMR, gender }, { new: true })
 
-    // cập nhật lại những chỉ số cùng sử dụng các giá trị với BMR , nếu chỉ số đó mà bằng null tức là chưa tính toán thì sẽ không cập nhật chỉ số đó
+    // tìm user theo id và so sánh weight cũ với weight mới nếu khác thì cập nhật lại weight và thêm weight mới vào pre_weight còn nếu giống nhau thì cập nhập lại date của weight cũ trong pre_weight
 
-    const updateData: Record<string, any> = {}
+    const user = await UserModel.findOne({ _id: user_id })
+
     if (!user) {
       throw new ErrorWithStatus({
         message: AUTH_USER_MESSAGE.USER_NOT_FOUND,
         status: HTTP_STATUS.NOT_FOUND
       })
     }
+
+    if (user.weight !== weight) {
+      const pre_weight = user.pre_weight || []
+      pre_weight.push({ weight: weight, date: new Date() })
+      await UserModel.findByIdAndUpdate(user_id, { weight, height, age, BMR, gender, pre_weight }, { new: true })
+    } else {
+      const pre_weight = user.pre_weight || []
+      pre_weight[pre_weight.length - 1].date = new Date()
+      await UserModel.findByIdAndUpdate(user_id, { weight, height, age, BMR, gender, pre_weight }, { new: true })
+    }
+
+    // const user = await UserModel.findByIdAndUpdate(user_id, { weight, height, age, BMR, gender }, { new: true })
+
+    // cập nhật lại những chỉ số cùng sử dụng các giá trị với BMR , nếu chỉ số đó mà bằng null tức là chưa tính toán thì sẽ không cập nhật chỉ số đó
+
+    const updateData: Record<string, any> = {}
+    // if (!user) {
+    //   throw new ErrorWithStatus({
+    //     message: AUTH_USER_MESSAGE.USER_NOT_FOUND,
+    //     status: HTTP_STATUS.NOT_FOUND
+    //   })
+    // }
 
     // nếu các chỉ số khác null thì cập nhật
     if (user.BMI !== null) {
@@ -208,20 +246,49 @@ class CalculatorServices {
   async saveTDEEService({ weight, height, age, gender, activity, TDEE, user_id }: SaveTDEEReqBody) {
     // save vào db
     const convertHeight = convertCentimeterToMetter(height)
-    const user = await UserModel.findByIdAndUpdate(
-      user_id,
-      { weight, height, age, gender, activity_level: activity, TDEE },
-      { new: true }
-    )
 
-    // cập nhật lại những chỉ số cùng sử dụng các giá trị với TDEE , nếu chỉ số đó mà bằng null tức là chưa tính toán thì sẽ không cập nhật chỉ số đó'
-    const updateData: Record<string, any> = {}
+    // tìm user theo id và so sánh weight cũ với weight mới nếu khác thì cập nhật lại weight và thêm weight mới vào pre_weight còn nếu giống nhau thì cập nhập lại date của weight cũ trong pre_weight
+    const user = await UserModel.findOne({ _id: user_id })
+
     if (!user) {
       throw new ErrorWithStatus({
         message: AUTH_USER_MESSAGE.USER_NOT_FOUND,
         status: HTTP_STATUS.NOT_FOUND
       })
     }
+
+    if (user.weight !== weight) {
+      const pre_weight = user.pre_weight || []
+      pre_weight.push({ weight: weight, date: new Date() })
+      await UserModel.findByIdAndUpdate(
+        user_id,
+        { weight, height, age, gender, activity_level: activity, TDEE, pre_weight },
+        { new: true }
+      )
+    } else {
+      const pre_weight = user.pre_weight || []
+      pre_weight[pre_weight.length - 1].date = new Date()
+      await UserModel.findByIdAndUpdate(
+        user_id,
+        { weight, height, age, gender, activity_level: activity, TDEE, pre_weight },
+        { new: true }
+      )
+    }
+
+    // const user = await UserModel.findByIdAndUpdate(
+    //   user_id,
+    //   { weight, height, age, gender, activity_level: activity, TDEE },
+    //   { new: true }
+    // )
+
+    // cập nhật lại những chỉ số cùng sử dụng các giá trị với TDEE , nếu chỉ số đó mà bằng null tức là chưa tính toán thì sẽ không cập nhật chỉ số đó'
+    const updateData: Record<string, any> = {}
+    // if (!user) {
+    //   throw new ErrorWithStatus({
+    //     message: AUTH_USER_MESSAGE.USER_NOT_FOUND,
+    //     status: HTTP_STATUS.NOT_FOUND
+    //   })
+    // }
 
     // nếu các chỉ số khác null thì cập nhật
     if (user.BMI !== null) {
@@ -363,11 +430,10 @@ class CalculatorServices {
   async saveLBMService({ weight, height, gender, LBM, user_id }: SaveLBMReqBody) {
     // save vào db
     const convertHeight = convertCentimeterToMetter(height)
-    const user = await UserModel.findByIdAndUpdate(user_id, { weight, height, gender, LBM }, { new: true })
+    // const user = await UserModel.findByIdAndUpdate(user_id, { weight, height, gender, LBM }, { new: true })
 
-    // cập nhật lại những chỉ số cùng sử dụng các giá trị với LBM , nếu chỉ số đó mà bằng null tức là chưa tính toán thì sẽ không cập nhật chỉ số đó'
-
-    const updateData: Record<string, any> = {}
+    // tìm user theo id và so sánh weight cũ với weight mới nếu khác thì cập nhật lại weight và thêm weight mới vào pre_weight còn nếu giống nhau thì cập nhập lại date của weight cũ trong pre_weight
+    const user = await UserModel.findOne({ _id: user_id })
 
     if (!user) {
       throw new ErrorWithStatus({
@@ -375,6 +441,20 @@ class CalculatorServices {
         status: HTTP_STATUS.NOT_FOUND
       })
     }
+
+    if (user.weight !== weight) {
+      const pre_weight = user.pre_weight || []
+      pre_weight.push({ weight: weight, date: new Date() })
+      await UserModel.findByIdAndUpdate(user_id, { weight, height, gender, LBM, pre_weight }, { new: true })
+    } else {
+      const pre_weight = user.pre_weight || []
+      pre_weight[pre_weight.length - 1].date = new Date()
+      await UserModel.findByIdAndUpdate(user_id, { weight, height, gender, LBM, pre_weight }, { new: true })
+    }
+
+    // cập nhật lại những chỉ số cùng sử dụng các giá trị với LBM , nếu chỉ số đó mà bằng null tức là chưa tính toán thì sẽ không cập nhật chỉ số đó'
+
+    const updateData: Record<string, any> = {}
 
     // nếu các chỉ số khác null thì cập nhật
 

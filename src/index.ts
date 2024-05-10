@@ -18,12 +18,14 @@ import calculatorsRouter from './routes/userRoutes/calculator.routes'
 import workoutScheduleRouter from './routes/userRoutes/workoutSchedule.routes'
 import recipesRouter from './routes/userRoutes/recipe.routes'
 import albumsRouter from './routes/userRoutes/album.routes'
+import ingredientsRouter from './routes/userRoutes/ingredient.routes'
+import mealSchedulesRouter from './routes/userRoutes/mealSchedule.routes'
 const app: Express = express()
 const port = envConfig.port
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 1000, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  max: 1000, // Limit each IP to 1000 requests per `window` (here, per 15 minutes)
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false // Disable the `X-RateLimit-*` headers
   // store: ... , // Use an external store for more precise rate limiting
@@ -56,8 +58,10 @@ app.use('/api/posts', postsRouter)
 app.use('/api/activities', activitiesRouter)
 app.use('/api/calculators', calculatorsRouter)
 app.use('/api/workout-schedules', workoutScheduleRouter)
+app.use('/api/meal-schedules', mealSchedulesRouter)
 app.use('/api/recipes', recipesRouter)
 app.use('/api/albums', albumsRouter)
+app.use('/api/ingredients', ingredientsRouter)
 
 app.use('/api/admin/auth/admins', authAdminRouter)
 

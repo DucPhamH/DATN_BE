@@ -69,7 +69,6 @@ export const updateWorkoutScheduleValidator = validate(
         isString: true,
         trim: true
       },
-
       calo_target: {
         notEmpty: true,
         isNumeric: true

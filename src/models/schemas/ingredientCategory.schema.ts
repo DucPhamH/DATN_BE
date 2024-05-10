@@ -1,17 +1,17 @@
 import mongoose from 'mongoose'
 
-export interface IngerdientCategories {
+export interface IngredientCategory {
   name: string
 }
-const IngerdientCategorySchema = new mongoose.Schema<IngerdientCategories>(
+const IngredientCategorySchema = new mongoose.Schema<IngredientCategory>(
   {
     name: { type: String, default: '', required: true, index: true }
   },
   {
-    collection: 'ingerdient_categories'
+    collection: 'ingredient_categories'
   }
 )
 
-const IngerdientCategoryModel = mongoose.model('ingerdient_categories', IngerdientCategorySchema)
+const IngredientCategoryModel = mongoose.model('ingredient_categories', IngredientCategorySchema)
 
-export default IngerdientCategoryModel
+export default IngredientCategoryModel

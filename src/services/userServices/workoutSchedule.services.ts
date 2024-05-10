@@ -78,7 +78,8 @@ class WorkoutScheduleService {
       )
       // cập nhật lại calo_burn của các item trong workout_schedule_id
       const workoutItems = await WorkoutItemModel.find({
-        workout_schedule_id: new ObjectId(workout_schedule_id)
+        workout_schedule_id: new ObjectId(workout_schedule_id),
+        is_completed: false
       })
 
       // chuyển workoutItems từ document sang mảng

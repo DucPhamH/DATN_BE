@@ -118,3 +118,28 @@ export enum RecipeTime {
   from60To120,
   moreThan120
 }
+
+export enum PurposeValue {
+  gainWeight,
+  loseWeight,
+  maintainWeight
+}
+
+export const UnitValue = {
+  gram: 'gram',
+  ml: 'ml',
+  piece: 'cái',
+  plate: 'đĩa',
+  loaf: 'ổ',
+  slice: 'lát',
+  pack: 'gói',
+  cup: 'tách/chén',
+  glass: 'cốc/ly',
+  can: 'lon',
+  bowl: 'tô/bát',
+  jar: 'hũ/hộp',
+  bottle: 'chai',
+  roll: 'cuốn',
+  pill: 'viên',
+  fruit: 'trái/quả'
+}

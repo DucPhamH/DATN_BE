@@ -123,6 +123,25 @@ export const WORKOUT_MESSAGE = {
   WEIGHT_SYNC_SUCCESS: 'Đồng bộ cân nặng thành công'
 }
 
+export const MEAL_MESSAGE = {
+  BMI_TDEE_NOT_FOUND: 'Bạn phải tính chỉ số BMI và TDEE trước',
+  CREATE_MEAL_SCHEDULE_SUCCESS: 'Tạo meal schedule thành công',
+  GET_LIST_MEAL_SCHEDULE_SUCCESS: 'Lấy danh sách meal schedule thành công',
+  GET_MEAL_SCHEDULE_SUCCESS: 'Lấy thông tin meal schedule thành công',
+  START_DATE_INVALID: 'Ngày bắt đầu không hợp lệ',
+  END_DATE_INVALID: 'Ngày kết thúc không hợp lệ',
+  WEIGHT_TARGET_INVALID: 'Cân nặng mục tiêu không hợp lệ',
+  PURPOSE_INVALID: 'Mục đích không hợp lệ',
+  INVALID_WEIGHT_TARGET: 'Cân nặng mục tiêu không hợp lệ',
+  MEAL_SCHEDULE_NOT_FOUND: 'Không tìm thấy meal schedule',
+  UPDATE_MEAL_SCHEDULE_SUCCESS: 'Cập nhật meal schedule thành công',
+  CREATE_MEAL_ITEM_SUCCESS: 'Tạo meal item thành công',
+  GET_LIST_DATE_MEAL_ITEM_SUCCESS: 'Lấy danh sách ngày meal item thành công',
+  COMPLETE_DATE_MEAL_ITEM_SUCCESS: 'Hoàn thành ngày meal item thành công',
+  DELETE_DATE_MEAL_ITEM_SUCCESS: 'Xóa ngày meal item thành công',
+  DELETE_MEAL_SCHEDULE_SUCCESS: 'Xóa meal schedule thành công'
+}
+
 export const RECIPE_MESSAGE = {
   CREATE_RECIPE_SUCCESS: 'Tạo công thức thành công',
   GET_RECIPE_SUCCESS: 'Lấy thông tin công thức thành công',
@@ -159,4 +178,9 @@ export const ALBUM_MESSAGE = {
   GET_RECIPES_IN_ALBUM_SUCCESS: 'Lấy danh sách công thức trong album thành công',
   BOOKMARK_ALBUM_SUCCESS: 'Bookmark album thành công',
   UN_BOOKMARK_ALBUM_SUCCESS: 'Unbookmark album thành công'
+}
+
+export const INGREDIENT_MESSAGE = {
+  GET_ALL_CATEGORY_INGREDIENTS_SUCCESS: 'Lấy danh mục nguyên liệu thành công',
+  GET_LIST_INGREDIENTS_SUCCESS: 'Lấy danh sách nguyên liệu thành công'
 }

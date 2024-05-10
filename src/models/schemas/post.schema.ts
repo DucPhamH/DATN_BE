@@ -1,6 +1,6 @@
 import mongoose, { Types } from 'mongoose'
 import { PostStatus, PostTypes } from '~/constants/enums'
-import moment from 'moment-timezone'
+import moment from 'moment'
 
 export interface Post {
   content?: string

@@ -1,3 +1,4 @@
+import moment from 'moment'
 import mongoose from 'mongoose'
 import { UserGender, UserRoles, UserStatus } from '~/constants/enums'
 
@@ -12,6 +13,10 @@ export interface User {
   address?: string
   gender?: string
   weight?: number
+  pre_weight?: {
+    weight: number
+    date: Date
+  }[]
   height?: number
   age?: number
   hip?: number
@@ -59,6 +64,12 @@ const UserSchema = new mongoose.Schema<User>(
       type: Number,
       default: null
     },
+    pre_weight: [
+      {
+        weight: { type: Number, default: null },
+        date: { type: Date, default: moment().toDate() }
+      }
+    ],
     height: {
       type: Number,
       default: null
