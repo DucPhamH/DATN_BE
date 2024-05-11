@@ -47,6 +47,8 @@ BlogSchema.pre('save', async function (next) {
   }
 })
 
+BlogSchema.index({ search_fields: 'text' }, { default_language: 'none' })
+
 const BlogModel = mongoose.model('blogs', BlogSchema)
 
 export default BlogModel

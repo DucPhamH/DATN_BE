@@ -39,7 +39,10 @@ export const followUserController = async (req: Request, res: Response) => {
       status: HTTP_STATUS.BAD_REQUEST
     })
   }
-  const result = await usersService.followUserService(user.user_id, follow_id)
+  const result = await usersService.followUserService({
+    user_id: user.user_id,
+    follow_id: follow_id
+  })
   return res.json({
     message: USER_MESSAGE.FOLLOW_USER_SUCCESS,
     result: result
@@ -49,9 +52,68 @@ export const followUserController = async (req: Request, res: Response) => {
 export const unfollowUserController = async (req: Request, res: Response) => {
   const user = req.decoded_authorization as TokenPayload
   const { follow_id } = req.body
-  const result = await usersService.unfollowUserService(user.user_id, follow_id)
+  const result = await usersService.unfollowUserService({
+    user_id: user.user_id,
+    follow_id: follow_id
+  })
   return res.json({
     message: USER_MESSAGE.UNFOLLOW_USER_SUCCESS,
+    result: result
+  })
+}
+
+export const updateAvatarUserController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const file = req.file
+  const result = await usersService.updateAvatarUserService({
+    user_id: user.user_id,
+    image: file
+  })
+  return res.json({
+    message: USER_MESSAGE.UPDATE_USER_SUCCESS,
+    result: result
+  })
+}
+
+export const updateCoverAvatarUserController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const file = req.file
+  const result = await usersService.updateCoverAvatarUserService({
+    user_id: user.user_id,
+    image: file
+  })
+  return res.json({
+    message: USER_MESSAGE.UPDATE_USER_SUCCESS,
+    result: result
+  })
+}
+
+export const updateUserController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { name, user_name, birthday, address } = req.body
+  const result = await usersService.updateUserService({
+    user_id: user.user_id,
+    name: name,
+    user_name: user_name,
+    birthday: new Date(birthday),
+    address: address
+  })
+  return res.json({
+    message: USER_MESSAGE.UPDATE_USER_SUCCESS,
+    result: result
+  })
+}
+
+export const updatePasswordUserController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { old_password, new_password } = req.body
+  const result = await usersService.changePasswordService({
+    user_id: user.user_id,
+    old_password: old_password,
+    new_password: new_password
+  })
+  return res.json({
+    message: USER_MESSAGE.UPDATE_PASSWORD_SUCCESS,
     result: result
   })
 }

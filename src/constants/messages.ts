@@ -16,7 +16,8 @@ export const AUTH_USER_MESSAGE = {
   GMAIL_NOT_VERIFIED: 'Email chưa được xác thực',
   ACCOUNT_BANNED: 'Tài khoản đã bị khóa',
   UNAUTHORIZED: 'Không có quyền truy cập',
-  USER_NAME_OR_PASSWORD_INCORRECT: 'Tên đăng nhập hoặc mật khẩu không chính xác'
+  USER_NAME_OR_PASSWORD_INCORRECT: 'Tên đăng nhập hoặc mật khẩu không chính xác',
+  OLD_PASSWORD_NEW_PASSWORD_NOT_SAME: 'Mật khẩu cũ và mật khẩu mới không được giống nhau'
 } as const
 
 export const POST_MESSAGE = {
@@ -54,7 +55,11 @@ export const USER_MESSAGE = {
   FOLLOW_USER_SUCCESS: 'Theo dõi người dùng thành công',
   CANNOT_FOLLOW_YOURSELF: 'Không thể theo dõi chính mình',
   GET_ME_SUCCESS: 'Lấy thông tin cá nhân thành công',
-  UNFOLLOW_USER_SUCCESS: 'Bỏ theo dõi người dùng thành công'
+  UNFOLLOW_USER_SUCCESS: 'Bỏ theo dõi người dùng thành công',
+  USER_NOT_FOUND: 'Không tìm thấy người dùng',
+  USER_NAME_ALREADY_EXISTS: 'Tên người dùng đã tồn tại',
+  OLD_PASSWORD_INCORRECT: 'Mật khẩu cũ không chính xác',
+  UPDATE_PASSWORD_SUCCESS: 'Cập nhật mật khẩu thành công'
 } as const
 
 export const BLOG_MESSAGE = {

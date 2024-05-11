@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { UserRoles } from '~/constants/enums'
 import {
   bookmarkAlbumController,
   createAlbumController,
@@ -13,17 +14,47 @@ import {
 } from '~/controllers/userControllers/album.controller'
 import { createAlbumValidator, getListAlbumForChefValidator } from '~/middlewares/album.middleware'
 import { accessTokenValidator } from '~/middlewares/authUser.middleware'
+import { checkRole } from '~/middlewares/roles.middleware'
 import { wrapRequestHandler } from '~/utils/handler'
 
 const albumsRouter = Router()
 
-albumsRouter.post('/', accessTokenValidator, createAlbumValidator, wrapRequestHandler(createAlbumController))
+albumsRouter.post(
+  '/',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  createAlbumValidator,
+  wrapRequestHandler(createAlbumController)
+)
 
 albumsRouter.get(
   '/chef/get-albums',
   accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
   getListAlbumForChefValidator,
   wrapRequestHandler(getListAlbumForChefController)
+)
+
+albumsRouter.post(
+  '/chef/delete-recipe-in-album',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  wrapRequestHandler(deleteRecipeInAlbumForChefController)
+)
+
+albumsRouter.put(
+  '/chef/update-album/:id',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  createAlbumValidator,
+  wrapRequestHandler(updateAlbumForChefController)
+)
+
+albumsRouter.get(
+  '/chef/get-album/:id',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  wrapRequestHandler(getAlbumForChefController)
 )
 
 albumsRouter.get('/user/get-albums', getListAlbumForChefValidator, wrapRequestHandler(getListAlbumForUserController))
@@ -33,20 +64,5 @@ albumsRouter.get('/user/get-recipes-in-album', accessTokenValidator, wrapRequest
 
 albumsRouter.post('/actions/bookmark', accessTokenValidator, wrapRequestHandler(bookmarkAlbumController))
 albumsRouter.post('/actions/unbookmark', accessTokenValidator, wrapRequestHandler(unBookmarkAlbumController))
-
-albumsRouter.post(
-  '/chef/delete-recipe-in-album',
-  accessTokenValidator,
-  wrapRequestHandler(deleteRecipeInAlbumForChefController)
-)
-
-albumsRouter.put(
-  '/chef/update-album/:id',
-  accessTokenValidator,
-  createAlbumValidator,
-  wrapRequestHandler(updateAlbumForChefController)
-)
-
-albumsRouter.get('/chef/get-album/:id', accessTokenValidator, wrapRequestHandler(getAlbumForChefController))
 
 export default albumsRouter

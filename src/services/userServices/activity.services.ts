@@ -1,3 +1,4 @@
+import { cond } from 'lodash'
 import ActivityModel from '~/models/schemas/activity.schema'
 
 class ActivityService {
@@ -15,8 +16,11 @@ class ActivityService {
     const condition: any = {}
 
     if (search !== undefined) {
-      condition.activity = { $regex: search, $options: 'i' }
+      // condition.activity = { $regex: search, $options: 'i' }
+      condition.$text = { $search: search }
     }
+
+    console.log(condition)
 
     if (activity_category !== undefined) {
       condition.activity_category = activity_category

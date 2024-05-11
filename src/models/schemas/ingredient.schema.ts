@@ -10,7 +10,7 @@ export interface Ingredient {
 }
 const IngredientSchema = new mongoose.Schema<Ingredient>(
   {
-    name: { type: String, default: '', required: true, index: true },
+    name: { type: String, default: '', required: true },
     energy: { type: Number, default: 0 },
     protein: { type: Number, default: 0 },
     fat: { type: Number, default: 0 },
@@ -25,6 +25,8 @@ const IngredientSchema = new mongoose.Schema<Ingredient>(
     collection: 'ingredients'
   }
 )
+
+IngredientSchema.index({ name: 'text', ingredient_category_ID: 'text' }, { default_language: 'none' })
 
 const IngredientModel = mongoose.model('ingredients', IngredientSchema)
 

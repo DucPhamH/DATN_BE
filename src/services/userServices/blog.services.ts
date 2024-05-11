@@ -50,7 +50,8 @@ class BlogsService {
     }
 
     if (search !== undefined) {
-      condition.search_fields = { $regex: search, $options: 'i' }
+      // condition.search_fields = { $regex: search, $options: 'i' }
+      condition.$text = { $search: search }
     }
 
     if (category_blog_id !== undefined) {
@@ -184,7 +185,8 @@ class BlogsService {
     }
 
     if (search !== undefined) {
-      condition.search_fields = { $regex: search, $options: 'i' }
+      // condition.search_fields = { $regex: search, $options: 'i' }
+      condition.$text = { $search: search }
     }
 
     if (category_blog_id !== undefined) {

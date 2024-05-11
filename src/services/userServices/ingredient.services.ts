@@ -11,7 +11,7 @@ class IngredientServices {
     const condition: any = {}
 
     if (search !== undefined) {
-      condition.name = { $regex: search, $options: 'i' }
+      condition.$text = { $search: search }
     }
 
     if (ingredient_category_ID !== undefined) {

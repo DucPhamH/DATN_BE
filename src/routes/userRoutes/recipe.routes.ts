@@ -30,14 +30,6 @@ const recipesRouter = Router()
 
 recipesRouter.get('/category/get-category', wrapRequestHandler(getAllRecipeCategoryController))
 
-recipesRouter.post(
-  '/',
-  accessTokenValidator,
-  upload.single('image'),
-  wrapRequestHandler(createRecipeValidator()),
-  wrapRequestHandler(createRecipeForChefController)
-)
-
 recipesRouter.post('/actions/like', accessTokenValidator, wrapRequestHandler(likeRecipeController))
 recipesRouter.post('/actions/unlike', accessTokenValidator, wrapRequestHandler(unlikeRecipeController))
 
@@ -48,42 +40,45 @@ recipesRouter.post('/actions/delete-comment', accessTokenValidator, wrapRequestH
 recipesRouter.post('/actions/bookmark', accessTokenValidator, wrapRequestHandler(bookmarkRecipeController))
 recipesRouter.post('/actions/unbookmark', accessTokenValidator, wrapRequestHandler(unbookmarkRecipeController))
 
+recipesRouter.post(
+  '/',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  upload.single('image'),
+  wrapRequestHandler(createRecipeValidator()),
+  wrapRequestHandler(createRecipeForChefController)
+)
+
 recipesRouter.get(
   '/chef/get-recipes',
   accessTokenValidator,
   getListRecipeForChefValidator,
-  wrapRequestHandler(checkRole([UserRoles.user])),
+  wrapRequestHandler(checkRole([UserRoles.chef])),
   wrapRequestHandler(getListRecipesForChefController)
-)
-
-recipesRouter.get(
-  '/user/get-recipes',
-  accessTokenValidator,
-  getListRecipeForUserValidator,
-  wrapRequestHandler(checkRole([UserRoles.user])),
-  wrapRequestHandler(getListRecipesForUserController)
 )
 
 recipesRouter.get(
   '/chef/get-recipe/:id',
   accessTokenValidator,
-  wrapRequestHandler(checkRole([UserRoles.user])),
+  wrapRequestHandler(checkRole([UserRoles.chef])),
   wrapRequestHandler(getRecicpeForChefController)
-)
-
-recipesRouter.get(
-  '/user/get-recipe/:id',
-  accessTokenValidator,
-  wrapRequestHandler(checkRole([UserRoles.user])),
-  wrapRequestHandler(getRecipeForUserController)
 )
 
 recipesRouter.put(
   '/chef/update-recipe/:id',
   accessTokenValidator,
   upload.single('image'),
-  wrapRequestHandler(checkRole([UserRoles.user])),
+  wrapRequestHandler(checkRole([UserRoles.chef])),
   wrapRequestHandler(updateRecipeForChefController)
+)
+
+recipesRouter.get('/user/get-recipe/:id', accessTokenValidator, wrapRequestHandler(getRecipeForUserController))
+
+recipesRouter.get(
+  '/user/get-recipes',
+  accessTokenValidator,
+  getListRecipeForUserValidator,
+  wrapRequestHandler(getListRecipesForUserController)
 )
 
 export default recipesRouter

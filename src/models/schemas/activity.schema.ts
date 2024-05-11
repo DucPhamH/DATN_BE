@@ -19,6 +19,9 @@ const ActivitySchema = new mongoose.Schema<Activity>(
   }
 )
 
+// tạo index dạng text cùng 1 lúc cho nhiều field
+ActivitySchema.index({ code: 'text', activity: 'text', activity_category: 'text' }, { default_language: 'none' })
+
 const ActivityModel = mongoose.model('activities', ActivitySchema)
 
 export default ActivityModel

@@ -26,34 +26,52 @@ import { wrapRequestHandler } from '~/utils/handler'
 const blogsRouter = Router()
 
 blogsRouter.get('/category/get-category', wrapRequestHandler(getAllCategoryBlogsController))
-blogsRouter.post('/', accessTokenValidator, createBlogValidator, wrapRequestHandler(createBlogController))
+
+blogsRouter.post(
+  '/',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  createBlogValidator,
+  wrapRequestHandler(createBlogController)
+)
+
 blogsRouter.get(
   '/chef/get-blogs',
   accessTokenValidator,
-  wrapRequestHandler(checkRole([UserRoles.user])),
+  wrapRequestHandler(checkRole([UserRoles.chef])),
   getListBlogsForChefValidator,
   wrapRequestHandler(getListBlogForChefController)
 )
+
+blogsRouter.get(
+  '/chef/get-blog/:id',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  wrapRequestHandler(getBlogForChefController)
+)
+
+blogsRouter.put(
+  '/chef/update-blog/:id',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  wrapRequestHandler(updateBlogForChefController)
+)
+
+blogsRouter.delete(
+  '/chef/delete-blog/:id',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  wrapRequestHandler(deleteBlogForChefController)
+)
+
 blogsRouter.get(
   '/user/get-blogs',
   accessTokenValidator,
   getListBlogsForChefValidator,
   wrapRequestHandler(getListBlogForUserController)
 )
-blogsRouter.get(
-  '/chef/get-blog/:id',
-  accessTokenValidator,
-  wrapRequestHandler(checkRole([UserRoles.user])),
-  wrapRequestHandler(getBlogForChefController)
-)
-blogsRouter.get('/user/get-blog/:id', accessTokenValidator, wrapRequestHandler(getBlogForUserController))
 
-blogsRouter.put(
-  '/chef/update-blog/:id',
-  accessTokenValidator,
-  wrapRequestHandler(checkRole([UserRoles.user])),
-  wrapRequestHandler(updateBlogForChefController)
-)
+blogsRouter.get('/user/get-blog/:id', accessTokenValidator, wrapRequestHandler(getBlogForUserController))
 
 blogsRouter.post(
   '/actions/comment',
@@ -70,11 +88,5 @@ blogsRouter.get(
 )
 
 blogsRouter.post('/actions/delete-comment', accessTokenValidator, wrapRequestHandler(deleteCommentBlogController))
-blogsRouter.delete(
-  '/chef/delete-blog/:id',
-  accessTokenValidator,
-  wrapRequestHandler(checkRole([UserRoles.user])),
-  wrapRequestHandler(deleteBlogForChefController)
-)
 
 export default blogsRouter
