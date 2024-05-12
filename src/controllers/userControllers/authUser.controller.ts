@@ -68,3 +68,37 @@ export const oauthController = async (req: Request, res: Response) => {
   }&user=${JSON.stringify(result.user)}`
   return res.redirect(urlRedirect)
 }
+
+export const sendOtpController = async (req: Request, res: Response) => {
+  const { email } = req.body
+  const result = await authUserService.sendOtp(email)
+  return res.json({
+    message: AUTH_USER_MESSAGE.SEND_OTP_SUCCESS,
+    result
+  })
+}
+
+export const verifyOtpController = async (req: Request, res: Response) => {
+  const { email, otp_code } = req.body
+  const result = await authUserService.verifyOtp({
+    email,
+    otp_code
+  })
+  return res.json({
+    message: AUTH_USER_MESSAGE.VERIFY_OTP_SUCCESS,
+    result
+  })
+}
+
+export const resetPasswordController = async (req: Request, res: Response) => {
+  const { email, new_password, otp_code } = req.body
+  const result = await authUserService.resetPassword({
+    email,
+    new_password,
+    otp_code
+  })
+  return res.json({
+    message: AUTH_USER_MESSAGE.RESET_PASSWORD_SUCCESS,
+    result
+  })
+}

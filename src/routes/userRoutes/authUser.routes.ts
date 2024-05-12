@@ -5,14 +5,19 @@ import {
   logoutController,
   oauthController,
   refreshTokenController,
-  registerController
+  registerController,
+  resetPasswordController,
+  sendOtpController,
+  verifyOtpController
 } from '~/controllers/userControllers/authUser.controller'
 import {
   accessTokenValidator,
   loginAdminValidator,
   loginValidator,
   refreshTokenValidator,
-  registerValidator
+  registerValidator,
+  resetPasswordValidator,
+  verifyOtpValidator
 } from '~/middlewares/authUser.middleware'
 import { wrapRequestHandler } from '~/utils/handler'
 
@@ -24,5 +29,8 @@ authUserRouter.post('/register', registerValidator, wrapRequestHandler(registerC
 authUserRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapRequestHandler(logoutController))
 authUserRouter.post('/refresh-token', refreshTokenValidator, wrapRequestHandler(refreshTokenController))
 authUserRouter.get('/oauth/google', wrapRequestHandler(oauthController))
+authUserRouter.post('/send-otp', wrapRequestHandler(sendOtpController))
+authUserRouter.post('/verify-otp', verifyOtpValidator, wrapRequestHandler(verifyOtpController))
+authUserRouter.post('/reset-password', resetPasswordValidator, wrapRequestHandler(resetPasswordController))
 
 export default authUserRouter

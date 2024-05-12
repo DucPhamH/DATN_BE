@@ -7,7 +7,9 @@ import { AUTH_USER_MESSAGE } from '~/constants/messages'
 import { UserLoginRequest, UserRegisterRequest } from '~/models/requests/authUser.request'
 import RefreshTokenModel from '~/models/schemas/refreshToken.schema'
 import UserModel from '~/models/schemas/user.schema'
-import { hashPassword } from '~/utils/crypto'
+import { comparePassword, hashPassword } from '~/utils/crypto'
+import { sendForgotPasswordEmailNodeMailer } from '~/utils/emailMailer'
+import { sendForgotPasswordEmail } from '~/utils/emailSes'
 import { ErrorWithStatus } from '~/utils/error'
 import { signToken, verifyToken } from '~/utils/jwt'
 
@@ -33,6 +35,10 @@ class AuthUserService {
         expiresIn: envConfig.ACCESS_TOKEN_EXPIRES_IN
       }
     })
+  }
+  private genarateOtpCode() {
+    const randomNum = Math.random() * 9000
+    return Math.floor(1000 + randomNum).toString()
   }
   private signRefreshToken(payload: {
     user_id: string
@@ -355,6 +361,53 @@ class AuthUserService {
         refresh_token: new_refresh_token
       }
     }
+  }
+  async sendOtp(email: string) {
+    const user = await UserModel.findOne({ email })
+    if (!user) {
+      throw new ErrorWithStatus({
+        message: AUTH_USER_MESSAGE.EMAIL_NOT_EXIST,
+        status: HTTP_STATUS.UNPROCESSABLE_ENTITY
+      })
+    }
+
+    const otp_code = this.genarateOtpCode()
+    await UserModel.updateOne({ email }, { otp_code })
+    await sendForgotPasswordEmailNodeMailer(email, otp_code)
+    return user.email
+  }
+  async verifyOtp({ email, otp_code }: { email: string; otp_code: string }) {
+    const user = await UserModel.findOne({ email, otp_code })
+    if (!user) {
+      throw new ErrorWithStatus({
+        message: AUTH_USER_MESSAGE.OTP_CODE_INVALID,
+        status: HTTP_STATUS.BAD_REQUEST
+      })
+    }
+    return {
+      email: user.email,
+      otp_code: user.otp_code
+    }
+  }
+  async resetPassword({ email, new_password, otp_code }: { otp_code: string; new_password: string; email: string }) {
+    const user = await UserModel.findOne({ email, otp_code })
+    // check xem new_password có trùng với password cũ không
+    if (!user) {
+      throw new ErrorWithStatus({
+        message: AUTH_USER_MESSAGE.OTP_CODE_INVALID,
+        status: HTTP_STATUS.BAD_REQUEST
+      })
+    }
+    const compare = await comparePassword(new_password, user.password)
+    if (compare) {
+      throw new ErrorWithStatus({
+        message: AUTH_USER_MESSAGE.PASSWORD_SAME_OLD_PASSWORD,
+        status: HTTP_STATUS.BAD_REQUEST
+      })
+    }
+    const hashedPassword = await hashPassword(new_password)
+    await UserModel.updateOne({ email }, { password: hashedPassword, otp_code: '' })
+    return true
   }
 }
 

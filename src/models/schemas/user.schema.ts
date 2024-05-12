@@ -32,6 +32,7 @@ export interface User {
   role?: UserRoles
   banned_count?: number
   status?: UserStatus
+  otp_code?: string
 }
 
 const UserSchema = new mongoose.Schema<User>(
@@ -129,6 +130,10 @@ const UserSchema = new mongoose.Schema<User>(
     status: {
       type: Number,
       default: UserStatus.active
+    },
+    otp_code: {
+      type: String,
+      default: ''
     }
   },
   {

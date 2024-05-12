@@ -234,3 +234,69 @@ export const refreshTokenValidator = validate(
     ['body']
   )
 )
+
+export const verifyOtpValidator = validate(
+  checkSchema(
+    {
+      otp_code: {
+        notEmpty: true,
+        isString: true,
+        isLength: {
+          options: {
+            min: 4,
+            max: 4
+          }
+        }
+      },
+      email: {
+        notEmpty: true,
+        isEmail: true,
+        trim: true
+      }
+    },
+    ['body']
+  )
+)
+
+export const resetPasswordValidator = validate(
+  checkSchema(
+    {
+      email: {
+        notEmpty: true,
+        isEmail: true,
+        trim: true
+      },
+      new_password: {
+        notEmpty: true,
+        isString: true,
+        isLength: {
+          options: {
+            min: 6,
+            max: 50
+          }
+        },
+        isStrongPassword: {
+          options: {
+            minLength: 6,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1
+          },
+          errorMessage: AUTH_USER_MESSAGE.PASSWORD_MUST_BE_STRONG
+        }
+      },
+      otp_code: {
+        notEmpty: true,
+        isString: true,
+        isLength: {
+          options: {
+            min: 4,
+            max: 4
+          }
+        }
+      }
+    },
+    ['body']
+  )
+)

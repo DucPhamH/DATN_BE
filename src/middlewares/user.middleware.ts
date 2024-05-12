@@ -73,7 +73,7 @@ export const updateProfileValidator = validate(
   checkSchema(
     {
       name: {
-        notEmpty: true,
+        optional: true,
         isString: true,
         isLength: {
           options: {
@@ -84,7 +84,7 @@ export const updateProfileValidator = validate(
         trim: true
       },
       user_name: {
-        notEmpty: true,
+        optional: true,
         isString: true,
         isLength: {
           options: {
@@ -103,12 +103,12 @@ export const updateProfileValidator = validate(
         }
       },
       birthday: {
-        notEmpty: true,
+        optional: true,
         isString: true,
         toDate: true
       },
       address: {
-        notEmpty: true,
+        optional: true,
         isString: true,
         isLength: {
           options: {

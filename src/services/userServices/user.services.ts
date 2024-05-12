@@ -460,11 +460,24 @@ class UsersService {
   async updateUserService({ user_id, name, user_name, birthday, address }: UpdateUserBody) {
     // check xem db có tồn tại user_name không, có thì không cho update
     const newBirthday = moment.utc(birthday).startOf('day').toDate()
-    const user = await UserModel.findOneAndUpdate(
-      { _id: new ObjectId(user_id) },
-      { name, user_name, birthday: newBirthday, address },
-      { new: true }
-    )
+
+    const objectData = {} as UpdateUserBody
+
+    if (name) {
+      objectData['name'] = name
+    }
+    if (user_name) {
+      objectData['user_name'] = user_name
+    }
+    if (birthday) {
+      objectData['birthday'] = newBirthday
+    }
+    if (address) {
+      objectData['address'] = address
+    }
+
+    console.log(objectData)
+    const user = await UserModel.findOneAndUpdate({ _id: new ObjectId(user_id) }, objectData, { new: true })
 
     if (user) {
       return omit(user.toObject(), ['password'])
@@ -491,7 +504,7 @@ class UsersService {
     if (!compare) {
       throw new ErrorWithStatus({
         message: USER_MESSAGE.OLD_PASSWORD_INCORRECT,
-        status: HTTP_STATUS.UNPROCESSABLE_ENTITY
+        status: HTTP_STATUS.BAD_REQUEST
       })
     }
     const hashedPassword = await hashPassword(new_password)

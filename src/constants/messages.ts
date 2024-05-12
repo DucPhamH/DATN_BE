@@ -17,7 +17,13 @@ export const AUTH_USER_MESSAGE = {
   ACCOUNT_BANNED: 'Tài khoản đã bị khóa',
   UNAUTHORIZED: 'Không có quyền truy cập',
   USER_NAME_OR_PASSWORD_INCORRECT: 'Tên đăng nhập hoặc mật khẩu không chính xác',
-  OLD_PASSWORD_NEW_PASSWORD_NOT_SAME: 'Mật khẩu cũ và mật khẩu mới không được giống nhau'
+  OLD_PASSWORD_NEW_PASSWORD_NOT_SAME: 'Mật khẩu cũ và mật khẩu mới không được giống nhau',
+  SEND_OTP_SUCCESS: 'Gửi mã OTP thành công',
+  OTP_CODE_INVALID: 'Mã OTP không hợp lệ',
+  VERIFY_OTP_SUCCESS: 'Xác thực mã OTP thành công',
+  RESET_PASSWORD_SUCCESS: 'Đặt lại mật khẩu thành công',
+  EMAIL_NOT_EXIST: 'Email không tồn tại',
+  PASSWORD_SAME_OLD_PASSWORD: 'Mật khẩu mới không được giống mật khẩu cũ'
 } as const
 
 export const POST_MESSAGE = {
