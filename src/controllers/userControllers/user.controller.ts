@@ -117,3 +117,25 @@ export const updatePasswordUserController = async (req: Request, res: Response) 
     result: result
   })
 }
+
+export const getBookmarkedUserController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const result = await usersService.getBookmarkedUserService({
+    user_id: user.user_id
+  })
+  return res.json({
+    message: USER_MESSAGE.GET_BOOKMARKED_SUCCESS,
+    result: result
+  })
+}
+
+export const recommendUsersController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const result = await usersService.recommendUsersService({
+    user_id: user.user_id
+  })
+  return res.json({
+    message: USER_MESSAGE.RECOMMEND_USER_SUCCESS,
+    result: result
+  })
+}

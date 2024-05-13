@@ -1,8 +1,10 @@
 import { Router } from 'express'
 import {
   followUserController,
+  getBookmarkedUserController,
   getMeController,
   getUserController,
+  recommendUsersController,
   unfollowUserController,
   updateAvatarUserController,
   updateCoverAvatarUserController,
@@ -47,5 +49,9 @@ usersRouter.put(
   updateProfileValidator,
   wrapRequestHandler(updateUserController)
 )
+
+usersRouter.get('/bookmarks', accessTokenValidator, wrapRequestHandler(getBookmarkedUserController))
+
+usersRouter.get('/recommed', accessTokenValidator, wrapRequestHandler(recommendUsersController))
 
 export default usersRouter

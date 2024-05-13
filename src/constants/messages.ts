@@ -65,7 +65,9 @@ export const USER_MESSAGE = {
   USER_NOT_FOUND: 'Không tìm thấy người dùng',
   USER_NAME_ALREADY_EXISTS: 'Tên người dùng đã tồn tại',
   OLD_PASSWORD_INCORRECT: 'Mật khẩu cũ không chính xác',
-  UPDATE_PASSWORD_SUCCESS: 'Cập nhật mật khẩu thành công'
+  UPDATE_PASSWORD_SUCCESS: 'Cập nhật mật khẩu thành công',
+  GET_BOOKMARKED_SUCCESS: 'Lấy danh sách đã bookmark thành công',
+  RECOMMEND_USER_SUCCESS: 'Gợi ý người dùng thành công'
 } as const
 
 export const BLOG_MESSAGE = {

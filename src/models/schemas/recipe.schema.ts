@@ -80,6 +80,8 @@ RecipeSchema.pre('save', async function (next) {
   }
 })
 
+RecipeSchema.index({ search_fields: 'text' }, { default_language: 'none' })
+
 const RecipeModel = mongoose.model('recipes', RecipeSchema)
 
 export default RecipeModel

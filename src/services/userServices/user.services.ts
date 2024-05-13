@@ -6,7 +6,11 @@ import { AlbumStatus, BlogStatus, RecipeStatus, UserStatus } from '~/constants/e
 import HTTP_STATUS from '~/constants/httpStatus'
 import { USER_MESSAGE } from '~/constants/messages'
 import { UpdateUserBody } from '~/models/requests/user.request'
+import AlbumModel from '~/models/schemas/album.schema'
+import BookmarkAlbumModel from '~/models/schemas/bookmarkAlbum.schema'
+import BookmarkRecipeModel from '~/models/schemas/bookmarkRecipe.schema'
 import FollowModel from '~/models/schemas/follow.schema'
+import RecipeModel from '~/models/schemas/recipe.schema'
 import UserModel from '~/models/schemas/user.schema'
 import { comparePassword, hashPassword } from '~/utils/crypto'
 import { ErrorWithStatus } from '~/utils/error'
@@ -359,7 +363,25 @@ class UsersService {
     // lấy ra 5 người ngẫu nhiên mà user_id chưa follow
     const recommendUsers = await UserModel.aggregate([
       {
-        $match: { _id: { $ne: new ObjectId(user_id), status: UserStatus.active } }
+        $match: { _id: { $ne: new ObjectId(user_id) }, status: UserStatus.active }
+      },
+      {
+        $lookup: {
+          from: 'follows',
+          localField: '_id',
+          foreignField: 'follow_id',
+          as: 'follows'
+        }
+      },
+      {
+        $addFields: {
+          is_following: {
+            $in: [new ObjectId(user_id), '$follows.user_id']
+          }
+        }
+      },
+      {
+        $match: { is_following: false }
       },
       // kiếm ngẫu nhiên 5 người mà user_id chưa follow
       { $sample: { size: 5 } }
@@ -515,6 +537,157 @@ class UsersService {
     )
     if (newUser) {
       return omit(newUser.toObject(), ['password'])
+    }
+  }
+  async getBookmarkedUserService({ user_id }: { user_id: string }) {
+    const idsInBookMarkRecipe = await BookmarkRecipeModel.find({ user_id: new ObjectId(user_id) }).select('recipe_id')
+    const arrayIdInBookMarkRecipe = idsInBookMarkRecipe.map((item) => item.recipe_id)
+    console.log(arrayIdInBookMarkRecipe)
+    const idsInBookMarkAlbum = await BookmarkAlbumModel.find({ user_id: new ObjectId(user_id) }).select('album_id')
+    const arrayIdInBookMarkAlbum = idsInBookMarkAlbum.map((item) => item.album_id)
+    console.log(arrayIdInBookMarkAlbum)
+
+    const recipes = await RecipeModel.aggregate([
+      {
+        $match: { _id: { $in: arrayIdInBookMarkRecipe }, status: RecipeStatus.accepted }
+      },
+      {
+        $lookup: {
+          from: 'recipe_categories',
+          localField: 'category_recipe_id',
+          foreignField: '_id',
+          as: 'category_recipe'
+        }
+      },
+      {
+        $unwind: '$category_recipe'
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      // // loại bỏ password của user
+      {
+        $project: {
+          'user.password': 0
+        }
+      },
+      // // lookup tới bảng bookmark
+      {
+        $lookup: {
+          from: 'bookmark_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'bookmarks'
+        }
+      },
+      // // // check xem user_id đã bookmark recipe_id chưa
+      {
+        $addFields: {
+          is_bookmarked: {
+            $in: [new ObjectId(user_id), '$bookmarks.user_id']
+          }
+        }
+      },
+      // // đếm số lượt bookmark
+      {
+        $addFields: {
+          total_bookmarks: { $size: '$bookmarks' }
+        }
+      },
+      // // nối bảng like
+      {
+        $lookup: {
+          from: 'like_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'likes'
+        }
+      },
+      // // check xem user_id đã like recipe_id chưa
+      {
+        $addFields: {
+          is_liked: {
+            $in: [new ObjectId(user_id), '$likes.user_id']
+          }
+        }
+      },
+      // // đếm số lượt like
+      {
+        $addFields: {
+          total_likes: { $size: '$likes' }
+        }
+      },
+      // // nối bảng comment
+      {
+        $lookup: {
+          from: 'comment_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'comments'
+        }
+      },
+      // // đếm số lượt comment
+      {
+        $addFields: {
+          total_comments: { $size: '$comments' }
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      }
+    ])
+
+    const albums = await AlbumModel.aggregate([
+      {
+        $match: { _id: { $in: arrayIdInBookMarkAlbum }, status: AlbumStatus.accepted }
+      },
+      {
+        $lookup: {
+          from: 'recipes',
+          localField: '_id',
+          foreignField: 'album_id',
+          as: 'recipes'
+        }
+      },
+      // look up tới bảng bookmark
+      {
+        $lookup: {
+          from: 'bookmark_albums',
+          localField: '_id',
+          foreignField: 'album_id',
+          as: 'bookmarks'
+        }
+      },
+      // check xem user_id đã bookmark album_id chưa
+      {
+        $addFields: {
+          is_bookmarked: {
+            $in: [new ObjectId(user_id), '$bookmarks.user_id']
+          }
+        }
+      },
+      // đếm số lượt bookmark
+      {
+        $addFields: {
+          total_bookmarks: { $size: '$bookmarks' }
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      }
+    ])
+
+    return {
+      recipes,
+      albums
     }
   }
 }

@@ -1,3 +1,5 @@
+import axios from 'axios'
+import { body } from 'express-validator'
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
 import { RecipeStatus, RecipeTime } from '~/constants/enums'
@@ -73,6 +75,19 @@ class RecipeService {
       processing_food
     })
 
+    // const body = {
+    //   image: 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg',
+    //   image_name: newRecipe.image_name
+    // }
+
+    // const { data } = await axios.post('http://127.0.0.1:5000/create-img', body, {
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+
+    // console.log(data)
+
     return newRecipe
   }
   async getListRecipesForChefService({
@@ -102,7 +117,8 @@ class RecipeService {
     }
 
     if (search !== undefined) {
-      condition.search_fields = { $regex: search, $options: 'i' }
+      // condition.search_fields = { $regex: search, $options: 'i' }
+      condition.$text = { $search: search }
     }
 
     if (!page) {
@@ -210,7 +226,8 @@ class RecipeService {
     console.log(sort)
 
     if (search !== undefined) {
-      condition.search_fields = { $regex: search, $options: 'i' }
+      // condition.search_fields = { $regex: search, $options: 'i' }
+      condition.$text = { $search: search }
     }
 
     if (!page) {
