@@ -142,6 +142,8 @@ const UserSchema = new mongoose.Schema<User>(
   }
 )
 
+UserSchema.index({ name: 'text', email: 'text', user_name: 'text' }, { default_language: 'none' })
+
 const UserModel = mongoose.model('users', UserSchema)
 
 export default UserModel

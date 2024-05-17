@@ -2,7 +2,7 @@ import { omit } from 'lodash'
 import moment from 'moment'
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
-import { AlbumStatus, BlogStatus, RecipeStatus, UserStatus } from '~/constants/enums'
+import { AlbumStatus, BlogStatus, RecipeStatus, UserRoles, UserStatus } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { USER_MESSAGE } from '~/constants/messages'
 import { UpdateUserBody } from '~/models/requests/user.request'
@@ -363,7 +363,11 @@ class UsersService {
     // lấy ra 5 người ngẫu nhiên mà user_id chưa follow
     const recommendUsers = await UserModel.aggregate([
       {
-        $match: { _id: { $ne: new ObjectId(user_id) }, status: UserStatus.active }
+        $match: {
+          _id: { $ne: new ObjectId(user_id) },
+          status: UserStatus.active,
+          role: { $nin: [UserRoles.admin, UserRoles.inspector, UserRoles.writter] }
+        }
       },
       {
         $lookup: {

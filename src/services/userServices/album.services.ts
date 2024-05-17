@@ -48,7 +48,8 @@ class AlbumService {
     }
 
     if (search !== undefined) {
-      condition.search_fields = { $regex: search, $options: 'i' }
+      // condition.search_fields = { $regex: search, $options: 'i' }
+      condition.$text = { $search: search }
     }
 
     if (!page) {
@@ -107,7 +108,8 @@ class AlbumService {
     }
 
     if (search !== undefined) {
-      condition.search_fields = { $regex: search, $options: 'i' }
+      // condition.search_fields = { $regex: search, $options: 'i' }
+      condition.$text = { $search: search }
     }
 
     if (!page) {

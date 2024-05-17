@@ -40,6 +40,8 @@ AlbumSchema.pre('save', async function (next) {
   }
 })
 
+AlbumSchema.index({ search_fields: 'text' }, { default_language: 'none' })
+
 const AlbumModel = mongoose.model('albums', AlbumSchema)
 
 export default AlbumModel

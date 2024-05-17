@@ -197,3 +197,7 @@ export const INGREDIENT_MESSAGE = {
   GET_ALL_CATEGORY_INGREDIENTS_SUCCESS: 'Lấy danh mục nguyên liệu thành công',
   GET_LIST_INGREDIENTS_SUCCESS: 'Lấy danh sách nguyên liệu thành công'
 }
+
+export const SEARCH_MESSAGE = {
+  SEARCH_SUCCESS: 'Tìm kiếm thành công'
+}

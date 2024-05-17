@@ -10,7 +10,6 @@ import usersRouter from './routes/userRoutes/user.routes'
 import blogsRouter from './routes/userRoutes/blog.routes'
 import authUserRouter from './routes/userRoutes/authUser.routes'
 import { defaultErrorHandler } from './middlewares/error.middleware'
-
 import postsRouter from './routes/userRoutes/post.routes'
 import authAdminRouter from './routes/adminRoutes/authAdmin.routes'
 import activitiesRouter from './routes/userRoutes/activity.routes'
@@ -20,6 +19,7 @@ import recipesRouter from './routes/userRoutes/recipe.routes'
 import albumsRouter from './routes/userRoutes/album.routes'
 import ingredientsRouter from './routes/userRoutes/ingredient.routes'
 import mealSchedulesRouter from './routes/userRoutes/mealSchedule.routes'
+import seachRouter from './routes/userRoutes/search.routes'
 const app: Express = express()
 const port = envConfig.port
 
@@ -62,6 +62,7 @@ app.use('/api/meal-schedules', mealSchedulesRouter)
 app.use('/api/recipes', recipesRouter)
 app.use('/api/albums', albumsRouter)
 app.use('/api/ingredients', ingredientsRouter)
+app.use('/api/search', seachRouter)
 
 app.use('/api/admin/auth/admins', authAdminRouter)
 

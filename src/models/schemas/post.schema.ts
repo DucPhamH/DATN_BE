@@ -47,6 +47,8 @@ const PostSchema = new mongoose.Schema<Post>(
   }
 )
 
+PostSchema.index({ content: 'text' }, { default_language: 'none' })
+
 const PostModel = mongoose.model('posts', PostSchema)
 
 export default PostModel
