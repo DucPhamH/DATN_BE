@@ -5,6 +5,7 @@ import {
   getMeController,
   getUserController,
   recommendUsersController,
+  requestUpgradeToChefController,
   unfollowUserController,
   updateAvatarUserController,
   updateCoverAvatarUserController,
@@ -12,7 +13,12 @@ import {
   updateUserController
 } from '~/controllers/userControllers/user.controller'
 import { accessTokenValidator } from '~/middlewares/authUser.middleware'
-import { followValidator, updatePasswordValidator, updateProfileValidator } from '~/middlewares/user.middleware'
+import {
+  followValidator,
+  requestUpgradeToChefValidator,
+  updatePasswordValidator,
+  updateProfileValidator
+} from '~/middlewares/user.middleware'
 import { wrapRequestHandler } from '~/utils/handler'
 import upload from '~/utils/multer'
 const usersRouter = Router()
@@ -53,5 +59,12 @@ usersRouter.put(
 usersRouter.get('/bookmarks', accessTokenValidator, wrapRequestHandler(getBookmarkedUserController))
 
 usersRouter.get('/recommed', accessTokenValidator, wrapRequestHandler(recommendUsersController))
+
+usersRouter.put(
+  '/update-to-chef',
+  accessTokenValidator,
+  requestUpgradeToChefValidator,
+  wrapRequestHandler(requestUpgradeToChefController)
+)
 
 export default usersRouter

@@ -11,6 +11,12 @@ export enum UserRoles {
   inspector
 }
 
+// có 2 kiểu type là đủ 5000 follow hoặc gửi minh chứng
+export enum RequestType {
+  follow,
+  proof
+}
+
 export enum UserStatus {
   banned,
   active

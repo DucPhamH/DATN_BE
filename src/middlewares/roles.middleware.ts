@@ -6,7 +6,6 @@ import { ErrorWithStatus } from '~/utils/error'
 
 export const checkRole = (roles: number[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    // try {
     const user = req.decoded_authorization
     if (user && roles.includes(user.role)) {
       return next()
@@ -15,11 +14,5 @@ export const checkRole = (roles: number[]) => {
       message: AUTH_USER_MESSAGE.UNAUTHORIZED,
       status: HTTP_STATUS.FORBIDDEN
     })
-    // } catch (e) {
-    //   throw new ErrorWithStatus({
-    //     message: AUTH_USER_MESSAGE.UNAUTHORIZED,
-    //     status: HTTP_STATUS.FORBIDDEN
-    //   })
-    // }
   }
 }

@@ -122,3 +122,33 @@ export const updateProfileValidator = validate(
     ['body']
   )
 )
+
+export const requestUpgradeToChefValidator = validate(
+  checkSchema(
+    {
+      reason: {
+        optional: true,
+        isString: true,
+        isLength: {
+          options: {
+            min: 3
+          }
+        },
+        trim: true
+      },
+      proof: {
+        optional: true,
+        isString: true,
+        isURL: true,
+        isLength: {
+          options: {
+            min: 3,
+            max: 500
+          }
+        },
+        trim: true
+      }
+    },
+    ['body']
+  )
+)

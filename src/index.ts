@@ -20,6 +20,7 @@ import albumsRouter from './routes/userRoutes/album.routes'
 import ingredientsRouter from './routes/userRoutes/ingredient.routes'
 import mealSchedulesRouter from './routes/userRoutes/mealSchedule.routes'
 import seachRouter from './routes/userRoutes/search.routes'
+import userAdminRouter from './routes/adminRoutes/userAdmin.routes'
 const app: Express = express()
 const port = envConfig.port
 
@@ -65,6 +66,7 @@ app.use('/api/ingredients', ingredientsRouter)
 app.use('/api/search', seachRouter)
 
 app.use('/api/admin/auth/admins', authAdminRouter)
+app.use('/api/admin/users', userAdminRouter)
 
 app.use(defaultErrorHandler)
 app.listen(port, () => {

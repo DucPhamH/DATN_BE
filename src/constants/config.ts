@@ -18,5 +18,6 @@ export const envConfig = {
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY as string,
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID as string,
   SES_FROM_ADDRESS: process.env.SES_FROM_ADDRESS as string,
-  EMAIL_PASSWORD: process.env.EMAIL_PASSWORD as string
+  EMAIL_PASSWORD: process.env.EMAIL_PASSWORD as string,
+  ACCESS_TOKEN_ADMIN_EXPIRES_IN: process.env.ACCESS_TOKEN_ADMIN_EXPIRES_IN as string
 }

@@ -531,6 +531,17 @@ class RecipeService {
           as: 'comments'
         }
       },
+      {
+        $addFields: {
+          comments: {
+            $filter: {
+              input: '$comments',
+              as: 'comment',
+              cond: { $eq: ['$$comment.is_banned', false] }
+            }
+          }
+        }
+      },
       // đếm số lượt comment
       {
         $addFields: {

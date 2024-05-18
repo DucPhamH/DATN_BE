@@ -7,6 +7,7 @@ const adminEmail = envConfig.SES_FROM_ADDRESS
 const adminPassword = envConfig.EMAIL_PASSWORD
 
 const verifyOtpEmailTemplate = fs.readFileSync(path.resolve('src/templates/emailOtp.html'), 'utf8')
+const acceptEmailTemplate = fs.readFileSync(path.resolve('src/templates/emailAccept.html'), 'utf8')
 // Mình sử dụng host của google - gmail
 const mailHost = 'smtp.gmail.com'
 // 587 là một cổng tiêu chuẩn và phổ biến trong giao thức SMTP
@@ -47,5 +48,44 @@ export const sendForgotPasswordEmailNodeMailer = (
       .replace('{{title}}', 'Quên mật khẩu')
       .replace('{{content}}', 'Để đặt lại mật khẩu, xin vui lòng nhập mã OTP dưới đây:')
       .replace('{{otpCode}}', otp_code)
+  )
+}
+
+export const sendRejectEmailNodeMailer = (
+  toAddress: string,
+  user_name: string,
+  template: string = acceptEmailTemplate
+) => {
+  return sendMail(
+    toAddress,
+    'Accept Email',
+    template
+      .replace('{{user_name}}', user_name)
+      .replace(
+        '{{content}}',
+        'Lời đầu tiên, đội ngũ CookHealty xin cảm ơn anh đã quan tâm và dành thời gian để đăng ký tài khoản đầu bếp trên hệ thống của chúng tôi. Tuy nhiên, sau khi đã kiểm tra và xác nhận thông tin của anh, chúng tôi rất tiếc phải thông báo rằng tài khoản của anh chưa đủ điều kiện để nâng cấp lên tài khoản đầu bếp. Chúng tôi rất tiếc về sự bất tiện này và mong anh thông cảm. Chúng tôi sẽ lưu trữ thông tin của anh và thông báo cho anh khi có cơ hội phù hợp hơn.'
+      )
+      .replace('{{note}}', 'Lưu ý: Đây là email tự động, vui lòng không trả lời email này.')
+  )
+}
+
+export const sendAcceptEmailNodeMailer = (
+  toAddress: string,
+  user_name: string,
+  template: string = acceptEmailTemplate
+) => {
+  return sendMail(
+    toAddress,
+    'Accept Email',
+    template
+      .replace('{{user_name}}', user_name)
+      .replace(
+        '{{content}}',
+        'Lời đầu tiên, đội ngũ CookHealty xin cảm ơn anh đã quan tâm và dành thời gian để đăng ký tài khoản đầu bếp trên hệ thống của chúng tôi. Sau khi đã kiểm tra và xác nhận thông tin của anh, chúng tôi xin trân trọng thông báo rằng tài khoản của anh đã được chấp nhận nâng cấp lên tài khoản đầu bếp. Chúng tôi rất vui mừng khi chào đón anh trở thành một thành viên của đội ngũ đầu bếp của chúng tôi.'
+      )
+      .replace(
+        '{{note}}',
+        'Lưu ý: Để mở thêm chức năng bạn vui lòng đăng xuất và đăng nhập lại hệ thống. Xin lỗi vì sự bất tiện này.'
+      )
   )
 }

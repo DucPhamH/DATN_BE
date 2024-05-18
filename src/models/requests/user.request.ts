@@ -5,3 +5,9 @@ export interface UpdateUserBody {
   birthday?: Date
   address?: string
 }
+
+export interface RequestUserBody {
+  user_id: string
+  reason?: string
+  proof?: string
+}

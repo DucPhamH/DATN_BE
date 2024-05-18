@@ -67,7 +67,10 @@ export const USER_MESSAGE = {
   OLD_PASSWORD_INCORRECT: 'Mật khẩu cũ không chính xác',
   UPDATE_PASSWORD_SUCCESS: 'Cập nhật mật khẩu thành công',
   GET_BOOKMARKED_SUCCESS: 'Lấy danh sách đã bookmark thành công',
-  RECOMMEND_USER_SUCCESS: 'Gợi ý người dùng thành công'
+  RECOMMEND_USER_SUCCESS: 'Gợi ý người dùng thành công',
+  REQUEST_ALREADY_SENT: 'Yêu cầu đã được gửi',
+  REQUEST_UPGRADE_SUCCESS: 'Yêu cầu nâng cấp thành công',
+  CANNOT_UPGRADE: 'Không thể nâng cấp'
 } as const
 
 export const BLOG_MESSAGE = {
@@ -200,4 +203,26 @@ export const INGREDIENT_MESSAGE = {
 
 export const SEARCH_MESSAGE = {
   SEARCH_SUCCESS: 'Tìm kiếm thành công'
+}
+
+export const AUTH_ADMIN_MESSAGE = {
+  LOGIN_SUCCESS: 'Đăng nhập thành công',
+  LOGOUT_SUCCESS: 'Đăng xuất thành công',
+  ACCOUNT_BANNED: 'Tài khoản đã bị khóa',
+  REFRESH_TOKEN_IS_REQUIRED: 'Cần có refresh token'
+}
+
+export const ADMIN_MESSAGE = {
+  GET_ALL_USER_SUCCESS: 'Lấy danh sách người dùng thành công',
+  GET_USER_BY_ID_SUCCESS: 'Lấy thông tin người dùng thành công',
+  DELETE_USER_BY_ID_SUCCESS: 'Xóa người dùng thành công',
+  BAN_USER_BY_ID_SUCCESS: 'Khóa tài khoản người dùng thành công',
+  UNBAN_USER_BY_ID_SUCCESS: 'Mở khóa tài khoản người dùng thành công',
+  CREATE_WRITTER_AND_INSPECTOR_SUCCESS: 'Tạo người viết và kiểm duyệt thành công',
+  EMAIL_ALREADY_EXISTS: 'Email đã tồn tại',
+  USER_NAME_ALREADY_EXISTS: 'Tên người dùng đã tồn tại',
+  ROLE_INVALID: 'Role không hợp lệ',
+  GET_REQUEST_UPGRADE_SUCCESS: 'Lấy yêu cầu nâng cấp thành công',
+  REJECT_REQUEST_UPGRADE_SUCCESS: 'Từ chối yêu cầu nâng cấp thành công',
+  ACCEPT_REQUEST_UPGRADE_SUCCESS: 'Chấp nh ận yêu cầu nâng cấp thành công'
 }

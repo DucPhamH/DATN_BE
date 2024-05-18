@@ -1,6 +1,6 @@
 import moment from 'moment'
 import mongoose from 'mongoose'
-import { UserGender, UserRoles, UserStatus } from '~/constants/enums'
+import { RequestType, UserGender, UserRoles, UserStatus } from '~/constants/enums'
 
 export interface User {
   name: string
@@ -33,6 +33,11 @@ export interface User {
   banned_count?: number
   status?: UserStatus
   otp_code?: string
+  upgrade_request?: {
+    reason: string
+    proof: string
+    type: RequestType
+  }
 }
 
 const UserSchema = new mongoose.Schema<User>(
@@ -134,6 +139,11 @@ const UserSchema = new mongoose.Schema<User>(
     otp_code: {
       type: String,
       default: ''
+    },
+    upgrade_request: {
+      reason: { type: String, default: null },
+      proof: { type: String, default: null },
+      type: { type: Number, default: null }
     }
   },
   {

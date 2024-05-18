@@ -139,3 +139,17 @@ export const recommendUsersController = async (req: Request, res: Response) => {
     result: result
   })
 }
+
+export const requestUpgradeToChefController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { reason, proof } = req.body
+  const result = await usersService.requestUpgradeToChefService({
+    user_id: user.user_id,
+    reason: reason,
+    proof: proof
+  })
+  return res.json({
+    message: USER_MESSAGE.REQUEST_UPGRADE_SUCCESS,
+    result: result
+  })
+}

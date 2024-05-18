@@ -2,17 +2,19 @@ import { omit } from 'lodash'
 import moment from 'moment'
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
-import { AlbumStatus, BlogStatus, RecipeStatus, UserRoles, UserStatus } from '~/constants/enums'
+import { AlbumStatus, BlogStatus, RecipeStatus, RequestType, UserRoles, UserStatus } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { USER_MESSAGE } from '~/constants/messages'
-import { UpdateUserBody } from '~/models/requests/user.request'
+import { RequestUserBody, UpdateUserBody } from '~/models/requests/user.request'
 import AlbumModel from '~/models/schemas/album.schema'
 import BookmarkAlbumModel from '~/models/schemas/bookmarkAlbum.schema'
 import BookmarkRecipeModel from '~/models/schemas/bookmarkRecipe.schema'
 import FollowModel from '~/models/schemas/follow.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
+
 import UserModel from '~/models/schemas/user.schema'
 import { comparePassword, hashPassword } from '~/utils/crypto'
+
 import { ErrorWithStatus } from '~/utils/error'
 import { deleteFileFromS3, uploadFileToS3 } from '~/utils/s3'
 
@@ -693,6 +695,57 @@ class UsersService {
       recipes,
       albums
     }
+  }
+  async requestUpgradeToChefService({ user_id, reason, proof }: RequestUserBody) {
+    // tìm user
+    const user = await UserModel.findOne({ _id: new ObjectId(user_id) })
+
+    if (!user) {
+      throw new ErrorWithStatus({
+        message: USER_MESSAGE.USER_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    // nếu type của user là chef thì không cho gửi request
+    if (user.role === UserRoles.chef) {
+      throw new ErrorWithStatus({
+        message: USER_MESSAGE.CANNOT_UPGRADE,
+        status: HTTP_STATUS.BAD_REQUEST
+      })
+    }
+
+    // nếu user đã gửi request rồi thì không cho gửi nữa
+    if (user.upgrade_request?.proof && user.upgrade_request?.reason && user.upgrade_request?.type) {
+      throw new ErrorWithStatus({
+        message: USER_MESSAGE.REQUEST_ALREADY_SENT,
+        status: HTTP_STATUS.BAD_REQUEST
+      })
+    }
+    // nếu user đủ follow thì type = 0, không đủ thì type = 1
+    const followCount = await FollowModel.find({ follow_id: new ObjectId(user_id) }).countDocuments()
+    console.log(followCount)
+    if (followCount >= 3) {
+      const upgrade_request = {
+        reason: 'Đủ 5000 follow',
+        proof: '',
+        type: RequestType.follow
+      }
+      const newUser = await UserModel.findOneAndUpdate(
+        { _id: new ObjectId(user_id) },
+        { upgrade_request },
+        { new: true }
+      )
+      return newUser
+    }
+
+    const upgrade_request = {
+      reason,
+      proof,
+      type: RequestType.proof
+    }
+    const newUser = await UserModel.findOneAndUpdate({ _id: new ObjectId(user_id) }, { upgrade_request }, { new: true })
+    return newUser
   }
 }
 

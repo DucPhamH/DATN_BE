@@ -1,6 +1,7 @@
 import { omit } from 'lodash'
+import { ObjectId } from 'mongodb'
 import { envConfig } from '~/constants/config'
-import { TokenType } from '~/constants/enums'
+import { TokenType, UserStatus } from '~/constants/enums'
 import { AUTH_USER_MESSAGE } from '~/constants/messages'
 import UserModel from '~/models/schemas/user.schema'
 import { signToken, verifyToken } from '~/utils/jwt'
@@ -24,7 +25,7 @@ class AuthAdminService {
       },
       privateKey: envConfig.JWT_SECRET_ACCESS_TOKEN,
       options: {
-        expiresIn: envConfig.ACCESS_TOKEN_EXPIRES_IN
+        expiresIn: envConfig.ACCESS_TOKEN_ADMIN_EXPIRES_IN
       }
     })
   }
@@ -59,6 +60,18 @@ class AuthAdminService {
     return {
       message: AUTH_USER_MESSAGE.LOGOUT_SUCCESS
     }
+  }
+  async getMe({ user_id }: { user_id: string }) {
+    const me = await UserModel.aggregate([
+      { $match: { _id: new ObjectId(user_id), status: UserStatus.active } },
+      // bỏ password
+      {
+        $project: {
+          password: 0
+        }
+      }
+    ])
+    return me
   }
 }
 
