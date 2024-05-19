@@ -68,7 +68,7 @@ export const USER_MESSAGE = {
   UPDATE_PASSWORD_SUCCESS: 'Cập nhật mật khẩu thành công',
   GET_BOOKMARKED_SUCCESS: 'Lấy danh sách đã bookmark thành công',
   RECOMMEND_USER_SUCCESS: 'Gợi ý người dùng thành công',
-  REQUEST_ALREADY_SENT: 'Yêu cầu đã được gửi',
+  REQUEST_ALREADY_SENT: 'Yêu cầu nâng cấp đã được gửi từ trước, vui lòng chờ admin xác nhận',
   REQUEST_UPGRADE_SUCCESS: 'Yêu cầu nâng cấp thành công',
   CANNOT_UPGRADE: 'Không thể nâng cấp'
 } as const
