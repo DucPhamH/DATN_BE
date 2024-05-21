@@ -397,6 +397,8 @@ class AlbumService {
         status: HTTP_STATUS.NOT_FOUND
       })
     }
+    // set lại status của album thành pending
+    await AlbumModel.findByIdAndUpdate(album_id, { status: AlbumStatus.pending })
     await RecipeModel.findByIdAndUpdate(recipe_id, { album_id: null })
     return true
   }

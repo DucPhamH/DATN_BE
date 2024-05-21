@@ -43,7 +43,7 @@ export const sendForgotPasswordEmailNodeMailer = (
 ) => {
   return sendMail(
     toAddress,
-    'Forgot Password',
+    'Thư từ CookHealty',
     template
       .replace('{{title}}', 'Quên mật khẩu')
       .replace('{{content}}', 'Để đặt lại mật khẩu, xin vui lòng nhập mã OTP dưới đây:')
@@ -58,12 +58,12 @@ export const sendRejectEmailNodeMailer = (
 ) => {
   return sendMail(
     toAddress,
-    'Accept Email',
+    'Thư từ CookHealty',
     template
       .replace('{{user_name}}', user_name)
       .replace(
         '{{content}}',
-        'Lời đầu tiên, đội ngũ CookHealty xin cảm ơn anh đã quan tâm và dành thời gian để đăng ký tài khoản đầu bếp trên hệ thống của chúng tôi. Tuy nhiên, sau khi đã kiểm tra và xác nhận thông tin của anh, chúng tôi rất tiếc phải thông báo rằng tài khoản của anh chưa đủ điều kiện để nâng cấp lên tài khoản đầu bếp. Chúng tôi rất tiếc về sự bất tiện này và mong anh thông cảm. Chúng tôi sẽ lưu trữ thông tin của anh và thông báo cho anh khi có cơ hội phù hợp hơn.'
+        'Lời đầu tiên, đội ngũ CookHealthy xin cảm ơn anh đã quan tâm và dành thời gian để đăng ký tài khoản đầu bếp trên hệ thống của chúng tôi. Tuy nhiên, sau khi đã kiểm tra và xác nhận thông tin của anh, chúng tôi rất tiếc phải thông báo rằng tài khoản của anh chưa đủ điều kiện để nâng cấp lên tài khoản đầu bếp. Chúng tôi rất tiếc về sự bất tiện này và mong anh thông cảm. Chúng tôi sẽ lưu trữ thông tin của anh và thông báo cho anh khi có cơ hội phù hợp hơn.'
       )
       .replace('{{note}}', 'Lưu ý: Đây là email tự động, vui lòng không trả lời email này.')
   )
@@ -76,12 +76,12 @@ export const sendAcceptEmailNodeMailer = (
 ) => {
   return sendMail(
     toAddress,
-    'Accept Email',
+    'Thư từ CookHealthy',
     template
       .replace('{{user_name}}', user_name)
       .replace(
         '{{content}}',
-        'Lời đầu tiên, đội ngũ CookHealty xin cảm ơn anh đã quan tâm và dành thời gian để đăng ký tài khoản đầu bếp trên hệ thống của chúng tôi. Sau khi đã kiểm tra và xác nhận thông tin của anh, chúng tôi xin trân trọng thông báo rằng tài khoản của anh đã được chấp nhận nâng cấp lên tài khoản đầu bếp. Chúng tôi rất vui mừng khi chào đón anh trở thành một thành viên của đội ngũ đầu bếp của chúng tôi.'
+        'Lời đầu tiên, đội ngũ CookHealthy xin cảm ơn anh đã quan tâm và dành thời gian để đăng ký tài khoản đầu bếp trên hệ thống của chúng tôi. Sau khi đã kiểm tra và xác nhận thông tin của anh, chúng tôi xin trân trọng thông báo rằng tài khoản của anh đã được chấp nhận nâng cấp lên tài khoản đầu bếp. Chúng tôi rất vui mừng khi chào đón anh trở thành một thành viên của đội ngũ đầu bếp của chúng tôi.'
       )
       .replace(
         '{{note}}',

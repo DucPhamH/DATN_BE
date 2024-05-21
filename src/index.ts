@@ -21,6 +21,8 @@ import ingredientsRouter from './routes/userRoutes/ingredient.routes'
 import mealSchedulesRouter from './routes/userRoutes/mealSchedule.routes'
 import seachRouter from './routes/userRoutes/search.routes'
 import userAdminRouter from './routes/adminRoutes/userAdmin.routes'
+import inspectorRouter from './routes/adminRoutes/inspector.routes'
+import writterRouter from './routes/adminRoutes/writter.routes'
 const app: Express = express()
 const port = envConfig.port
 
@@ -66,7 +68,9 @@ app.use('/api/ingredients', ingredientsRouter)
 app.use('/api/search', seachRouter)
 
 app.use('/api/admin/auth/admins', authAdminRouter)
-app.use('/api/admin/users', userAdminRouter)
+app.use('/api/admin', userAdminRouter)
+app.use('/api/inspectors', inspectorRouter)
+app.use('/api/writters', writterRouter)
 
 app.use(defaultErrorHandler)
 app.listen(port, () => {

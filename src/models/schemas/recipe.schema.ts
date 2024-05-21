@@ -17,6 +17,13 @@ export interface Recipe {
   carbohydrate?: number
   unit?: string
   quantity?: number
+  ingredients?: {
+    name: string
+    energy: number
+    protein: number
+    fat: number
+    carbohydrate: number
+  }[]
   user_id?: Types.ObjectId
   processing_food?: string
   status?: RecipeStatus
@@ -44,6 +51,15 @@ const RecipeSchema = new mongoose.Schema<Recipe>(
     carbohydrate: { type: Number, default: 0 },
     unit: { type: String, default: '' },
     quantity: { type: Number, default: 0 },
+    ingredients: [
+      {
+        name: { type: String, default: '' },
+        energy: { type: Number, default: 0 },
+        protein: { type: Number, default: 0 },
+        fat: { type: Number, default: 0 },
+        carbohydrate: { type: Number, default: 0 }
+      }
+    ],
     user_id: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'users',

@@ -226,3 +226,29 @@ export const ADMIN_MESSAGE = {
   REJECT_REQUEST_UPGRADE_SUCCESS: 'Từ chối yêu cầu nâng cấp thành công',
   ACCEPT_REQUEST_UPGRADE_SUCCESS: 'Chấp nh ận yêu cầu nâng cấp thành công'
 }
+
+export const INSPECTOR_MESSAGE = {
+  GET_ALL_POST_REPORT_SUCCESS: 'Lấy danh sách bài viết bị report thành công',
+  GET_POST_REPORT_DETAIL_SUCCESS: 'Lấy thông tin bài viết bị report thành công',
+  ACCEPT_POST_REPORT_SUCCESS: 'Từ chối report bài viết thành công',
+  DELETE_POST_REPORT_SUCCESS: 'Xóa bài viết bị report thành công',
+  GET_LIST_BLOG_FOR_INSPECTOR_SUCCESS: 'Lấy danh sách blog cho inspector thành công',
+  ACCEPT_BLOG_SUCCESS: 'Duyệt blog thành công',
+  REJECT_BLOG_SUCCESS: 'Từ chối blog thành công',
+  GET_BLOG_DETAIL_FOR_INSPECTOR_SUCCESS: 'Lấy thông tin blog cho inspector thành công',
+  GET_LIST_RECIPE_FOR_INSPECTOR_SUCCESS: 'Lấy danh sách công thức cho inspector thành công',
+  GET_RECIPE_DETAIL_FOR_INSPECTOR_SUCCESS: 'Lấy thông tin công thức cho inspector thành công',
+  ACCEPT_RECIPE_SUCCESS: 'Duyệt công thức thành công',
+  REJECT_RECIPE_SUCCESS: 'Từ chối công thức thành công',
+  GET_LIST_ALBUM_FOR_INSPECTOR_SUCCESS: 'Lấy danh sách album cho inspector thành công',
+  GET_ALBUM_DETAIL_FOR_INSPECTOR_SUCCESS: 'Lấy thông tin album cho inspector thành công',
+  GET_RECIPE_IN_ALBUM_FOR_INSPECTOR_SUCCESS: 'Lấy danh sách công thức trong album cho inspector thành công',
+  ACCEPT_ALBUM_SUCCESS: 'Duyệt album thành công',
+  REJECT_ALBUM_SUCCESS: 'Từ chối album thành công'
+}
+
+export const WRITTER_MESSAGE = {
+  CREATE_INGREDIENT_SUCCESS: 'Tạo nguyên liệu thành công',
+  GET_LIST_RECIPE_FOR_WRITTER_SUCCESS: 'Lấy danh sách công thức cho writter thành công',
+  GET_RECIPE_DETAIL_FOR_WRITTER_SUCCESS: 'Lấy thông tin công thức cho writter thành công'
+}

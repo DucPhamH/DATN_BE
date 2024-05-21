@@ -42,7 +42,8 @@ export enum PostStatus {
 export enum BlogStatus {
   pending,
   accepted,
-  banned
+  banned,
+  rejected
 }
 
 export enum RegionRecipe {
@@ -60,13 +61,15 @@ export enum DifficultLevel {
 export enum RecipeStatus {
   pending,
   accepted,
-  banned
+  banned,
+  rejected
 }
 
 export enum AlbumStatus {
   pending,
   accepted,
-  banned
+  banned,
+  rejected
 }
 
 export enum RecipeType {

@@ -387,7 +387,7 @@ class PostService {
           }
         }
       },
-      // lay commet cua post
+      // lay comment cua post
       {
         $lookup: {
           from: 'comment_posts',
