@@ -250,8 +250,7 @@ class InspectorService {
   async deletePostReportService({ post_id, user_id }: { post_id: string; user_id: string }) {
     await Promise.all([
       PostModel.findOneAndDelete({
-        _id: post_id,
-        user_id: user_id
+        _id: post_id
       }),
       ImagePostModel.deleteMany({
         post_id: post_id
@@ -285,15 +284,21 @@ class InspectorService {
       })
     )
 
-    // tăng banned_count của user lên 1
-    await UserModel.findOneAndUpdate(
-      { _id: new ObjectId(user_id) },
-      {
-        $inc: {
-          banned_count: 1
+    // tăng banned_count của user  = banned_count + 1
+    const user = await UserModel.findById(user_id)
+    console.log(user_id)
+    console.log(user)
+
+    if (user) {
+      await UserModel.updateOne(
+        { _id: user_id },
+        {
+          $set: {
+            banned_count: (user.banned_count ?? 0) + 1
+          }
         }
-      }
-    )
+      )
+    }
     return true
   }
   async getListBlogForInspectorService({ page, limit, sort, search, category_blog_id }: GetListBlogForInspectorQuery) {
@@ -664,6 +669,7 @@ class InspectorService {
     if (category_album !== undefined) {
       condition.category_album = category_album
     }
+    console.log(condition)
 
     const albums = await AlbumModel.aggregate([
       {
@@ -675,6 +681,23 @@ class InspectorService {
           localField: '_id',
           foreignField: 'album_id',
           as: 'recipes'
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      // bỏ password của user
+      {
+        $project: {
+          'user.password': 0
         }
       },
       {
@@ -826,14 +849,14 @@ class InspectorService {
       { new: true }
     )
     // xem những recipes nào có status là pending thì cập nhật thành rejected
-    await RecipeModel.updateMany(
-      { album_id: new ObjectId(album_id), status: RecipeStatus.pending },
-      {
-        $set: {
-          status: RecipeStatus.rejected
-        }
-      }
-    )
+    // await RecipeModel.updateMany(
+    //   { album_id: new ObjectId(album_id), status: RecipeStatus.pending },
+    //   {
+    //     $set: {
+    //       status: RecipeStatus.rejected
+    //     }
+    //   }
+    // )
     return album
   }
 }

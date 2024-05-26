@@ -32,6 +32,10 @@ class WritterService {
     })
     return ingredient
   }
+  async deleteIngredientService({ ingredient_id }: { ingredient_id: string }) {
+    await IngredientModel.findOneAndDelete({ _id: new ObjectId(ingredient_id) })
+    return true
+  }
   async createRecipeForWritterService({
     user_id,
     title,

@@ -3,6 +3,7 @@ import { UserRoles } from '~/constants/enums'
 import {
   createIngredientController,
   createRecipeForWritterController,
+  deleteIngredientController,
   getListRecipesForWritterController,
   getRecipeDetailForWritterController,
   updateRecipeForWritterController
@@ -19,6 +20,13 @@ writterRouter.post(
   accessTokenValidator,
   wrapRequestHandler(checkRole([UserRoles.admin, UserRoles.writter])),
   wrapRequestHandler(createIngredientController)
+)
+
+writterRouter.delete(
+  '/delete-ingredient/:id',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.admin, UserRoles.writter])),
+  wrapRequestHandler(deleteIngredientController)
 )
 
 writterRouter.get(

@@ -250,5 +250,6 @@ export const INSPECTOR_MESSAGE = {
 export const WRITTER_MESSAGE = {
   CREATE_INGREDIENT_SUCCESS: 'Tạo nguyên liệu thành công',
   GET_LIST_RECIPE_FOR_WRITTER_SUCCESS: 'Lấy danh sách công thức cho writter thành công',
-  GET_RECIPE_DETAIL_FOR_WRITTER_SUCCESS: 'Lấy thông tin công thức cho writter thành công'
+  GET_RECIPE_DETAIL_FOR_WRITTER_SUCCESS: 'Lấy thông tin công thức cho writter thành công',
+  DELETE_INGREDIENT_SUCCESS: 'Xóa nguyên liệu thành công'
 }

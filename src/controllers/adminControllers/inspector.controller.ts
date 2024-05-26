@@ -134,12 +134,13 @@ export const rejectRecipeController = async (req: Request, res: Response) => {
 }
 
 export const getListAlbumForInspectorController = async (req: Request, res: Response) => {
-  const { page, limit, search, sort } = req.query
+  const { page, limit, search, category_album, sort } = req.query
   const result = await inspectorService.getListAlbumForInspectorService({
     page: Number(page),
     limit: Number(limit),
     search: search as string,
-    sort: sort as string
+    sort: sort as string,
+    category_album: category_album as string
   })
   return res.json({
     result,

@@ -22,6 +22,15 @@ export const createIngredientController = async (req: Request, res: Response) =>
   })
 }
 
+export const deleteIngredientController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await writterService.deleteIngredientService({ ingredient_id: id })
+  return res.json({
+    result,
+    message: WRITTER_MESSAGE.DELETE_INGREDIENT_SUCCESS
+  })
+}
+
 export const getListRecipesForWritterController = async (req: Request, res: Response) => {
   const user = req.decoded_authorization as TokenPayload
   const { page, limit, sort, search, category_recipe_id, difficult_level, processing_food, region, interval_time } =
