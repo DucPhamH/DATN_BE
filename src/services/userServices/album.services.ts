@@ -445,6 +445,22 @@ class AlbumService {
     })
     return true
   }
+
+  async deleleAlbumForChefService({ user_id, album_id }: { user_id: string; album_id: string }) {
+    // // xóa album
+    // await AlbumModel.findOneAndDelete({ _id: album_id, user_id })
+    // // chuyển recipe có album_id = album_id sang album_id = null
+    // await RecipeModel.updateMany({ album_id: new ObjectId(album_id) }, { album_id: null })
+    // //xóa bookmark album
+    // await BookmarkAlbumModel.deleteMany({ album_id: new ObjectId(album_id) })
+    await Promise.all([
+      AlbumModel.findOneAndDelete({ _id: album_id, user_id }),
+      RecipeModel.updateMany({ album_id: new ObjectId(album_id) }, { album_id: null }),
+      BookmarkAlbumModel.deleteMany({ album_id: new ObjectId(album_id) })
+    ])
+
+    return true
+  }
 }
 
 const albumService = new AlbumService()

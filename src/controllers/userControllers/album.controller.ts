@@ -160,3 +160,17 @@ export const unBookmarkAlbumController = async (req: Request, res: Response) => 
     result
   })
 }
+
+export const deleteAlbumForChefController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { id } = req.params
+  const result = await albumService.deleleAlbumForChefService({
+    user_id: user.user_id,
+    album_id: id
+  })
+
+  return res.json({
+    message: ALBUM_MESSAGE.DELETE_ALBUM_SUCCESS,
+    result
+  })
+}

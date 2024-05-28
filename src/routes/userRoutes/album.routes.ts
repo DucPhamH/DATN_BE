@@ -3,6 +3,7 @@ import { UserRoles } from '~/constants/enums'
 import {
   bookmarkAlbumController,
   createAlbumController,
+  deleteAlbumForChefController,
   deleteRecipeInAlbumForChefController,
   getAlbumForChefController,
   getAlbumForUserController,
@@ -48,6 +49,13 @@ albumsRouter.put(
   wrapRequestHandler(checkRole([UserRoles.chef])),
   createAlbumValidator,
   wrapRequestHandler(updateAlbumForChefController)
+)
+
+albumsRouter.delete(
+  '/chef/delete-album/:id',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  wrapRequestHandler(deleteAlbumForChefController)
 )
 
 albumsRouter.get(

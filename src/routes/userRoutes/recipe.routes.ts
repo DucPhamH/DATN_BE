@@ -5,12 +5,14 @@ import {
   createCommentRecipeController,
   createRecipeForChefController,
   deleteCommentRecipeController,
+  deleteRecipeForChefController,
   getAllRecipeCategoryController,
   getCommentRecipeController,
   getListRecipesForChefController,
   getListRecipesForUserController,
   getRecicpeForChefController,
   getRecipeForUserController,
+  getThreeTopRecipesController,
   likeRecipeController,
   unbookmarkRecipeController,
   unlikeRecipeController,
@@ -72,6 +74,13 @@ recipesRouter.put(
   wrapRequestHandler(updateRecipeForChefController)
 )
 
+recipesRouter.delete(
+  '/chef/delete-recipe/:id',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.chef])),
+  wrapRequestHandler(deleteRecipeForChefController)
+)
+
 recipesRouter.get('/user/get-recipe/:id', accessTokenValidator, wrapRequestHandler(getRecipeForUserController))
 
 recipesRouter.get(
@@ -80,5 +89,7 @@ recipesRouter.get(
   getListRecipeForUserValidator,
   wrapRequestHandler(getListRecipesForUserController)
 )
+
+recipesRouter.get('/user/get-top-recipes', wrapRequestHandler(getThreeTopRecipesController))
 
 export default recipesRouter

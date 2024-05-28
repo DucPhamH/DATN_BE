@@ -805,6 +805,65 @@ class RecipeService {
       limit
     }
   }
+  async deteleRecipeForChefService({ user_id, recipe_id }: { user_id: string; recipe_id: string }) {
+    // xóa ảnh trên S3
+    // const image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
+    // await deleteFileFromS3(`recipe/${image_name}`)
+    console.log(recipe_id)
+
+    await Promise.all([
+      await RecipeModel.findOneAndDelete({
+        _id: new ObjectId(recipe_id),
+        user_id: new ObjectId(user_id)
+      }),
+      CommentRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) }),
+      LikeRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) }),
+      BookmarkRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) })
+    ])
+
+    return true
+  }
+  async getThreeTopRecipesService() {
+    // lấy 3 bài viết có like, bookmark, view nhiều nhất
+    const recipes = await RecipeModel.aggregate([
+      {
+        $lookup: {
+          from: 'bookmark_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'bookmarks'
+        }
+      },
+      // đếm số lượt bookmark
+      {
+        $addFields: {
+          total_bookmarks: { $size: '$bookmarks' }
+        }
+      },
+      // nối bảng like
+      {
+        $lookup: {
+          from: 'like_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'likes'
+        }
+      },
+      // đếm số lượt like
+      {
+        $addFields: {
+          total_likes: { $size: '$likes' }
+        }
+      },
+      {
+        $sort: { total_likes: -1, total_bookmarks: -1 }
+      },
+      {
+        $limit: 3
+      }
+    ])
+    return recipes
+  }
 }
 
 const recipeService = new RecipeService()

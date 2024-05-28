@@ -113,7 +113,7 @@ export const createRecipeForWritterController = async (req: Request, res: Respon
     carbohydrate: Number(carbohydrate),
     unit,
     quantity: Number(quantity),
-    ingredients
+    ingredients: JSON.parse(ingredients as string)
   })
 
   return res.json({
@@ -163,10 +163,23 @@ export const updateRecipeForWritterController = async (req: Request, res: Respon
     carbohydrate: Number(carbohydrate),
     unit,
     quantity: Number(quantity),
-    ingredients
+    ingredients: JSON.parse(ingredients as string)
   })
   return res.json({
     result,
     message: RECIPE_MESSAGE.UPDATE_RECIPE_SUCCESS
+  })
+}
+
+export const deleteRecipeForWritterController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const user = req.decoded_authorization as TokenPayload
+  const result = await writterService.deteleRecipeForWritterService({
+    user_id: user.user_id,
+    recipe_id: id
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.DELETE_RECIPE_SUCCESS
   })
 }

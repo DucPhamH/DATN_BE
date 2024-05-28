@@ -181,7 +181,15 @@ export const RECIPE_MESSAGE = {
   BOOKMARK_RECIPE_SUCCESS: 'Bookmark công thức thành công',
   UNBOOKMARK_RECIPE_SUCCESS: 'Unbookmark công thức thành công',
   GET_COMMENT_RECIPE_SUCCESS: 'Lấy bình luận công thức thành công',
-  RECIPE_NOT_FOUND: 'Không tìm thấy công thức'
+  RECIPE_NOT_FOUND: 'Không tìm thấy công thức',
+  DELETE_RECIPE_SUCCESS: 'Xóa công thức thành công',
+  ENERGY_INVALID: 'Năng lượng không hợp lệ',
+  PROTEIN_INVALID: 'Protein không hợp lệ',
+  FAT_INVALID: 'Fat không hợp lệ',
+  CARBOHYDRATE_INVALID: 'Carbohydrate không hợp lệ',
+  UNIT_INVALID: 'Đơn vị không hợp lệ',
+  QUANTITY_INVALID: 'Số lượng không hợp lệ',
+  GET_THREE_TOP_RECIPES_SUCCESS: 'Lấy 3 công thức nổi bật thành công'
 }
 
 export const ALBUM_MESSAGE = {
@@ -193,7 +201,8 @@ export const ALBUM_MESSAGE = {
   UPDATE_ALBUM_SUCCESS: 'Cập nhật album thành công',
   GET_RECIPES_IN_ALBUM_SUCCESS: 'Lấy danh sách công thức trong album thành công',
   BOOKMARK_ALBUM_SUCCESS: 'Bookmark album thành công',
-  UN_BOOKMARK_ALBUM_SUCCESS: 'Unbookmark album thành công'
+  UN_BOOKMARK_ALBUM_SUCCESS: 'Unbookmark album thành công',
+  DELETE_ALBUM_SUCCESS: 'Xóa album thành công'
 }
 
 export const INGREDIENT_MESSAGE = {

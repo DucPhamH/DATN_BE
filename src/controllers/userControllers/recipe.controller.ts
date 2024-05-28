@@ -257,3 +257,24 @@ export const getCommentRecipeController = async (req: Request, res: Response) =>
     message: RECIPE_MESSAGE.GET_COMMENT_RECIPE_SUCCESS
   })
 }
+
+export const deleteRecipeForChefController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const user = req.decoded_authorization as TokenPayload
+  const result = await recipeService.deteleRecipeForChefService({
+    user_id: user.user_id,
+    recipe_id: id
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.DELETE_RECIPE_SUCCESS
+  })
+}
+
+export const getThreeTopRecipesController = async (req: Request, res: Response) => {
+  const result = await recipeService.getThreeTopRecipesService()
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.GET_THREE_TOP_RECIPES_SUCCESS
+  })
+}

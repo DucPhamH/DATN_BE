@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
-import { RecipeStatus, RecipeTime } from '~/constants/enums'
+import { RecipeStatus, RecipeTime, RecipeType } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { RECIPE_MESSAGE } from '~/constants/messages'
 import {
@@ -9,7 +9,10 @@ import {
   GetListRecipeForWritterQuery,
   UpdateRecipeForWritterBody
 } from '~/models/requests/writter.request'
+import BookmarkRecipeModel from '~/models/schemas/bookmarkRecipe.schema'
+import CommentRecipeModel from '~/models/schemas/commentRecipe.schema'
 import IngredientModel from '~/models/schemas/ingredient.schema'
+import LikeRecipeModel from '~/models/schemas/likeRecipe.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
 import { ErrorWithStatus } from '~/utils/error'
 
@@ -63,13 +66,14 @@ class WritterService {
         .jpeg()
         .toBuffer()
     }
+    // console.log(ingredients)
 
     // const uploadRes = await uploadFileToS3({
     //   filename: `recipe/${newImage?.originalname}` as string,
     //   contentType: newImage?.mimetype as string,
     //   body: newImage?.buffer as Buffer
     // })
-    console.log(newImage)
+    // console.log(newImage)
 
     // lấy tên ảnh từ newImage.originalname
 
@@ -101,7 +105,8 @@ class WritterService {
       status: RecipeStatus.accepted,
       // ingredients là 1 mảng, mỗi phần tử là 1 object chứa các trường name, energy, protein, fat, carbohydrate
       // push vào mảng ingredients của recipe
-      ingredients
+      ingredients,
+      type: RecipeType.writter
     })
 
     // const body = {
@@ -191,8 +196,10 @@ class WritterService {
       quantity = recipe.quantity
     }
 
+    console.log(ingredients)
+
     // nếu ingredients là mảng rỗng thì gán ingredients = recipe.ingredients
-    if (ingredients?.length === 0) {
+    if (ingredients?.length === 0 || !ingredients) {
       ingredients = recipe.ingredients
     }
 
@@ -217,6 +224,7 @@ class WritterService {
 
       // // xóa anhr cũ trên S3
       // const old_image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
+      // console.log('old_image_name', old_image_name)
 
       // await deleteFileFromS3(`recipe/${old_image_name}`)
 
@@ -228,25 +236,27 @@ class WritterService {
           user_id: new ObjectId(user_id)
         },
         {
-          title,
-          description,
-          content,
-          image:
-            'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
-          image_name,
-          video,
-          time,
-          region,
-          difficult_level,
-          category_recipe_id,
-          processing_food,
-          energy,
-          protein,
-          fat,
-          carbohydrate,
-          unit,
-          quantity,
-          ingredients
+          $set: {
+            title,
+            description,
+            content,
+            image:
+              'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
+            image_name,
+            video,
+            time,
+            region,
+            difficult_level,
+            category_recipe_id,
+            processing_food,
+            energy,
+            protein,
+            fat,
+            carbohydrate,
+            unit,
+            quantity,
+            ingredients: ingredients
+          }
         },
         { new: true }
       )
@@ -269,7 +279,14 @@ class WritterService {
         difficult_level,
         category_recipe_id,
         processing_food,
-        status: RecipeStatus.pending
+        energy,
+        protein,
+        fat,
+        carbohydrate,
+        unit,
+        quantity,
+        // xóa trường ingredients cũ và thêm trường ingredients mới
+        ingredients
       },
       { new: true }
     )
@@ -428,6 +445,23 @@ class WritterService {
     ])
 
     return recipe
+  }
+  async deteleRecipeForWritterService({ user_id, recipe_id }: { user_id: string; recipe_id: string }) {
+    // xóa ảnh trên S3
+    // const image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
+    // await deleteFileFromS3(`recipe/${image_name}`)
+
+    await Promise.all([
+      await RecipeModel.findOneAndDelete({
+        _id: new ObjectId(recipe_id),
+        user_id: new ObjectId(user_id)
+      }),
+      CommentRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) }),
+      LikeRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) }),
+      BookmarkRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) })
+    ])
+
+    return true
   }
 }
 
