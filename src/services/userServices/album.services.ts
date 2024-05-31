@@ -98,6 +98,96 @@ class AlbumService {
     }
   }
 
+  async getListMeAlbumService({ user_id, page, limit }: { user_id: string; page: number; limit: number }) {
+    if (!page) {
+      page = 1
+    }
+
+    if (!limit) {
+      limit = 10
+    }
+    const albums = await AlbumModel.aggregate([
+      {
+        $match: {
+          user_id: new ObjectId(user_id),
+          status: AlbumStatus.accepted
+        }
+      },
+      {
+        $lookup: {
+          from: 'recipes',
+          localField: '_id',
+          foreignField: 'album_id',
+          as: 'recipes'
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+
+    const findAlbums = await AlbumModel.find({ user_id: new ObjectId(user_id), status: AlbumStatus.accepted })
+    const totalPage = Math.ceil(findAlbums.length / limit)
+
+    return {
+      albums,
+      totalPage,
+      page,
+      limit
+    }
+  }
+
+  async getListUserAlbumService({ user_id, page, limit }: { user_id: string; page: number; limit: number }) {
+    if (!page) {
+      page = 1
+    }
+
+    if (!limit) {
+      limit = 10
+    }
+    const albums = await AlbumModel.aggregate([
+      {
+        $match: {
+          user_id: new ObjectId(user_id),
+          status: AlbumStatus.accepted
+        }
+      },
+      {
+        $lookup: {
+          from: 'recipes',
+          localField: '_id',
+          foreignField: 'album_id',
+          as: 'recipes'
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+
+    const findAlbums = await AlbumModel.find({ user_id: new ObjectId(user_id), status: AlbumStatus.accepted })
+    const totalPage = Math.ceil(findAlbums.length / limit)
+
+    return {
+      albums,
+      totalPage,
+      page,
+      limit
+    }
+  }
+
   async getListAlbumForUserService({ page, limit, search, category_album, sort, status }: GetListAlbumForUserQuery) {
     const condition: any = {
       status: AlbumStatus.accepted

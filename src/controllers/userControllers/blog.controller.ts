@@ -65,6 +65,34 @@ export const getListBlogForUserController = async (req: Request, res: Response) 
   })
 }
 
+export const getListMeBlogController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { page, limit } = req.query
+  const result = await blogsService.getListMeBlogService({
+    user_id: user.user_id,
+    page: Number(page),
+    limit: Number(limit)
+  })
+  return res.json({
+    message: BLOG_MESSAGE.GET_BLOGS_SUCCESS,
+    result
+  })
+}
+
+export const getListUserBlogController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const { page, limit } = req.query
+  const result = await blogsService.getListUserBlogService({
+    user_id: id,
+    page: Number(page),
+    limit: Number(limit)
+  })
+  return res.json({
+    message: BLOG_MESSAGE.GET_BLOGS_SUCCESS,
+    result
+  })
+}
+
 export const getBlogForChefController = async (req: Request, res: Response) => {
   const user = req.decoded_authorization as TokenPayload
   const { id } = req.params

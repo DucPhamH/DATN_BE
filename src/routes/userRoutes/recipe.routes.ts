@@ -8,8 +8,10 @@ import {
   deleteRecipeForChefController,
   getAllRecipeCategoryController,
   getCommentRecipeController,
+  getListMeRecipesController,
   getListRecipesForChefController,
   getListRecipesForUserController,
+  getListUserRecipesController,
   getRecicpeForChefController,
   getRecipeForUserController,
   getThreeTopRecipesController,
@@ -91,5 +93,9 @@ recipesRouter.get(
 )
 
 recipesRouter.get('/user/get-top-recipes', wrapRequestHandler(getThreeTopRecipesController))
+
+recipesRouter.get('/me/get-list-recipe', accessTokenValidator, wrapRequestHandler(getListMeRecipesController))
+
+recipesRouter.get('/user/get-list-recipe/:id', accessTokenValidator, wrapRequestHandler(getListUserRecipesController))
 
 export default recipesRouter

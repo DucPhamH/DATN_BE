@@ -113,6 +113,120 @@ class BlogsService {
 
     return { blogs, totalPage, limit, page }
   }
+  async getListMeBlogService({ user_id, limit, page }: { user_id: string; limit: number; page: number }) {
+    if (!page) {
+      page = 1
+    }
+
+    if (!limit) {
+      limit = 10
+    }
+
+    const blogs = await BlogModel.aggregate([
+      {
+        $match: {
+          user_id: new ObjectId(user_id),
+          status: BlogStatus.accepted
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $lookup: {
+          from: 'category_blogs',
+          localField: 'category_blog_id',
+          foreignField: '_id',
+          as: 'category_blog'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $unwind: '$category_blog'
+      },
+      // nếu không có sort thì mặc định là mới nhất
+      {
+        $sort: {
+          createdAt: -1
+        }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+
+    const findBlogs = await BlogModel.find({ user_id: new ObjectId(user_id), status: BlogStatus.accepted })
+    const totalPage = Math.ceil(findBlogs.length / limit)
+
+    return { blogs, totalPage, limit, page }
+  }
+  async getListUserBlogService({ user_id, limit, page }: { user_id: string; limit: number; page: number }) {
+    if (!page) {
+      page = 1
+    }
+
+    if (!limit) {
+      limit = 10
+    }
+
+    const blogs = await BlogModel.aggregate([
+      {
+        $match: {
+          user_id: new ObjectId(user_id),
+          status: BlogStatus.accepted
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $lookup: {
+          from: 'category_blogs',
+          localField: 'category_blog_id',
+          foreignField: '_id',
+          as: 'category_blog'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $unwind: '$category_blog'
+      },
+      // nếu không có sort thì mặc định là mới nhất
+      {
+        $sort: {
+          createdAt: -1
+        }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+
+    const findBlogs = await BlogModel.find({ user_id: new ObjectId(user_id), status: BlogStatus.accepted })
+    const totalPage = Math.ceil(findBlogs.length / limit)
+
+    return { blogs, totalPage, limit, page }
+  }
   async getBlogForChefService({ user_id, blog_id }: { user_id: string; blog_id: string }) {
     const blog = await BlogModel.aggregate([
       {

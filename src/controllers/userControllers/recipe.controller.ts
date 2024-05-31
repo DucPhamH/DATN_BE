@@ -278,3 +278,33 @@ export const getThreeTopRecipesController = async (req: Request, res: Response) 
     message: RECIPE_MESSAGE.GET_THREE_TOP_RECIPES_SUCCESS
   })
 }
+
+export const getListMeRecipesController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { page, limit } = req.query
+  const result = await recipeService.getListMeRecipeService({
+    user_id: user.user_id,
+    page: Number(page),
+    limit: Number(limit)
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.GET_LIST_RECIPE_FOR_CHEF_SUCCESS
+  })
+}
+
+export const getListUserRecipesController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const { page, limit } = req.query
+  const user = req.decoded_authorization as TokenPayload
+  const result = await recipeService.getListUserRecipeService({
+    id: id as string,
+    user_id: user.user_id,
+    page: Number(page),
+    limit: Number(limit)
+  })
+  return res.json({
+    result,
+    message: RECIPE_MESSAGE.GET_LIST_RECIPE_FOR_USER_SUCCESS
+  })
+}

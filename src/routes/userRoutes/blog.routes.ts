@@ -11,6 +11,8 @@ import {
   getCommentsBlogController,
   getListBlogForChefController,
   getListBlogForUserController,
+  getListMeBlogController,
+  getListUserBlogController,
   updateBlogForChefController
 } from '~/controllers/userControllers/blog.controller'
 import { accessTokenValidator } from '~/middlewares/authUser.middleware'
@@ -70,6 +72,10 @@ blogsRouter.get(
   getListBlogsForChefValidator,
   wrapRequestHandler(getListBlogForUserController)
 )
+
+blogsRouter.get('/me/get-list-blog', accessTokenValidator, wrapRequestHandler(getListMeBlogController))
+
+blogsRouter.get('/user/get-list-blog/:id', accessTokenValidator, wrapRequestHandler(getListUserBlogController))
 
 blogsRouter.get('/user/get-blog/:id', accessTokenValidator, wrapRequestHandler(getBlogForUserController))
 

@@ -9,6 +9,8 @@ import {
   getAlbumForUserController,
   getListAlbumForChefController,
   getListAlbumForUserController,
+  getListMeAlbumController,
+  getListUserAlbumController,
   getRecipesInAlbumController,
   unBookmarkAlbumController,
   updateAlbumForChefController
@@ -72,5 +74,9 @@ albumsRouter.get('/user/get-recipes-in-album', accessTokenValidator, wrapRequest
 
 albumsRouter.post('/actions/bookmark', accessTokenValidator, wrapRequestHandler(bookmarkAlbumController))
 albumsRouter.post('/actions/unbookmark', accessTokenValidator, wrapRequestHandler(unBookmarkAlbumController))
+
+albumsRouter.get('/me/get-list-album', accessTokenValidator, wrapRequestHandler(getListMeAlbumController))
+
+albumsRouter.get('/user/get-list-album/:id', accessTokenValidator, wrapRequestHandler(getListUserAlbumController))
 
 export default albumsRouter

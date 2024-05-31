@@ -174,3 +174,33 @@ export const deleteAlbumForChefController = async (req: Request, res: Response) 
     result
   })
 }
+
+export const getListMeAlbumController = async (req: Request, res: Response) => {
+  const user = req.decoded_authorization as TokenPayload
+  const { page, limit } = req.query
+  const result = await albumService.getListMeAlbumService({
+    user_id: user.user_id,
+    page: Number(page),
+    limit: Number(limit)
+  })
+
+  return res.json({
+    message: ALBUM_MESSAGE.GET_LIST_ALBUM_SUCCESS,
+    result
+  })
+}
+
+export const getListUserAlbumController = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const { page, limit } = req.query
+  const result = await albumService.getListUserAlbumService({
+    user_id: id,
+    page: Number(page),
+    limit: Number(limit)
+  })
+
+  return res.json({
+    message: ALBUM_MESSAGE.GET_LIST_ALBUM_SUCCESS,
+    result
+  })
+}

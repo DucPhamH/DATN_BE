@@ -206,6 +206,271 @@ class RecipeService {
       limit
     }
   }
+
+  async getListMeRecipeService({ user_id, page, limit }: { user_id: string; page: number; limit: number }) {
+    if (!limit) {
+      limit = 10
+    }
+    if (!page) {
+      page = 1
+    }
+
+    const recipes = await RecipeModel.aggregate([
+      {
+        $match: {
+          user_id: new ObjectId(user_id),
+          status: RecipeStatus.accepted
+        }
+      },
+      {
+        $lookup: {
+          from: 'recipe_categories',
+          localField: 'category_recipe_id',
+          foreignField: '_id',
+          as: 'category_recipe'
+        }
+      },
+      {
+        $unwind: '$category_recipe'
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      // loại bỏ password của user
+      {
+        $project: {
+          'user.password': 0
+        }
+      },
+      // lookup tới bảng bookmark
+      {
+        $lookup: {
+          from: 'bookmark_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'bookmarks'
+        }
+      },
+      // // check xem user_id đã bookmark recipe_id chưa
+      {
+        $addFields: {
+          is_bookmarked: {
+            $in: [new ObjectId(user_id), '$bookmarks.user_id']
+          }
+        }
+      },
+      // đếm số lượt bookmark
+      {
+        $addFields: {
+          total_bookmarks: { $size: '$bookmarks' }
+        }
+      },
+      // nối bảng like
+      {
+        $lookup: {
+          from: 'like_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'likes'
+        }
+      },
+      // check xem user_id đã like recipe_id chưa
+      {
+        $addFields: {
+          is_liked: {
+            $in: [new ObjectId(user_id), '$likes.user_id']
+          }
+        }
+      },
+      // đếm số lượt like
+      {
+        $addFields: {
+          total_likes: { $size: '$likes' }
+        }
+      },
+
+      // nối bảng comment
+      {
+        $lookup: {
+          from: 'comment_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'comments'
+        }
+      },
+      // đếm số lượt comment
+      {
+        $addFields: {
+          total_comments: { $size: '$comments' }
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+
+    const findRecipes = await RecipeModel.find({ user_id: new ObjectId(user_id), status: RecipeStatus.accepted })
+    const totalPage = Math.ceil(findRecipes.length / limit)
+
+    return {
+      recipes,
+      totalPage,
+      page,
+      limit
+    }
+  }
+
+  async getListUserRecipeService({
+    id,
+    user_id,
+    page,
+    limit
+  }: {
+    id: string
+    user_id: string
+    page: number
+    limit: number
+  }) {
+    if (!limit) {
+      limit = 10
+    }
+    if (!page) {
+      page = 1
+    }
+
+    const recipes = await RecipeModel.aggregate([
+      {
+        $match: {
+          user_id: new ObjectId(id),
+          status: RecipeStatus.accepted
+        }
+      },
+      {
+        $lookup: {
+          from: 'recipe_categories',
+          localField: 'category_recipe_id',
+          foreignField: '_id',
+          as: 'category_recipe'
+        }
+      },
+      {
+        $unwind: '$category_recipe'
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      // loại bỏ password của user
+      {
+        $project: {
+          'user.password': 0
+        }
+      },
+      // lookup tới bảng bookmark
+      {
+        $lookup: {
+          from: 'bookmark_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'bookmarks'
+        }
+      },
+      // // check xem user_id đã bookmark recipe_id chưa
+      {
+        $addFields: {
+          is_bookmarked: {
+            $in: [new ObjectId(user_id), '$bookmarks.user_id']
+          }
+        }
+      },
+      // đếm số lượt bookmark
+      {
+        $addFields: {
+          total_bookmarks: { $size: '$bookmarks' }
+        }
+      },
+      // nối bảng like
+      {
+        $lookup: {
+          from: 'like_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'likes'
+        }
+      },
+      // check xem user_id đã like recipe_id chưa
+      {
+        $addFields: {
+          is_liked: {
+            $in: [new ObjectId(user_id), '$likes.user_id']
+          }
+        }
+      },
+      // đếm số lượt like
+      {
+        $addFields: {
+          total_likes: { $size: '$likes' }
+        }
+      },
+
+      // nối bảng comment
+      {
+        $lookup: {
+          from: 'comment_recipes',
+          localField: '_id',
+          foreignField: 'recipe_id',
+          as: 'comments'
+        }
+      },
+      // đếm số lượt comment
+      {
+        $addFields: {
+          total_comments: { $size: '$comments' }
+        }
+      },
+      {
+        $sort: { createdAt: -1 }
+      },
+      {
+        $skip: (page - 1) * limit
+      },
+      {
+        $limit: limit
+      }
+    ])
+
+    const findRecipes = await RecipeModel.find({ user_id: new ObjectId(id), status: RecipeStatus.accepted })
+    const totalPage = Math.ceil(findRecipes.length / limit)
+
+    return {
+      recipes,
+      totalPage,
+      page,
+      limit
+    }
+  }
+
   async getListRecipesForUserService({
     user_id,
     page,
