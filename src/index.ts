@@ -23,8 +23,13 @@ import seachRouter from './routes/userRoutes/search.routes'
 import userAdminRouter from './routes/adminRoutes/userAdmin.routes'
 import inspectorRouter from './routes/adminRoutes/inspector.routes'
 import writterRouter from './routes/adminRoutes/writter.routes'
+import { createServer } from 'http'
+import initSocket from './utils/socket'
+
 const app: Express = express()
 const port = envConfig.port
+
+const httpServer = createServer(app)
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -73,6 +78,9 @@ app.use('/api/inspectors', inspectorRouter)
 app.use('/api/writters', writterRouter)
 
 app.use(defaultErrorHandler)
-app.listen(port, () => {
+
+initSocket(httpServer)
+
+httpServer.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

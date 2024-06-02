@@ -34,7 +34,6 @@ export const loginAdminController = async (req: Request, res: Response) => {
 export const logoutController = async (req: Request, res: Response) => {
   const { refresh_token } = req.body
   const { decoded_authorization } = req
-  console.log('decoded_authorization', decoded_authorization)
   const result = await authUserService.logout(refresh_token)
   return res.json(result)
 }

@@ -7,7 +7,6 @@ import { ErrorWithStatus } from '~/utils/error'
 
 export const getMeController = async (req: Request, res: Response) => {
   const user = req.decoded_authorization as TokenPayload
-  console.log(user)
   const me = await usersService.getMe({
     user_id: user.user_id
   })

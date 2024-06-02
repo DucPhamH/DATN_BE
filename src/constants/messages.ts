@@ -23,7 +23,8 @@ export const AUTH_USER_MESSAGE = {
   VERIFY_OTP_SUCCESS: 'Xác thực mã OTP thành công',
   RESET_PASSWORD_SUCCESS: 'Đặt lại mật khẩu thành công',
   EMAIL_NOT_EXIST: 'Email không tồn tại',
-  PASSWORD_SAME_OLD_PASSWORD: 'Mật khẩu mới không được giống mật khẩu cũ'
+  PASSWORD_SAME_OLD_PASSWORD: 'Mật khẩu mới không được giống mật khẩu cũ',
+  ACCESS_TOKEN_REQUIRED: 'Cần có access token'
 } as const
 
 export const POST_MESSAGE = {

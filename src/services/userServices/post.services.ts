@@ -318,7 +318,6 @@ class PostService {
 
     const follow_ids_arr = follow_ids.map((f) => f.follow_id)
     follow_ids_arr.push(user_id_obj)
-    console.log(follow_ids_arr)
 
     const newFeeds = await PostModel.aggregate([
       {
@@ -1065,7 +1064,6 @@ class PostService {
     }).select('user_id')
 
     const follow_ids_arr = follow_ids.map((f) => f.user_id)
-    console.log(follow_ids_arr)
 
     const posts = await PostModel.aggregate([
       {
