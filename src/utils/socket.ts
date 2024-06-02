@@ -2,11 +2,11 @@ import { Server } from 'socket.io'
 import { Server as ServerHttp } from 'http'
 import { TokenPayload } from '~/models/requests/authUser.request'
 import { verifyAccessToken } from './common'
-
+// http://localhost:3000
 const initSocket = (httpServer: ServerHttp) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: 'http://localhost:3000'
+      origin: 'https://datn-fe-mu.vercel.app'
     }
   })
   const users: {
