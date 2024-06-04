@@ -5,7 +5,7 @@ export interface Album {
   title: string
   description: string
   image: string
-  user_id?: Types.ObjectId
+  user_id: Types.ObjectId
   search_fields?: string
   status?: AlbumStatus
   category_album: string

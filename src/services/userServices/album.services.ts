@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { AlbumStatus } from '~/constants/enums'
+import { AlbumStatus, NotificationTypes } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { ALBUM_MESSAGE } from '~/constants/messages'
 import {
@@ -11,6 +11,7 @@ import {
 } from '~/models/requests/album.request'
 import AlbumModel from '~/models/schemas/album.schema'
 import BookmarkAlbumModel from '~/models/schemas/bookmarkAlbum.schema'
+import NotificationModel from '~/models/schemas/notification.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
 import { ErrorWithStatus } from '~/utils/error'
 
@@ -525,6 +526,36 @@ class AlbumService {
       },
       { upsert: true, new: true }
     )
+
+    const user_album_id = await AlbumModel.findOne({ _id: album_id })
+
+    if (!user_album_id) {
+      throw new ErrorWithStatus({
+        message: ALBUM_MESSAGE.ALBUM_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    if (user_album_id.user_id.toString() !== user_id) {
+      await NotificationModel.findOneAndUpdate(
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: user_album_id.user_id,
+          link_id: album_id,
+          type: NotificationTypes.bookmarkAlbum
+        },
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: user_album_id.user_id,
+          content: 'Đã lưu album của bạn',
+          name_notification: user_album_id.title || 'Album không có tiêu đề',
+          link_id: album_id,
+          type: NotificationTypes.bookmarkAlbum
+        },
+        { upsert: true }
+      )
+    }
+
     return newBookmark
   }
 

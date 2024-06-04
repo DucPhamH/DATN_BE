@@ -3,6 +3,7 @@ import { Server as ServerHttp } from 'http'
 import { TokenPayload } from '~/models/requests/authUser.request'
 import { verifyAccessToken } from './common'
 // http://localhost:3000
+// https://datn-fe-mu.vercel.app
 const initSocket = (httpServer: ServerHttp) => {
   const io = new Server(httpServer, {
     cors: {
@@ -71,6 +72,111 @@ const initSocket = (httpServer: ServerHttp) => {
         avatar: data.avatar
       })
     })
+
+    socket.on('share post', (data) => {
+      console.log(data)
+
+      if (!users[data.to]) {
+        return
+      }
+
+      const receiver_socket_id = users[data.to].socket_id
+
+      if (socket.id === receiver_socket_id) {
+        console.log('User không tự thông báo share post cho chính mình')
+        return
+      }
+
+      if (!receiver_socket_id) {
+        return
+      }
+
+      socket.to(receiver_socket_id).emit('toast share', {
+        content: data.content,
+        from: user_id,
+        name: data.name,
+        avatar: data.avatar
+      })
+    })
+
+    socket.on('comment post', (data) => {
+      console.log(data)
+
+      if (!users[data.to]) {
+        return
+      }
+
+      const receiver_socket_id = users[data.to].socket_id
+
+      if (socket.id === receiver_socket_id) {
+        console.log('User không tự thông báo comment post cho chính mình')
+        return
+      }
+
+      if (!receiver_socket_id) {
+        return
+      }
+
+      socket.to(receiver_socket_id).emit('toast comment', {
+        content: data.content,
+        from: user_id,
+        name: data.name,
+        avatar: data.avatar
+      })
+    })
+
+    socket.on('comment child post', (data) => {
+      console.log(data)
+
+      if (!users[data.to]) {
+        return
+      }
+
+      const receiver_socket_id = users[data.to].socket_id
+
+      if (socket.id === receiver_socket_id) {
+        console.log('User không tự thông báo comment child post cho chính mình')
+        return
+      }
+
+      if (!receiver_socket_id) {
+        return
+      }
+
+      socket.to(receiver_socket_id).emit('toast comment child', {
+        content: data.content,
+        from: user_id,
+        name: data.name,
+        avatar: data.avatar
+      })
+    })
+
+    socket.on('follow', (data) => {
+      console.log(data)
+
+      if (!users[data.to]) {
+        return
+      }
+
+      const receiver_socket_id = users[data.to].socket_id
+
+      if (socket.id === receiver_socket_id) {
+        console.log('User không tự thông báo follow cho chính mình')
+        return
+      }
+
+      if (!receiver_socket_id) {
+        return
+      }
+
+      socket.to(receiver_socket_id).emit('toast follow', {
+        content: data.content,
+        from: user_id,
+        name: data.name,
+        avatar: data.avatar
+      })
+    })
+
     socket.on('disconnect', () => {
       delete users[user_id]
       console.log(`user ${socket.id} disconnected`)

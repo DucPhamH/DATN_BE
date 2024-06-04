@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { BlogStatus } from '~/constants/enums'
+import { BlogStatus, NotificationTypes } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { BLOG_MESSAGE } from '~/constants/messages'
 import {
@@ -11,6 +11,7 @@ import {
 import BlogModel, { Blog } from '~/models/schemas/blog.schema'
 import BlogCategoryModel from '~/models/schemas/blogCategory.schema'
 import CommentBlogModel from '~/models/schemas/commentBlog.schema'
+import NotificationModel from '~/models/schemas/notification.schema'
 import { ErrorWithStatus } from '~/utils/error'
 
 class BlogsService {
@@ -475,6 +476,26 @@ class BlogsService {
       user_id: new ObjectId(user_id),
       blog_id: new ObjectId(blog_id)
     })
+
+    const user_blog_id = await BlogModel.findOne({ _id: blog_id })
+
+    if (!user_blog_id) {
+      throw new ErrorWithStatus({
+        message: BLOG_MESSAGE.BLOG_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    if (user_blog_id.user_id.toString() !== user_id) {
+      await NotificationModel.create({
+        sender_id: new ObjectId(user_id),
+        receiver_id: user_blog_id.user_id,
+        content: 'Đã bình luận blog của bạn',
+        name_notification: user_blog_id.title || 'Blog không có tiêu đề',
+        link_id: blog_id,
+        type: NotificationTypes.commentBlog
+      })
+    }
     return comment
   }
   async deleteCommentBlogService({ user_id, comment_id }: { user_id: string; comment_id: string }) {

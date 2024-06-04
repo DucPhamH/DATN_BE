@@ -1,4 +1,3 @@
-import { cond } from 'lodash'
 import ActivityModel from '~/models/schemas/activity.schema'
 
 class ActivityService {

@@ -97,6 +97,13 @@ export const BLOG_MESSAGE = {
   GET_COMMENTS_BLOG_SUCCESS: 'Lấy bình luận blog thành công'
 } as const
 
+export const NOTIFICATION_MESSAGE = {
+  GET_LIST_NOTIFICATION_SUCCESS: 'Lấy danh sách thông báo thành công',
+  READ_NOTIFICATION_SUCCESS: 'Đọc thông báo thành công',
+  DELETE_NOTIFICATION_SUCCESS: 'Xóa thông báo thành công',
+  CHECK_READ_NOTIFICATION_SUCCESS: 'Kiểm tra thông báo đã đọc thành công'
+} as const
+
 export const ACTIVITY_MESSAGE = {
   GET_LIST_ACTIVITY_CATEGORY_SUCCESS: 'Lấy danh sách danh mục hoạt động thành công',
   GET_LIST_ACTIVITY_SUCCESS: 'Lấy danh sách hoạt động thành công'

@@ -1,7 +1,7 @@
 import moment from 'moment-timezone'
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
-import { PostStatus, PostTypes } from '~/constants/enums'
+import { NotificationTypes, PostStatus, PostTypes } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { POST_MESSAGE } from '~/constants/messages'
 import { CreatePostBody } from '~/models/requests/post.request'
@@ -9,7 +9,9 @@ import CommentPostModel from '~/models/schemas/commentPost.schema'
 import FollowModel from '~/models/schemas/follow.schema'
 import ImagePostModel from '~/models/schemas/imagePost.schema'
 import LikePostModel from '~/models/schemas/likePost.schema'
+import NotificationModel from '~/models/schemas/notification.schema'
 import PostModel from '~/models/schemas/post.schema'
+import UserModel from '~/models/schemas/user.schema'
 import { ErrorWithStatus } from '~/utils/error'
 import { uploadFileToS3 } from '~/utils/s3'
 
@@ -574,6 +576,37 @@ class PostService {
         new: true
       }
     )
+
+    const user_post_id = await PostModel.findOne({ _id: post_id })
+
+    if (!user_post_id) {
+      throw new ErrorWithStatus({
+        message: POST_MESSAGE.POST_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    console.log(user_post_id)
+    if (user_post_id.user_id.toString() !== user_id) {
+      await NotificationModel.findOneAndUpdate(
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: user_post_id.user_id,
+          link_id: post_id,
+          type: NotificationTypes.likePost
+        },
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: user_post_id.user_id,
+          content: 'Đã thích bài viết của bạn',
+          name_notification: user_post_id.content || 'Bài viết không có nội dung',
+          link_id: post_id,
+          type: NotificationTypes.likePost
+        },
+        {
+          upsert: true
+        }
+      )
+    }
     return newLike
   }
   async unLikePostService({ user_id, post_id }: { user_id: string; post_id: string }) {
@@ -607,6 +640,27 @@ class PostService {
         status: HTTP_STATUS.BAD_REQUEST
       })
     }
+
+    const user_post_id = await PostModel.findOne({ _id: parent_id })
+
+    if (!user_post_id) {
+      throw new ErrorWithStatus({
+        message: POST_MESSAGE.POST_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    if (user_post_id.user_id.toString() !== user_id) {
+      await NotificationModel.create({
+        sender_id: new ObjectId(user_id),
+        receiver_id: user_post_id.user_id,
+        content: 'Đã chia sẻ bài viết của bạn',
+        name_notification: user_post_id.content || 'Bài viết không có nội dung',
+        link_id: newPost._id,
+        type: NotificationTypes.sharePost
+      })
+    }
+
     return newPost
   }
   async getCommentsPostService({ post_id, limit, page }: { post_id: string; limit: number; page: number }) {
@@ -752,6 +806,25 @@ class PostService {
         user_id: user_id,
         post_id: post_id
       })
+
+      const user_post_id = await PostModel.findOne({ _id: post_id })
+
+      if (!user_post_id) {
+        throw new ErrorWithStatus({
+          message: POST_MESSAGE.POST_NOT_FOUND,
+          status: HTTP_STATUS.NOT_FOUND
+        })
+      }
+      if (user_post_id.user_id.toString() !== user_id) {
+        await NotificationModel.create({
+          sender_id: new ObjectId(user_id),
+          receiver_id: user_post_id.user_id,
+          content: 'Đã bình luận bài viết của bạn',
+          name_notification: user_post_id.content || 'Bài viết không có nội dung',
+          link_id: post_id,
+          type: NotificationTypes.commentPost
+        })
+      }
       return newComment
     }
     const newComment = await CommentPostModel.create({
@@ -760,6 +833,27 @@ class PostService {
       post_id: post_id,
       parent_comment_id: parent_comment_id
     })
+
+    const user_parent_comment_id = await CommentPostModel.findOne({ _id: parent_comment_id })
+
+    if (!user_parent_comment_id) {
+      throw new ErrorWithStatus({
+        message: POST_MESSAGE.COMMENT_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    if (user_parent_comment_id.user_id.toString() !== user_id) {
+      await NotificationModel.create({
+        sender_id: new ObjectId(user_id),
+        receiver_id: user_parent_comment_id.user_id,
+        content: 'Đã trả lời bình luận của bạn',
+        name_notification: user_parent_comment_id.content || 'Bình luận không có nội dung',
+        link_id: post_id,
+        type: NotificationTypes.commentChildPost
+      })
+    }
+
     return newComment
   }
   async deletePostforEachUserService({ post_id, user_id }: { post_id: string; user_id: string }) {

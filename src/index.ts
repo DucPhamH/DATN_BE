@@ -25,6 +25,7 @@ import inspectorRouter from './routes/adminRoutes/inspector.routes'
 import writterRouter from './routes/adminRoutes/writter.routes'
 import { createServer } from 'http'
 import initSocket from './utils/socket'
+import notificationsRouter from './routes/userRoutes/notification.routes'
 
 const app: Express = express()
 const port = envConfig.port
@@ -71,6 +72,7 @@ app.use('/api/recipes', recipesRouter)
 app.use('/api/albums', albumsRouter)
 app.use('/api/ingredients', ingredientsRouter)
 app.use('/api/search', seachRouter)
+app.use('/api/notifications', notificationsRouter)
 
 app.use('/api/admin/auth/admins', authAdminRouter)
 app.use('/api/admin', userAdminRouter)

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { body } from 'express-validator'
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
-import { RecipeStatus, RecipeTime } from '~/constants/enums'
+import { NotificationTypes, RecipeStatus, RecipeTime } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { RECIPE_MESSAGE } from '~/constants/messages'
 import {
@@ -14,6 +14,7 @@ import {
 import BookmarkRecipeModel from '~/models/schemas/bookmarkRecipe.schema'
 import CommentRecipeModel from '~/models/schemas/commentRecipe.schema'
 import LikeRecipeModel from '~/models/schemas/likeRecipe.schema'
+import NotificationModel from '~/models/schemas/notification.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
 import RecipeCategoryModel from '~/models/schemas/recipeCategory.schema'
 import { ErrorWithStatus } from '~/utils/error'
@@ -957,6 +958,36 @@ class RecipeService {
       },
       { upsert: true, new: true }
     )
+
+    const user_recipe_id = await RecipeModel.findOne({ _id: recipe_id })
+
+    if (!user_recipe_id) {
+      throw new ErrorWithStatus({
+        message: RECIPE_MESSAGE.RECIPE_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    if (user_recipe_id.user_id.toString() !== user_id) {
+      await NotificationModel.findOneAndUpdate(
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: user_recipe_id.user_id,
+          link_id: recipe_id,
+          type: NotificationTypes.likeRecipe
+        },
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: user_recipe_id.user_id,
+          content: 'Đã thích công thức của bạn',
+          name_notification: user_recipe_id.title || 'Công thức không có tiêu đề',
+          link_id: recipe_id,
+          type: NotificationTypes.likeRecipe
+        },
+        { upsert: true }
+      )
+    }
+
     return newLike
   }
   async unlikeRecipeService({ user_id, recipe_id }: { user_id: string; recipe_id: string }) {
@@ -980,6 +1011,27 @@ class RecipeService {
       recipe_id: new ObjectId(recipe_id),
       content
     })
+
+    const user_recipe_id = await RecipeModel.findOne({ _id: recipe_id })
+
+    if (!user_recipe_id) {
+      throw new ErrorWithStatus({
+        message: RECIPE_MESSAGE.RECIPE_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    if (user_recipe_id.user_id.toString() !== user_id) {
+      await NotificationModel.create({
+        sender_id: new ObjectId(user_id),
+        receiver_id: user_recipe_id.user_id,
+        content: 'Đã bình luận công thức của bạn',
+        name_notification: user_recipe_id.title || 'Công thức không có tiêu đề',
+        link_id: recipe_id,
+        type: NotificationTypes.commentRecipe
+      })
+    }
+
     return newComment
   }
 
@@ -1004,6 +1056,36 @@ class RecipeService {
       },
       { upsert: true, new: true }
     )
+
+    const user_recipe_id = await RecipeModel.findOne({ _id: recipe_id })
+
+    if (!user_recipe_id) {
+      throw new ErrorWithStatus({
+        message: RECIPE_MESSAGE.RECIPE_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    if (user_recipe_id.user_id.toString() !== user_id) {
+      await NotificationModel.findOneAndUpdate(
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: user_recipe_id.user_id,
+          link_id: recipe_id,
+          type: NotificationTypes.bookmarkRecipe
+        },
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: user_recipe_id.user_id,
+          content: 'Đã lưu công thức của bạn',
+          name_notification: user_recipe_id.title || 'Công thức không có tiêu đề',
+          link_id: recipe_id,
+          type: NotificationTypes.bookmarkRecipe
+        },
+        { upsert: true }
+      )
+    }
+
     return newBookmark
   }
 

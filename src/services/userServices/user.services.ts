@@ -2,7 +2,15 @@ import { omit } from 'lodash'
 import moment from 'moment'
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
-import { AlbumStatus, BlogStatus, RecipeStatus, RequestType, UserRoles, UserStatus } from '~/constants/enums'
+import {
+  AlbumStatus,
+  BlogStatus,
+  NotificationTypes,
+  RecipeStatus,
+  RequestType,
+  UserRoles,
+  UserStatus
+} from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { USER_MESSAGE } from '~/constants/messages'
 import { RequestUserBody, UpdateUserBody } from '~/models/requests/user.request'
@@ -10,6 +18,7 @@ import AlbumModel from '~/models/schemas/album.schema'
 import BookmarkAlbumModel from '~/models/schemas/bookmarkAlbum.schema'
 import BookmarkRecipeModel from '~/models/schemas/bookmarkRecipe.schema'
 import FollowModel from '~/models/schemas/follow.schema'
+import NotificationModel from '~/models/schemas/notification.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
 
 import UserModel from '~/models/schemas/user.schema'
@@ -25,6 +34,25 @@ class UsersService {
       { user_id, follow_id },
       { upsert: true, new: true }
     )
+
+    if (user_id !== follow_id) {
+      await NotificationModel.findOneAndUpdate(
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: new ObjectId(follow_id),
+          link_id: follow_id,
+          type: NotificationTypes.follow
+        },
+        {
+          sender_id: new ObjectId(user_id),
+          receiver_id: new ObjectId(follow_id),
+          link_id: follow_id,
+          content: 'Đã theo dõi bạn',
+          type: NotificationTypes.follow
+        },
+        { upsert: true }
+      )
+    }
     return newFollow
   }
   async unfollowUserService({ user_id, follow_id }: { user_id: string; follow_id: string }) {

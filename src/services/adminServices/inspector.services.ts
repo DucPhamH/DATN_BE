@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { AlbumStatus, BlogStatus, RecipeStatus, RecipeTime } from '~/constants/enums'
+import { AlbumStatus, BlogStatus, NotificationTypes, RecipeStatus, RecipeTime } from '~/constants/enums'
 import {
   GetListAlbumForInspectorQuery,
   GetListBlogForInspectorQuery,
@@ -10,6 +10,7 @@ import BlogModel from '~/models/schemas/blog.schema'
 import CommentPostModel from '~/models/schemas/commentPost.schema'
 import ImagePostModel from '~/models/schemas/imagePost.schema'
 import LikePostModel from '~/models/schemas/likePost.schema'
+import NotificationModel from '~/models/schemas/notification.schema'
 import PostModel from '~/models/schemas/post.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
 import UserModel from '~/models/schemas/user.schema'
@@ -298,6 +299,12 @@ class InspectorService {
           }
         }
       )
+      await NotificationModel.create({
+        receiver_id: user_id,
+        content: 'Một bài viết của bạn đã bị xóa do vi phạm quy định của hệ thống',
+        link_id: post_id,
+        type: NotificationTypes.system
+      })
     }
     return true
   }

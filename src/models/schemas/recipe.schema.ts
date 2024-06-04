@@ -24,7 +24,7 @@ export interface Recipe {
     fat: number
     carbohydrate: number
   }[]
-  user_id?: Types.ObjectId
+  user_id: Types.ObjectId
   processing_food?: string
   status?: RecipeStatus
   type?: RecipeType

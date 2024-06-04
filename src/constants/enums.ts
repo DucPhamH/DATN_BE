@@ -11,6 +11,20 @@ export enum UserRoles {
   inspector
 }
 
+export enum NotificationTypes {
+  follow,
+  likePost,
+  commentPost,
+  commentChildPost,
+  sharePost,
+  likeRecipe,
+  commentRecipe,
+  bookmarkRecipe,
+  commentBlog,
+  bookmarkAlbum,
+  system
+}
+
 // có 2 kiểu type là đủ 5000 follow hoặc gửi minh chứng
 export enum RequestType {
   follow,

@@ -6,7 +6,7 @@ export interface Blog {
   content: string
   description: string
   image: string
-  user_id?: Types.ObjectId
+  user_id: Types.ObjectId
   category_blog_id?: Types.ObjectId
   status?: BlogStatus
   user_view?: number
