@@ -241,7 +241,8 @@ export const ADMIN_MESSAGE = {
   ROLE_INVALID: 'Role không hợp lệ',
   GET_REQUEST_UPGRADE_SUCCESS: 'Lấy yêu cầu nâng cấp thành công',
   REJECT_REQUEST_UPGRADE_SUCCESS: 'Từ chối yêu cầu nâng cấp thành công',
-  ACCEPT_REQUEST_UPGRADE_SUCCESS: 'Chấp nh ận yêu cầu nâng cấp thành công'
+  ACCEPT_REQUEST_UPGRADE_SUCCESS: 'Chấp nh ận yêu cầu nâng cấp thành công',
+  GET_DASHBROAD_SUCCESS: 'Lấy thông tin dashboard thành công'
 }
 
 export const INSPECTOR_MESSAGE = {

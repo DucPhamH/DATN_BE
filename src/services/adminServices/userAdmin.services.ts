@@ -1,6 +1,6 @@
 import { omit } from 'lodash'
 import { ObjectId } from 'mongodb'
-import { RequestType, UserRoles, UserStatus } from '~/constants/enums'
+import { AlbumStatus, BlogStatus, RecipeStatus, RequestType, UserRoles, UserStatus } from '~/constants/enums'
 import { CreateUserAdminBody, GetListUserAdminQuery } from '~/models/requests/userAdmin.request'
 import AlbumModel from '~/models/schemas/album.schema'
 import BlogModel from '~/models/schemas/blog.schema'
@@ -493,6 +493,132 @@ class UserAdminService {
       await sendAcceptEmailNodeMailer(user.email, user.name)
     }
     return user
+  }
+  async dashboardService() {
+    // lấy số lượng user có role là user, số lượng user có role là writter, số lượng user có role là inspector, số lượng user có role là chef
+    const [user, writter, inspector, chef] = await Promise.all([
+      UserModel.countDocuments({ role: UserRoles.user }),
+      UserModel.countDocuments({ role: UserRoles.writter }),
+      UserModel.countDocuments({ role: UserRoles.inspector }),
+      UserModel.countDocuments({ role: UserRoles.chef })
+    ])
+    // lấy số lượng user đang active có role là user, số lượng user đang active có role là writter, số lượng user đang active có role là inspector, số lượng user đang active có role là chef
+    const [activeUser, activeWritter, activeInspector, activeChef] = await Promise.all([
+      UserModel.countDocuments({ role: UserRoles.user, status: UserStatus.active }),
+      UserModel.countDocuments({ role: UserRoles.writter, status: UserStatus.active }),
+      UserModel.countDocuments({ role: UserRoles.inspector, status: UserStatus.active }),
+      UserModel.countDocuments({ role: UserRoles.chef, status: UserStatus.active })
+    ])
+
+    // lấy số lượng công thức đang active, số lượng công thức đang pending, số lượng công thức bị reject
+    const [activeRecipe, pendingRecipe, rejectRecipe] = await Promise.all([
+      RecipeModel.countDocuments({ status: RecipeStatus.accepted }),
+      RecipeModel.countDocuments({ status: RecipeStatus.pending }),
+      RecipeModel.countDocuments({ status: RecipeStatus.rejected })
+    ])
+
+    // lấy số lương album đang active, số lượng album đang pending, số lượng album bị reject
+    const [activeAlbum, pendingAlbum, rejectAlbum] = await Promise.all([
+      AlbumModel.countDocuments({ status: AlbumStatus.accepted }),
+      AlbumModel.countDocuments({ status: AlbumStatus.pending }),
+      AlbumModel.countDocuments({ status: AlbumStatus.rejected })
+    ])
+
+    // lấy số lượng blog đang active, số lượng blog đang pending, số lượng blog bị reject
+    const [activeBlog, pendingBlog, rejectBlog] = await Promise.all([
+      BlogModel.countDocuments({ status: BlogStatus.accepted }),
+      BlogModel.countDocuments({ status: BlogStatus.pending }),
+      BlogModel.countDocuments({ status: BlogStatus.rejected })
+    ])
+
+    // lấy số lượng post đăng theo 10 ngày gần nhất
+    const posts = await PostModel.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date(new Date().setDate(new Date().getDate() - 10))
+          }
+        }
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ])
+
+    const users = await UserModel.aggregate([
+      {
+        $match: {
+          BMI: { $ne: null }
+        }
+      },
+      {
+        $project: {
+          name: 1,
+          BMI: 1
+        }
+      }
+    ])
+    // tính tổng số lượng người có BMI
+    const underWeight = users.filter((user) => user.BMI < 18.5).length
+    const normal = users.filter((user) => user.BMI >= 18.5 && user.BMI < 24.9).length
+    const overWeight = users.filter((user) => user.BMI >= 25 && user.BMI < 29.9).length
+    const obesity = users.filter((user) => user.BMI >= 30).length
+
+    // tính tổng users
+
+    const totalUser = users.length
+
+    return {
+      account: {
+        users: {
+          total: user,
+          active: activeUser
+        },
+        writters: {
+          total: writter,
+          active: activeWritter
+        },
+        inspectors: {
+          total: inspector,
+          active: activeInspector
+        },
+        chefs: {
+          total: chef,
+          active: activeChef
+        }
+      },
+      food: {
+        recipes: {
+          total: activeRecipe,
+          pending: pendingRecipe,
+          reject: rejectRecipe
+        },
+        albums: {
+          total: activeAlbum,
+          pending: pendingAlbum,
+          reject: rejectAlbum
+        },
+        blogs: {
+          total: activeBlog,
+          pending: pendingBlog,
+          reject: rejectBlog
+        }
+      },
+      posts,
+      usersBMI: {
+        total: totalUser,
+        underWeight,
+        normal,
+        overWeight,
+        obesity
+      }
+    }
   }
 }
 

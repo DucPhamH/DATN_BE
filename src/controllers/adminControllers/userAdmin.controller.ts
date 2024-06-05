@@ -108,3 +108,11 @@ export const acceptRequestUpgradeController = async (req: Request, res: Response
     message: ADMIN_MESSAGE.ACCEPT_REQUEST_UPGRADE_SUCCESS
   })
 }
+
+export const dashboardController = async (req: Request, res: Response) => {
+  const result = await userAdminService.dashboardService()
+  return res.json({
+    result,
+    message: ADMIN_MESSAGE.GET_DASHBROAD_SUCCESS
+  })
+}

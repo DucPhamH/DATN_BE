@@ -4,6 +4,7 @@ import {
   acceptRequestUpgradeController,
   banUserByIdController,
   createWritterAndInspectorController,
+  dashboardController,
   deleteUserByIdController,
   getAllUserController,
   getRequestUpgradeController,
@@ -80,6 +81,13 @@ userAdminRouter.put(
   accessTokenValidator,
   wrapRequestHandler(checkRole([UserRoles.admin])),
   wrapRequestHandler(acceptRequestUpgradeController)
+)
+
+userAdminRouter.get(
+  '/home/dashboard',
+  accessTokenValidator,
+  wrapRequestHandler(checkRole([UserRoles.admin])),
+  wrapRequestHandler(dashboardController)
 )
 
 export default userAdminRouter
