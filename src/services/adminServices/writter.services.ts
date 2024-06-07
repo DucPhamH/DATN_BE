@@ -110,18 +110,18 @@ class WritterService {
       type: RecipeType.writter
     })
 
-    const body = {
-      image: 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg',
-      image_name: newRecipe.image_name
-    }
+    // const body = {
+    //   image: 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg',
+    //   image_name: newRecipe.image_name
+    // }
 
-    const { data } = await axios.post('http://103.75.76.145:5000/create-img', body, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    // const { data } = await axios.post('http://103.75.76.145:5000/create-img', body, {
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
 
-    console.log(data)
+    // console.log(data)
 
     return newRecipe
   }
