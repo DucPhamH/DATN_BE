@@ -7,7 +7,7 @@ import { verifyAccessToken } from './common'
 const initSocket = (httpServer: ServerHttp) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: 'http://localhost:3000'
+      origin: 'https://datn-fe-mu.vercel.app'
     }
   })
   const users: {
