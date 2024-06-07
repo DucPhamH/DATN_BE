@@ -40,13 +40,13 @@ class UsersService {
         {
           sender_id: new ObjectId(user_id),
           receiver_id: new ObjectId(follow_id),
-          link_id: follow_id,
+          link_id: user_id,
           type: NotificationTypes.follow
         },
         {
           sender_id: new ObjectId(user_id),
           receiver_id: new ObjectId(follow_id),
-          link_id: follow_id,
+          link_id: user_id,
           content: 'Đã theo dõi bạn',
           type: NotificationTypes.follow
         },
