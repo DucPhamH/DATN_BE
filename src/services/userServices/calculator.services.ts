@@ -128,7 +128,14 @@ class CalculatorServices {
 
     if (user.weight !== weight) {
       const pre_weight = user.pre_weight || []
-      pre_weight.push({ weight: weight, date: new Date() })
+      //nếu pre_weight > 10 thì xóa phần tử đầu tiên thêm phần tử mới vào cuối mảng
+
+      if (pre_weight.length >= 10) {
+        pre_weight.shift()
+        pre_weight.push({ weight: weight, date: new Date() })
+      } else {
+        pre_weight.push({ weight: weight, date: new Date() })
+      }
       await UserModel.findByIdAndUpdate(user_id, { weight, height: convertHeight, BMI, pre_weight }, { new: true })
     } else {
       const pre_weight = user.pre_weight || []
@@ -194,7 +201,14 @@ class CalculatorServices {
 
     if (user.weight !== weight) {
       const pre_weight = user.pre_weight || []
-      pre_weight.push({ weight: weight, date: new Date() })
+      // nếu pre_weight > 10 thì xóa phần tử đầu tiên thêm phần tử mới vào cuối mảng
+
+      if (pre_weight.length >= 10) {
+        pre_weight.shift()
+        pre_weight.push({ weight: weight, date: new Date() })
+      } else {
+        pre_weight.push({ weight: weight, date: new Date() })
+      }
       await UserModel.findByIdAndUpdate(user_id, { weight, height, age, BMR, gender, pre_weight }, { new: true })
     } else {
       const pre_weight = user.pre_weight || []
@@ -259,7 +273,15 @@ class CalculatorServices {
 
     if (user.weight !== weight) {
       const pre_weight = user.pre_weight || []
-      pre_weight.push({ weight: weight, date: new Date() })
+      // nếu pre_weight > 10 thì xóa phần tử đầu tiên thêm phần tử mới vào cuối mảng
+
+      if (pre_weight.length >= 10) {
+        pre_weight.shift()
+        pre_weight.push({ weight: weight, date: new Date() })
+      } else {
+        pre_weight.push({ weight: weight, date: new Date() })
+      }
+
       await UserModel.findByIdAndUpdate(
         user_id,
         { weight, height, age, gender, activity_level: activity, TDEE, pre_weight },
@@ -444,7 +466,16 @@ class CalculatorServices {
 
     if (user.weight !== weight) {
       const pre_weight = user.pre_weight || []
-      pre_weight.push({ weight: weight, date: new Date() })
+
+      // nếu pre_weight > 10 thì xóa phần tử đầu tiên thêm phần tử mới vào cuối mảng
+
+      if (pre_weight.length >= 10) {
+        pre_weight.shift()
+        pre_weight.push({ weight: weight, date: new Date() })
+      } else {
+        pre_weight.push({ weight: weight, date: new Date() })
+      }
+
       await UserModel.findByIdAndUpdate(user_id, { weight, height, gender, LBM, pre_weight }, { new: true })
     } else {
       const pre_weight = user.pre_weight || []
