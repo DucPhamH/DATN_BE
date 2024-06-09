@@ -430,11 +430,11 @@ class UsersService {
         .jpeg()
         .toBuffer()
     }
-    const uploadRes = await uploadFileToS3({
-      filename: `avatar/${newImage?.originalname}` as string,
-      contentType: newImage?.mimetype as string,
-      body: newImage?.buffer as Buffer
-    })
+    // const uploadRes = await uploadFileToS3({
+    //   filename: `avatar/${newImage?.originalname}` as string,
+    //   contentType: newImage?.mimetype as string,
+    //   body: newImage?.buffer as Buffer
+    // })
     console.log(newImage)
 
     const findUser = await UserModel.findOne({ _id: new ObjectId(user_id) })
@@ -448,17 +448,17 @@ class UsersService {
 
     // xóa ảnh cũ trên s3
     // lấy tên ảnh
-    const old_image_name = findUser.avatar ? findUser.avatar.split('/')[findUser.avatar.split('/').length - 1] : ''
-    console.log(old_image_name)
+    // const old_image_name = findUser.avatar ? findUser.avatar.split('/')[findUser.avatar.split('/').length - 1] : ''
+    // console.log(old_image_name)
 
-    await deleteFileFromS3(`avatar/${old_image_name}`)
+    // await deleteFileFromS3(`avatar/${old_image_name}`)
 
     //     url: 'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
 
     const user = await UserModel.findOneAndUpdate(
       { _id: new ObjectId(user_id) },
       {
-        avatar: uploadRes.Location
+        avatar: 'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg'
       },
       { new: true }
     )
