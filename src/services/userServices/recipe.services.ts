@@ -81,13 +81,13 @@ class RecipeService {
       image_name: newRecipe.image_name
     }
 
-    // const { data } = await axios.post('http://103.75.76.145:5000/create-img', body, {
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
+    const { data } = await axios.post('https://cookhealthyimage.io.vn/create-img', body, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
 
-    // console.log(data)
+    console.log(data)
 
     return newRecipe
   }
