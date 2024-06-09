@@ -20,7 +20,6 @@ import {
   updateProfileValidator
 } from '~/middlewares/user.middleware'
 import { wrapRequestHandler } from '~/utils/handler'
-import { uploadAvatar } from '~/utils/multerServer'
 import upload from '~/utils/multer'
 const usersRouter = Router()
 
@@ -32,7 +31,7 @@ usersRouter.post('/unfollow', accessTokenValidator, followValidator, wrapRequest
 usersRouter.put(
   '/update-avatar',
   accessTokenValidator,
-  uploadAvatar.single('image'),
+  upload.single('image'),
   wrapRequestHandler(updateAvatarUserController)
 )
 
