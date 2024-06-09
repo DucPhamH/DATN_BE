@@ -64,6 +64,7 @@ export const unfollowUserController = async (req: Request, res: Response) => {
 export const updateAvatarUserController = async (req: Request, res: Response) => {
   const user = req.decoded_authorization as TokenPayload
   const file = req.file
+  console.log(file)
   const result = await usersService.updateAvatarUserService({
     user_id: user.user_id,
     image: file

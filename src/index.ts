@@ -26,6 +26,7 @@ import writterRouter from './routes/adminRoutes/writter.routes'
 import { createServer } from 'http'
 import initSocket from './utils/socket'
 import notificationsRouter from './routes/userRoutes/notification.routes'
+import fs from 'fs'
 
 const app: Express = express()
 const port = envConfig.port
@@ -42,10 +43,23 @@ const limiter = rateLimit({
 
 app.set('trust proxy', 1) // Trust first proxy
 
+// tạo folder ./uploads/avatar và ./uploads/cover nếu chưa tồn tại còn không thì không tạo
+if (!fs.existsSync('./src/uploads/avatar')) {
+  fs.mkdirSync('./src/uploads/avatar', { recursive: true })
+}
+
+if (!fs.existsSync('./src/uploads/cover')) {
+  fs.mkdirSync('./src/uploads/cover', { recursive: true })
+}
+
 connectDB()
 app.use(limiter)
 app.use(morgan('combined'))
-app.use(helmet())
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false
+  })
+)
 app.use(cors())
 app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ limit: '50mb' }))
@@ -59,6 +73,9 @@ app.use(
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')
 })
+
+app.use('/uploads/avatar', express.static('./src/uploads/avatar'))
+app.use('/uploads/cover', express.static('./src/uploads/cover'))
 
 app.use('/api/auth/users', authUserRouter)
 app.use('/api/users', usersRouter)

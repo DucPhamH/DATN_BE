@@ -20,7 +20,7 @@ import BookmarkRecipeModel from '~/models/schemas/bookmarkRecipe.schema'
 import FollowModel from '~/models/schemas/follow.schema'
 import NotificationModel from '~/models/schemas/notification.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
-
+import fs from 'fs'
 import UserModel from '~/models/schemas/user.schema'
 import { comparePassword, hashPassword } from '~/utils/crypto'
 
@@ -423,19 +423,19 @@ class UsersService {
     return recommendUsers
   }
   async updateAvatarUserService({ user_id, image }: { user_id: string; image: any }) {
-    const newImage = {
-      ...image,
-      originalname: image?.originalname.split('.')[0] + new Date().getTime() + '.' + image?.originalname.split('.')[1],
-      buffer: await sharp(image?.buffer as Buffer)
-        .jpeg()
-        .toBuffer()
-    }
+    // const newImage = {
+    //   ...image,
+    //   originalname: image?.originalname.split('.')[0] + new Date().getTime() + '.' + image?.originalname.split('.')[1],
+    //   buffer: await sharp(image?.buffer as Buffer)
+    //     .jpeg()
+    //     .toBuffer()
+    // }
     // const uploadRes = await uploadFileToS3({
     //   filename: `avatar/${newImage?.originalname}` as string,
     //   contentType: newImage?.mimetype as string,
     //   body: newImage?.buffer as Buffer
     // })
-    console.log(newImage)
+    console.log('new', image)
 
     const findUser = await UserModel.findOne({ _id: new ObjectId(user_id) })
 
@@ -448,8 +448,13 @@ class UsersService {
 
     // xóa ảnh cũ trên s3
     // lấy tên ảnh
-    // const old_image_name = findUser.avatar ? findUser.avatar.split('/')[findUser.avatar.split('/').length - 1] : ''
-    // console.log(old_image_name)
+    const old_image_name = findUser.avatar ? findUser.avatar.split('/')[findUser.avatar.split('/').length - 1] : ''
+    console.log(old_image_name)
+
+    // nếu tên ảnh có trong ./uploads/avatar thì xóa
+    if (fs.existsSync(`./src/uploads/avatar/${old_image_name}`)) {
+      fs.unlinkSync(`./src/uploads/avatar/${old_image_name}`)
+    }
 
     // await deleteFileFromS3(`avatar/${old_image_name}`)
 
@@ -458,7 +463,7 @@ class UsersService {
     const user = await UserModel.findOneAndUpdate(
       { _id: new ObjectId(user_id) },
       {
-        avatar: 'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg'
+        avatar: `https://cookhealthydatn.io.vn/uploads/avatar/${image?.filename}`
       },
       { new: true }
     )
