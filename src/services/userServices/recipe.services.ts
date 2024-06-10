@@ -46,11 +46,11 @@ class RecipeService {
         .toBuffer()
     }
 
-    // const uploadRes = await uploadFileToS3({
-    //   filename: `recipe/${newImage?.originalname}` as string,
-    //   contentType: newImage?.mimetype as string,
-    //   body: newImage?.buffer as Buffer
-    // })
+    const uploadRes = await uploadFileToS3({
+      filename: `recipe/${newImage?.originalname}` as string,
+      contentType: newImage?.mimetype as string,
+      body: newImage?.buffer as Buffer
+    })
     console.log(newImage)
 
     // lấy tên ảnh từ newImage.originalname
@@ -66,7 +66,7 @@ class RecipeService {
       title,
       description,
       content,
-      image: 'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
+      image: uploadRes.Location,
       image_name: image_name,
       video,
       time,
@@ -75,12 +75,14 @@ class RecipeService {
       category_recipe_id,
       processing_food
     })
-
+    // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
     const body = {
-      image: 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg',
+      image: newRecipe.image,
       image_name: newRecipe.image_name
     }
 
+    // https://cookhealthyimage.io.vn/create-img
+    // http://127.0.0.1:5000/create-img
     const { data } = await axios.post('https://cookhealthyimage.io.vn/create-img', body, {
       headers: {
         'Content-Type': 'application/json'
@@ -90,6 +92,183 @@ class RecipeService {
     console.log(data)
 
     return newRecipe
+  }
+  async updateRecipeForChefService({
+    user_id,
+    recipe_id,
+    title,
+    description,
+    content,
+    image,
+    video,
+    time,
+    region,
+    difficult_level,
+    category_recipe_id,
+    processing_food
+  }: UpdateRecipeBody) {
+    const recipe = await RecipeModel.findOne({
+      _id: new ObjectId(recipe_id),
+      user_id: new ObjectId(user_id)
+    })
+
+    if (!recipe) {
+      throw new ErrorWithStatus({
+        message: RECIPE_MESSAGE.RECIPE_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    // nếu time là NaN thì gán time = time cũ
+    if (isNaN(Number(time))) {
+      console.log('time', time)
+      time = recipe.time
+    }
+
+    if (isNaN(Number(region))) {
+      region = recipe.region
+    }
+
+    if (isNaN(Number(difficult_level))) {
+      console.log('difficult_level', difficult_level)
+      difficult_level = recipe.difficult_level
+    }
+
+    console.log(image)
+    // nếu có ảnh mới thì update ảnh mới và xóa ảnh cũ
+    if (image) {
+      console.log('co anh')
+      const newImage = {
+        ...image,
+        originalname:
+          image?.originalname.split('.')[0] + new Date().getTime() + '.' + image?.originalname.split('.')[1],
+        buffer: await sharp(image?.buffer as Buffer)
+          .jpeg()
+          .toBuffer()
+      }
+
+      const uploadRes = await uploadFileToS3({
+        filename: `recipe/${newImage?.originalname}` as string,
+        contentType: newImage?.mimetype as string,
+        body: newImage?.buffer as Buffer
+      })
+
+      // // xóa anhr cũ trên S3
+      const old_image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
+
+      await deleteFileFromS3(`recipe/${old_image_name}`)
+
+      const image_name = newImage.originalname.split('.')[0]
+
+      const newRecipe = await RecipeModel.findOneAndUpdate(
+        {
+          _id: new ObjectId(recipe_id),
+          user_id: new ObjectId(user_id)
+        },
+        {
+          title,
+          description,
+          content,
+          image: uploadRes.Location,
+          image_name,
+          video,
+          time,
+          region,
+          difficult_level,
+          category_recipe_id,
+          processing_food,
+          status: RecipeStatus.pending
+        },
+        { new: true }
+      )
+
+      // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
+      const body = {
+        image: uploadRes.Location,
+        image_name: image_name,
+        old_image_name: recipe.image_name
+      }
+
+      // https://cookhealthyimage.io.vn/update-img
+      // http://127.0.0.1:5000/update-img
+      const { data } = await axios.post('https://cookhealthyimage.io.vn/update-img', body, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      console.log(data)
+
+      return newRecipe
+    }
+
+    const newRecipe = await RecipeModel.findOneAndUpdate(
+      {
+        _id: new ObjectId(recipe_id),
+        user_id: new ObjectId(user_id)
+      },
+      {
+        title,
+        description,
+        content,
+        video,
+        time,
+        region,
+        difficult_level,
+        category_recipe_id,
+        processing_food,
+        status: RecipeStatus.pending
+      },
+      { new: true }
+    )
+
+    return newRecipe
+  }
+  async deteleRecipeForChefService({ user_id, recipe_id }: { user_id: string; recipe_id: string }) {
+    const recipe = await RecipeModel.findOne({
+      _id: new ObjectId(recipe_id),
+      user_id: new ObjectId(user_id)
+    })
+    if (!recipe) {
+      throw new ErrorWithStatus({
+        message: RECIPE_MESSAGE.RECIPE_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    // xóa ảnh trên S3
+    const image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
+    await deleteFileFromS3(`recipe/${image_name}`)
+
+    // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
+    const body = {
+      image_name: recipe.image_name
+    }
+
+    // https://cookhealthyimage.io.vn/delete-img
+    // http://127.0.0.1:5000/delete-img
+    const { data } = await axios.post('https://cookhealthyimage.io.vn/delete-img', body, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    // nếu axios lỗi thì vẫn cho xóa recipe
+
+    console.log(data)
+    console.log(recipe_id)
+
+    await Promise.all([
+      await RecipeModel.findOneAndDelete({
+        _id: new ObjectId(recipe_id),
+        user_id: new ObjectId(user_id)
+      }),
+      CommentRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) }),
+      LikeRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) }),
+      BookmarkRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) })
+    ])
+
+    return true
   }
   async getListRecipesForChefService({
     user_id,
@@ -831,121 +1010,6 @@ class RecipeService {
 
     return recipe
   }
-  async updateRecipeForChefService({
-    user_id,
-    recipe_id,
-    title,
-    description,
-    content,
-    image,
-    video,
-    time,
-    region,
-    difficult_level,
-    category_recipe_id,
-    processing_food
-  }: UpdateRecipeBody) {
-    const recipe = await RecipeModel.findOne({
-      _id: new ObjectId(recipe_id),
-      user_id: new ObjectId(user_id)
-    })
-
-    if (!recipe) {
-      throw new ErrorWithStatus({
-        message: RECIPE_MESSAGE.RECIPE_NOT_FOUND,
-        status: HTTP_STATUS.NOT_FOUND
-      })
-    }
-
-    // nếu time là NaN thì gán time = time cũ
-    if (isNaN(Number(time))) {
-      console.log('time', time)
-      time = recipe.time
-    }
-
-    if (isNaN(Number(region))) {
-      region = recipe.region
-    }
-
-    if (isNaN(Number(difficult_level))) {
-      console.log('difficult_level', difficult_level)
-      difficult_level = recipe.difficult_level
-    }
-
-    console.log(image)
-    // nếu có ảnh mới thì update ảnh mới và xóa ảnh cũ
-    if (image) {
-      console.log('co anh')
-      const newImage = {
-        ...image,
-        originalname:
-          image?.originalname.split('.')[0] + new Date().getTime() + '.' + image?.originalname.split('.')[1],
-        buffer: await sharp(image?.buffer as Buffer)
-          .jpeg()
-          .toBuffer()
-      }
-
-      // const uploadRes = await uploadFileToS3({
-      //   filename: `recipe/${newImage?.originalname}` as string,
-      //   contentType: newImage?.mimetype as string,
-      //   body: newImage?.buffer as Buffer
-      // })
-
-      // // xóa anhr cũ trên S3
-      // const old_image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
-
-      // await deleteFileFromS3(`recipe/${old_image_name}`)
-
-      const image_name = newImage.originalname.split('.')[0]
-
-      const newRecipe = await RecipeModel.findOneAndUpdate(
-        {
-          _id: new ObjectId(recipe_id),
-          user_id: new ObjectId(user_id)
-        },
-        {
-          title,
-          description,
-          content,
-          image:
-            'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
-          image_name,
-          video,
-          time,
-          region,
-          difficult_level,
-          category_recipe_id,
-          processing_food,
-          status: RecipeStatus.pending
-        },
-        { new: true }
-      )
-
-      return newRecipe
-    }
-
-    const newRecipe = await RecipeModel.findOneAndUpdate(
-      {
-        _id: new ObjectId(recipe_id),
-        user_id: new ObjectId(user_id)
-      },
-      {
-        title,
-        description,
-        content,
-        video,
-        time,
-        region,
-        difficult_level,
-        category_recipe_id,
-        processing_food,
-        status: RecipeStatus.pending
-      },
-      { new: true }
-    )
-
-    return newRecipe
-  }
   async likeRecipeService({ user_id, recipe_id }: { user_id: string; recipe_id: string }) {
     const newLike = await LikeRecipeModel.findOneAndUpdate(
       {
@@ -1151,24 +1215,6 @@ class RecipeService {
       page,
       limit
     }
-  }
-  async deteleRecipeForChefService({ user_id, recipe_id }: { user_id: string; recipe_id: string }) {
-    // xóa ảnh trên S3
-    // const image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
-    // await deleteFileFromS3(`recipe/${image_name}`)
-    console.log(recipe_id)
-
-    await Promise.all([
-      await RecipeModel.findOneAndDelete({
-        _id: new ObjectId(recipe_id),
-        user_id: new ObjectId(user_id)
-      }),
-      CommentRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) }),
-      LikeRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) }),
-      BookmarkRecipeModel.deleteMany({ recipe_id: new ObjectId(recipe_id) })
-    ])
-
-    return true
   }
   async getThreeTopRecipesService() {
     // lấy 3 bài viết có like, bookmark, view nhiều nhất
