@@ -579,6 +579,19 @@ class BlogsService {
     }
     return true
   }
+  async randomThreeBlogLandingService() {
+    const blogs = await BlogModel.aggregate([
+      {
+        $match: {
+          status: BlogStatus.accepted
+        }
+      },
+      {
+        $sample: { size: 3 }
+      }
+    ])
+    return blogs
+  }
 }
 
 const blogsService = new BlogsService()

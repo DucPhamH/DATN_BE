@@ -178,3 +178,11 @@ export const deleteBlogForChefController = async (req: Request, res: Response) =
     result
   })
 }
+
+export const randomThreeBlogLandingController = async (req: Request, res: Response) => {
+  const result = await blogsService.randomThreeBlogLandingService()
+  return res.json({
+    message: BLOG_MESSAGE.GET_BLOGS_SUCCESS,
+    result
+  })
+}

@@ -43,7 +43,7 @@ export const sendForgotPasswordEmailNodeMailer = (
 ) => {
   return sendMail(
     toAddress,
-    'Thư từ CookHealty',
+    'Thư từ CookHealthy',
     template
       .replace('{{title}}', 'Quên mật khẩu')
       .replace('{{content}}', 'Để đặt lại mật khẩu, xin vui lòng nhập mã OTP dưới đây:')
@@ -58,7 +58,7 @@ export const sendRejectEmailNodeMailer = (
 ) => {
   return sendMail(
     toAddress,
-    'Thư từ CookHealty',
+    'Thư từ CookHealthy',
     template
       .replace('{{user_name}}', user_name)
       .replace(

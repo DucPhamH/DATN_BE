@@ -13,6 +13,7 @@ import {
   getListBlogForUserController,
   getListMeBlogController,
   getListUserBlogController,
+  randomThreeBlogLandingController,
   updateBlogForChefController
 } from '~/controllers/userControllers/blog.controller'
 import { accessTokenValidator } from '~/middlewares/authUser.middleware'
@@ -94,5 +95,7 @@ blogsRouter.get(
 )
 
 blogsRouter.post('/actions/delete-comment', accessTokenValidator, wrapRequestHandler(deleteCommentBlogController))
+
+blogsRouter.get('/random-blog', wrapRequestHandler(randomThreeBlogLandingController))
 
 export default blogsRouter
