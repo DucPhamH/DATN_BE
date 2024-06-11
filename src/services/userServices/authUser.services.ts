@@ -135,7 +135,7 @@ class AuthUserService {
   async oauth(code: string) {
     const { id_token, access_token } = await this.getOauthGoogleToken(code)
     const userInfo = await this.getGoogleUserInfo(access_token, id_token)
-    // console.log('userInfo', userInfo)
+    console.log('userInfo', userInfo)
     // Kiểm tra email đã được đăng ký chưa
     if (!userInfo.verified_email) {
       throw new ErrorWithStatus({
