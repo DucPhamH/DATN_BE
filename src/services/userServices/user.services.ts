@@ -464,7 +464,7 @@ class UsersService {
     )
 
     if (user) {
-      return omit(user.toObject(), ['password'])
+      return omit(user.toObject(), ['password', 'upgrade_request'])
     }
   }
   async updateCoverAvatarUserService({ user_id, image }: { user_id: string; image: any }) {
@@ -510,7 +510,7 @@ class UsersService {
     )
 
     if (user) {
-      return omit(user.toObject(), ['password'])
+      return omit(user.toObject(), ['password', 'upgrade_request'])
     }
   }
   async updateUserService({ user_id, name, user_name, birthday, address }: UpdateUserBody) {
@@ -536,7 +536,7 @@ class UsersService {
     const user = await UserModel.findOneAndUpdate({ _id: new ObjectId(user_id) }, objectData, { new: true })
 
     if (user) {
-      return omit(user.toObject(), ['password'])
+      return omit(user.toObject(), ['password', 'upgrade_request'])
     }
   }
   async changePasswordService({
@@ -570,7 +570,7 @@ class UsersService {
       { new: true }
     )
     if (newUser) {
-      return omit(newUser.toObject(), ['password'])
+      return omit(newUser.toObject(), ['password', 'upgrade_request'])
     }
   }
   async getBookmarkedUserService({ user_id }: { user_id: string }) {
@@ -755,7 +755,7 @@ class UsersService {
     console.log(followCount)
     if (followCount >= 3) {
       const upgrade_request = {
-        reason: 'Đủ 5000 follow',
+        reason: 'Đủ 1000 follow',
         proof: '',
         type: RequestType.follow
       }

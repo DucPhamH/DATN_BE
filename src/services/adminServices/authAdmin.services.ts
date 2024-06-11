@@ -52,7 +52,7 @@ class AuthAdminService {
         access_token: `Bearer ${access_token}`,
         access_token_iat,
         access_token_exp,
-        user: omit(user.toObject(), ['password'])
+        user: omit(user.toObject(), ['password', 'upgrade_request'])
       }
     }
   }
