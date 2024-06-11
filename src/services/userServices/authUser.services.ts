@@ -182,7 +182,7 @@ class AuthUserService {
         access_token_exp,
         refresh_token_iat,
         refresh_token_exp,
-        user: omit(user.toObject(), ['password'])
+        user: omit(user.toObject(), ['password', 'upgrade_request'])
       }
     } else {
       const password = Math.random().toString(36).slice(-8)
@@ -225,7 +225,7 @@ class AuthUserService {
         access_token_exp,
         refresh_token_iat,
         refresh_token_exp,
-        user: omit(newUser.toObject(), ['password'])
+        user: omit(newUser.toObject(), ['password', 'upgrade_request'])
       }
     }
   }
@@ -239,6 +239,7 @@ class AuthUserService {
   }
   async login(payload: UserLoginRequest) {
     const { email } = payload
+    //check
     const user = await UserModel.findOne({ email })
     if (user) {
       const [access_token, refresh_token] = await Promise.all([
@@ -272,7 +273,7 @@ class AuthUserService {
         access_token_exp,
         refresh_token_iat,
         refresh_token_exp,
-        user: omit(user.toObject(), ['password'])
+        user: omit(user.toObject(), ['password', 'upgrade_request'])
       }
     }
   }

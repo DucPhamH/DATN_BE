@@ -180,7 +180,7 @@ class CalculatorServices {
     // // cập nhật lại db
     const updatedUser = await UserModel.findByIdAndUpdate(user_id, updateData, { new: true })
     if (updatedUser) {
-      return omit(updatedUser.toObject(), ['password'])
+      return omit(updatedUser.toObject(), ['password', 'upgrade_request'])
     }
   }
   async saveBMRService({ weight, height, age, gender, BMR, user_id }: SaveBMRReqBody) {
@@ -254,7 +254,7 @@ class CalculatorServices {
     // cập nhật lại db
     const updatedUser = await UserModel.findByIdAndUpdate(user_id, updateData, { new: true })
     if (updatedUser) {
-      return omit(updatedUser.toObject(), ['password'])
+      return omit(updatedUser.toObject(), ['password', 'upgrade_request'])
     }
   }
   async saveTDEEService({ weight, height, age, gender, activity, TDEE, user_id }: SaveTDEEReqBody) {
@@ -339,7 +339,7 @@ class CalculatorServices {
     // cập nhật lại db
     const updatedUser = await UserModel.findByIdAndUpdate(user_id, updateData, { new: true })
     if (updatedUser) {
-      return omit(updatedUser.toObject(), ['password'])
+      return omit(updatedUser.toObject(), ['password', 'upgrade_request'])
     }
   }
 
@@ -390,7 +390,7 @@ class CalculatorServices {
     // cập nhật lại db
     const updatedUser = await UserModel.findByIdAndUpdate(user_id, updateData, { new: true })
     if (updatedUser) {
-      return omit(updatedUser.toObject(), ['password'])
+      return omit(updatedUser.toObject(), ['password', 'upgrade_request'])
     }
   }
   async saveIBWService({ height, gender, user_id, IBW }: SaveIBWReqBody) {
@@ -446,7 +446,7 @@ class CalculatorServices {
     // cập nhật lại db
     const updatedUser = await UserModel.findByIdAndUpdate(user_id, updateData, { new: true })
     if (updatedUser) {
-      return omit(updatedUser.toObject(), ['password'])
+      return omit(updatedUser.toObject(), ['password', 'upgrade_request'])
     }
   }
   async saveLBMService({ weight, height, gender, LBM, user_id }: SaveLBMReqBody) {
@@ -523,7 +523,7 @@ class CalculatorServices {
 
     const updatedUser = await UserModel.findByIdAndUpdate(user_id, updateData, { new: true })
     if (updatedUser) {
-      return omit(updatedUser.toObject(), ['password'])
+      return omit(updatedUser.toObject(), ['password', 'upgrade_request'])
     }
   }
 }
