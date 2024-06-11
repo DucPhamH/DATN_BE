@@ -483,7 +483,12 @@ class UserAdminService {
     const user = await UserModel.findByIdAndUpdate(
       user_id,
       {
-        role: UserRoles.chef
+        role: UserRoles.chef,
+        upgrade_request: {
+          reason: null,
+          proof: null,
+          type: null
+        }
       },
       { new: true }
     )
