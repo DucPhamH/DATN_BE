@@ -90,6 +90,12 @@ class BlogsService {
         }
       },
       {
+        $project: {
+          'user.password': 0,
+          content: 0
+        }
+      },
+      {
         $unwind: '$user'
       },
       {
@@ -144,6 +150,12 @@ class BlogsService {
           localField: 'category_blog_id',
           foreignField: '_id',
           as: 'category_blog'
+        }
+      },
+      {
+        $project: {
+          'user.password': 0,
+          content: 0
         }
       },
       {
@@ -204,6 +216,12 @@ class BlogsService {
         }
       },
       {
+        $project: {
+          'user.password': 0,
+          content: 0
+        }
+      },
+      {
         $unwind: '$user'
       },
       {
@@ -257,7 +275,8 @@ class BlogsService {
       },
       {
         $project: {
-          'user.password': 0
+          'user.password': 0,
+          content: 0
         }
       },
       {
@@ -336,6 +355,12 @@ class BlogsService {
           localField: 'category_blog_id',
           foreignField: '_id',
           as: 'category_blog'
+        }
+      },
+      {
+        $project: {
+          'user.password': 0,
+          content: 0
         }
       },
       {

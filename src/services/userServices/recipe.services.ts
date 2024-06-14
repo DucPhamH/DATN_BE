@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { body } from 'express-validator'
+import { create } from 'lodash'
 import { ObjectId } from 'mongodb'
 import sharp from 'sharp'
 import { NotificationTypes, RecipeStatus, RecipeTime } from '~/constants/enums'
@@ -18,6 +19,7 @@ import NotificationModel from '~/models/schemas/notification.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
 import RecipeCategoryModel from '~/models/schemas/recipeCategory.schema'
 import { ErrorWithStatus } from '~/utils/error'
+import { getRecommendations } from '~/utils/recommend'
 import { deleteFileFromS3, uploadFileToS3 } from '~/utils/s3'
 
 class RecipeService {
@@ -366,6 +368,11 @@ class RecipeService {
         }
       },
       {
+        $project: {
+          content: 0
+        }
+      },
+      {
         $unwind: '$category_recipe'
       },
       {
@@ -430,7 +437,8 @@ class RecipeService {
       // loại bỏ password của user
       {
         $project: {
-          'user.password': 0
+          'user.password': 0,
+          content: 0
         }
       },
       // lookup tới bảng bookmark
@@ -567,7 +575,8 @@ class RecipeService {
       // loại bỏ password của user
       {
         $project: {
-          'user.password': 0
+          'user.password': 0,
+          content: 0
         }
       },
       // lookup tới bảng bookmark
@@ -757,10 +766,11 @@ class RecipeService {
       {
         $unwind: '$user'
       },
-      // loại bỏ password của user
+      // loại bỏ password của user và content của recipe
       {
         $project: {
-          'user.password': 0
+          'user.password': 0,
+          content: 0
         }
       },
       // lookup tới bảng bookmark
@@ -1011,7 +1021,36 @@ class RecipeService {
       )
     }
 
-    return recipe
+    const recommendRecipes = getRecommendations(recipe_id)
+    console.log(recommendRecipes)
+
+    // tìm những recipe cùng trong recommendRecipes
+
+    const arrayRecommendRecipes = recommendRecipes.map((recommendRecipe) => new ObjectId(recommendRecipe.id))
+
+    console.log(arrayRecommendRecipes)
+
+    // lấy ra những recipe có id trong arrayRecommendRecipes và sắp xếp theo thứ tự trong arrayRecommendRecipes
+
+    const arrayRecipes = await Promise.all(
+      arrayRecommendRecipes.map(async (recommendRecipe) => {
+        const recipe = await RecipeModel.findById(recommendRecipe).select({
+          title: 1,
+          image: 1,
+          description: 1,
+          time: 1,
+          difficult_level: 1,
+          createdAt: 1
+        })
+        return recipe
+      })
+    )
+
+    console.log(arrayRecipes)
+
+    // const arrayRecipes
+
+    return { recipe, arrayRecipes }
   }
   async likeRecipeService({ user_id, recipe_id }: { user_id: string; recipe_id: string }) {
     const newLike = await LikeRecipeModel.findOneAndUpdate(

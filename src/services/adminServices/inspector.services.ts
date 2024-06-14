@@ -358,7 +358,8 @@ class InspectorService {
       // bỏ password của user
       {
         $project: {
-          'user.password': 0
+          'user.password': 0,
+          content: 0
         }
       },
       {
@@ -571,7 +572,8 @@ class InspectorService {
       // loại bỏ password của user
       {
         $project: {
-          'user.password': 0
+          'user.password': 0,
+          content: 0
         }
       },
       {

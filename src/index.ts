@@ -26,6 +26,7 @@ import writterRouter from './routes/adminRoutes/writter.routes'
 import { createServer } from 'http'
 import initSocket from './utils/socket'
 import notificationsRouter from './routes/userRoutes/notification.routes'
+import { trainRecipesRecommender } from './utils/recommend'
 
 const app: Express = express()
 const port = envConfig.port
@@ -56,6 +57,9 @@ app.use(
   })
 )
 
+// viết hàm chạy luôn khi server start
+
+trainRecipesRecommender()
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')
 })

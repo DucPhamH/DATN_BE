@@ -404,6 +404,11 @@ class WritterService {
         }
       },
       {
+        $project: {
+          content: 0
+        }
+      },
+      {
         $unwind: '$category_recipe'
       },
       {

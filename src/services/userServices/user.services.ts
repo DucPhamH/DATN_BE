@@ -610,7 +610,8 @@ class UsersService {
       // // loại bỏ password của user
       {
         $project: {
-          'user.password': 0
+          'user.password': 0,
+          content: 0
         }
       },
       // // lookup tới bảng bookmark
