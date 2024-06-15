@@ -275,8 +275,7 @@ class BlogsService {
       },
       {
         $project: {
-          'user.password': 0,
-          content: 0
+          'user.password': 0
         }
       },
       {
