@@ -14,6 +14,7 @@ import NotificationModel from '~/models/schemas/notification.schema'
 import PostModel from '~/models/schemas/post.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
 import UserModel from '~/models/schemas/user.schema'
+import { trainRecipesRecommender } from '~/utils/recommend'
 
 class InspectorService {
   async getAllPostReportService({ page, limit, search }: { page: number; limit: number; search: string }) {
@@ -643,6 +644,7 @@ class InspectorService {
       },
       { new: true }
     )
+    await trainRecipesRecommender()
     return recipe
   }
   async rejectRecipeService({ recipe_id }: { recipe_id: string }) {

@@ -16,6 +16,7 @@ import IngredientModel from '~/models/schemas/ingredient.schema'
 import LikeRecipeModel from '~/models/schemas/likeRecipe.schema'
 import RecipeModel from '~/models/schemas/recipe.schema'
 import { ErrorWithStatus } from '~/utils/error'
+import { trainRecipesRecommender } from '~/utils/recommend'
 import { deleteFileFromS3, uploadFileToS3 } from '~/utils/s3'
 
 class WritterService {
@@ -126,7 +127,7 @@ class WritterService {
     // })
 
     // console.log(data)
-
+    await trainRecipesRecommender()
     return newRecipe
   }
   async updateRecipeForWritterService({

@@ -51,6 +51,11 @@ class PostService {
       //   })
       // )
       // const newImage = newFile.map((f) => {
+      //   return {
+      //     url: f,
+      //     post_id: newPost._id
+      //   }
+      // })
       // tạm thời để 1 ảnh mặc định
       const newImage = file.map((f: any) => {
         return {
