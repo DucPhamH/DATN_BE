@@ -847,6 +847,7 @@ class InspectorService {
         }
       }
     )
+    await trainRecipesRecommender()
     return album
   }
   async rejectAlbumService({ album_id }: { album_id: string }) {
