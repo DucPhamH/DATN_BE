@@ -71,11 +71,11 @@ class WritterService {
     }
     // console.log(ingredients)
 
-    // const uploadRes = await uploadFileToS3({
-    //   filename: `recipe/${newImage?.originalname}` as string,
-    //   contentType: newImage?.mimetype as string,
-    //   body: newImage?.buffer as Buffer
-    // })
+    const uploadRes = await uploadFileToS3({
+      filename: `recipe/${newImage?.originalname}` as string,
+      contentType: newImage?.mimetype as string,
+      body: newImage?.buffer as Buffer
+    })
     console.log(newImage)
 
     // lấy tên ảnh từ newImage.originalname
@@ -91,7 +91,7 @@ class WritterService {
       title,
       description,
       content,
-      image: 'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
+      image: uploadRes.Location,
       image_name: image_name,
       video,
       time,
@@ -113,20 +113,20 @@ class WritterService {
     })
 
     // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
-    // const body = {
-    //   image: newRecipe.image,
-    //   image_name: newRecipe.image_name
-    // }
+    const body = {
+      image: newRecipe.image,
+      image_name: newRecipe.image_name
+    }
 
     // // https://cookhealthyimage.io.vn/create-img
     // // http://127.0.0.1:5000/create-img
-    // const { data } = await axios.post('http://127.0.0.1:5000/create-img', body, {
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
+    const { data } = await axios.post('https://cookhealthyimage.io.vn/create-img', body, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
 
-    // console.log(data)
+    console.log(data)
     await trainRecipesRecommender()
     return newRecipe
   }
@@ -222,17 +222,17 @@ class WritterService {
           .toBuffer()
       }
 
-      // const uploadRes = await uploadFileToS3({
-      //   filename: `recipe/${newImage?.originalname}` as string,
-      //   contentType: newImage?.mimetype as string,
-      //   body: newImage?.buffer as Buffer
-      // })
+      const uploadRes = await uploadFileToS3({
+        filename: `recipe/${newImage?.originalname}` as string,
+        contentType: newImage?.mimetype as string,
+        body: newImage?.buffer as Buffer
+      })
 
       // // xóa anhr cũ trên S3
-      // const old_image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
-      // console.log('old_image_name', old_image_name)
+      const old_image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
+      console.log('old_image_name', old_image_name)
 
-      // await deleteFileFromS3(`recipe/${old_image_name}`)
+      await deleteFileFromS3(`recipe/${old_image_name}`)
 
       const image_name = newImage.originalname.split('.')[0]
 
@@ -246,8 +246,7 @@ class WritterService {
             title,
             description,
             content,
-            image:
-              'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
+            image: uploadRes.Location,
             image_name,
             video,
             time,
@@ -268,21 +267,21 @@ class WritterService {
       )
 
       // // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
-      // const body = {
-      //   image: uploadRes.Location,
-      //   image_name: image_name,
-      //   old_image_name: recipe.image_name
-      // }
+      const body = {
+        image: uploadRes.Location,
+        image_name: image_name,
+        old_image_name: recipe.image_name
+      }
 
       // // https://cookhealthyimage.io.vn/update-img
       // // http://127.0.0.1:5000/update-img
-      // const { data } = await axios.post('http://127.0.0.1:5000/update-img', body, {
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   }
-      // })
+      const { data } = await axios.post('https://cookhealthyimage.io.vn/update-img', body, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
 
-      // console.log(data)
+      console.log(data)
 
       return newRecipe
     }
@@ -475,33 +474,33 @@ class WritterService {
     return recipe
   }
   async deteleRecipeForWritterService({ user_id, recipe_id }: { user_id: string; recipe_id: string }) {
-    // const recipe = await RecipeModel.findOne({
-    //   _id: new ObjectId(recipe_id),
-    //   user_id: new ObjectId(user_id)
-    // })
-    // if (!recipe) {
-    //   throw new ErrorWithStatus({
-    //     message: RECIPE_MESSAGE.RECIPE_NOT_FOUND,
-    //     status: HTTP_STATUS.NOT_FOUND
-    //   })
-    // }
+    const recipe = await RecipeModel.findOne({
+      _id: new ObjectId(recipe_id),
+      user_id: new ObjectId(user_id)
+    })
+    if (!recipe) {
+      throw new ErrorWithStatus({
+        message: RECIPE_MESSAGE.RECIPE_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
 
-    // // xóa ảnh trên S3
-    // const image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
-    // await deleteFileFromS3(`recipe/${image_name}`)
+    // xóa ảnh trên S3
+    const image_name = recipe.image_name + '.' + recipe.image.split('.').pop()
+    await deleteFileFromS3(`recipe/${image_name}`)
 
-    // // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
-    // const body = {
-    //   image_name: recipe.image_name
-    // }
+    // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
+    const body = {
+      image_name: recipe.image_name
+    }
 
-    // // https://cookhealthyimage.io.vn/delete-img
-    // // http://127.0.0.1:5000/delete-img
-    // const { data } = await axios.post('http://127.0.0.1:5000/delete-img', body, {
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // })
+    // https://cookhealthyimage.io.vn/delete-img
+    // http://127.0.0.1:5000/delete-img
+    const { data } = await axios.post('https://cookhealthyimage.io.vn/delete-img', body, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
 
     await Promise.all([
       await RecipeModel.findOneAndDelete({
