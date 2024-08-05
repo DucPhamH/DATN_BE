@@ -32,37 +32,38 @@ class PostService {
     //su dung sharp de resize mang hinh anh
     if (file?.length > 0) {
       // giu nguyen cac thuoc tinh cua mang chi thay doi buffer
-      const newFile = await Promise.all(
-        file.map(async (f: any) => {
-          f = {
-            ...f,
-            originalname: f?.originalname.split('.')[0] + new Date().getTime() + '.' + f?.originalname.split('.')[1],
-            buffer: await sharp(f?.buffer as Buffer)
-              .jpeg()
-              .toBuffer()
-          }
+      // const newFile = await Promise.all(
+      //   file.map(async (f: any) => {
+      //     f = {
+      //       ...f,
+      //       originalname: f?.originalname.split('.')[0] + new Date().getTime() + '.' + f?.originalname.split('.')[1],
+      //       buffer: await sharp(f?.buffer as Buffer)
+      //         .jpeg()
+      //         .toBuffer()
+      //     }
 
-          const uploadRes = await uploadFileToS3({
-            filename: `post/${f?.originalname}` as string,
-            contentType: f?.mimetype as string,
-            body: f?.buffer as Buffer
-          })
-          return uploadRes.Location
-        })
-      )
-      const newImage = newFile.map((f) => {
-        return {
-          url: f,
-          post_id: newPost._id
-        }
-      })
-      // tạm thời để 1 ảnh mặc định
-      // const newImage = file.map((f: any) => {
+      //     const uploadRes = await uploadFileToS3({
+      //       filename: `post/${f?.originalname}` as string,
+      //       contentType: f?.mimetype as string,
+      //       body: f?.buffer as Buffer
+      //     })
+      //     return uploadRes.Location
+      //   })
+      // )
+      // const newImage = newFile.map((f) => {
       //   return {
-      //     url: 'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
+      //     url: f,
       //     post_id: newPost._id
       //   }
       // })
+
+      // tạm thời để 1 ảnh mặc định
+      const newImage = file.map((f: any) => {
+        return {
+          url: 'https://bepvang.org.vn/Userfiles/Upload/images/Download/2017/2/24/268f41e9fdcd49999f327632ed207db1.jpg',
+          post_id: newPost._id
+        }
+      })
       const images = await ImagePostModel.insertMany(newImage)
       return {
         post: newPost,

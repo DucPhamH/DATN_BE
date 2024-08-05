@@ -1,0 +1,6 @@
+version: '3'
+services:
+  cookhealthy:
+    image: ducphamhong2/cookhealthy:v1
+    ports:
+      - '4000:4000'
