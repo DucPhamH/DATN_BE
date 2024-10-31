@@ -21,7 +21,7 @@ export const uploadFileToS3 = ({
   const parallelUploads3 = new Upload({
     client: s3,
     params: {
-      Bucket: 'cook-healthy',
+      Bucket: 'cookhealthy',
       Key: filename,
       Body: body,
       ContentType: contentType
@@ -39,7 +39,7 @@ export const uploadFileToS3 = ({
 export const deleteFileFromS3 = async (filename: string) => {
   try {
     const deleteParams = {
-      Bucket: 'cook-healthy',
+      Bucket: 'cookhealthy',
       Key: filename
     }
     await s3.deleteObject(deleteParams)

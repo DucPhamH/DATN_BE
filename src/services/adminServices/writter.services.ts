@@ -113,20 +113,20 @@ class WritterService {
     })
 
     // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
-    const body = {
-      image: newRecipe.image,
-      image_name: newRecipe.image_name
-    }
+    // const body = {
+    //   image: newRecipe.image,
+    //   image_name: newRecipe.image_name
+    // }
 
     // // https://cookhealthyimage.io.vn/create-img
     // // http://127.0.0.1:5000/create-img
-    const { data } = await axios.post('https://cookhealthyimage.io.vn/create-img', body, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    // const { data } = await axios.post('https://cookhealthyimage.io.vn/create-img', body, {
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
 
-    console.log(data)
+    // console.log(data)
     await trainRecipesRecommender()
     return newRecipe
   }
@@ -267,21 +267,21 @@ class WritterService {
       )
 
       // // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
-      const body = {
-        image: uploadRes.Location,
-        image_name: image_name,
-        old_image_name: recipe.image_name
-      }
+      // const body = {
+      //   image: uploadRes.Location,
+      //   image_name: image_name,
+      //   old_image_name: recipe.image_name
+      // }
 
       // // https://cookhealthyimage.io.vn/update-img
       // // http://127.0.0.1:5000/update-img
-      const { data } = await axios.post('https://cookhealthyimage.io.vn/update-img', body, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      // const { data } = await axios.post('https://cookhealthyimage.io.vn/update-img', body, {
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   }
+      // })
 
-      console.log(data)
+      // console.log(data)
 
       return newRecipe
     }
@@ -490,17 +490,17 @@ class WritterService {
     await deleteFileFromS3(`recipe/${image_name}`)
 
     // 'https://media.cooky.vn/recipe/g2/18978/s/recipe18978-prepare-step4-636228324350426949.jpg'
-    const body = {
-      image_name: recipe.image_name
-    }
+    // const body = {
+    //   image_name: recipe.image_name
+    // }
 
-    // https://cookhealthyimage.io.vn/delete-img
-    // http://127.0.0.1:5000/delete-img
-    const { data } = await axios.post('https://cookhealthyimage.io.vn/delete-img', body, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    // // https://cookhealthyimage.io.vn/delete-img
+    // // http://127.0.0.1:5000/delete-img
+    // const { data } = await axios.post('https://cookhealthyimage.io.vn/delete-img', body, {
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
 
     await Promise.all([
       await RecipeModel.findOneAndDelete({

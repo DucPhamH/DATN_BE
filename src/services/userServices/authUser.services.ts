@@ -9,7 +9,7 @@ import RefreshTokenModel from '~/models/schemas/refreshToken.schema'
 import UserModel from '~/models/schemas/user.schema'
 import { comparePassword, hashPassword } from '~/utils/crypto'
 import { sendForgotPasswordEmailNodeMailer } from '~/utils/emailMailer'
-import { sendForgotPasswordEmail } from '~/utils/emailSes'
+// import { sendForgotPasswordEmail } from '~/utils/emailSes'
 import { ErrorWithStatus } from '~/utils/error'
 import { signToken, verifyToken } from '~/utils/jwt'
 
